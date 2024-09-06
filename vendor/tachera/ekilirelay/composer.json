@@ -1,0 +1,20 @@
+{
+    "name": "tachera/ekilirelay",
+    "description": "A PHP package for sending emails using EkiliRelay API.",
+    "type": "library",
+    "require": {
+        "php": ">=7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "ekilie\\EkiliRelay\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "tacheraSasi",
+            "email": "tacherasasi@gmail.com"
+        }
+    ],
+    "license": "MIT"
+}

@@ -1,0 +1,59 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "bd54971a311bc4b8a9a40ef93e6e54b6",
+    "packages": [
+        {
+            "name": "tachera/ekilirelay",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tacheraSasi/ekilirelay-composer.git",
+                "reference": "544a514500942b0ec49ead471b1af3a6fa03519c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tacheraSasi/ekilirelay-composer/zipball/544a514500942b0ec49ead471b1af3a6fa03519c",
+                "reference": "544a514500942b0ec49ead471b1af3a6fa03519c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ekilie\\EkiliRelay\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "tacheraSasi",
+                    "email": "tacherasasi@gmail.com"
+                }
+            ],
+            "description": "A PHP package for sending emails using EkiliRelay API.",
+            "support": {
+                "issues": "https://github.com/tacheraSasi/ekilirelay-composer/issues",
+                "source": "https://github.com/tacheraSasi/ekilirelay-composer/tree/v1.0.0"
+            },
+            "time": "2024-09-04T10:57:00+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}

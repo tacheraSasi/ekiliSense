@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once "../../onboarding/server/config.php";
+include_once "../../config.php";
 $formType = $_POST['form-type'];
 $school_uid = $_SESSION['School_uid'];
 if(!isset($school_uid)){
@@ -122,46 +122,54 @@ function addClass($conn, $school_uid){
     }
 }
 
-#function to add class teachers
-function addClassTeacher($conn, $school_uid){
+function addClassTeacher($conn, $school_uid) {
     $class = mysqli_real_escape_string($conn, $_POST['choosen-class']);
     $teacher = mysqli_real_escape_string($conn, $_POST['choosen-class-teacher']);
     
     if($class == "Choose a teacher" || $teacher == "Select a class"){
-        echo "Please choose before submiting";
+        echo "Please choose before submitting";
         exit;
     }
 
-    #getting the class id using the class name
-    $get_class_id = mysqli_fetch_assoc(mysqli_query($conn, 
-    "SELECT * FROM classes WHERE Class_name = '$class' AND School_unique_id = '$school_uid'"));
+    // Getting the class id using the class name
+    $get_class_id_query = mysqli_query($conn, 
+        "SELECT Class_id FROM classes WHERE Class_name = '$class' AND School_unique_id = '$school_uid'");
+    $get_class_id = mysqli_fetch_assoc($get_class_id_query);
+    if (!$get_class_id) {
+        echo "Class not found.";
+        exit;
+    }
     $class_id = $get_class_id['Class_id'];
 
-    #getting the teacher's id using the teacher's name
-    $get_teacher_id = mysqli_fetch_assoc(mysqli_query($conn, 
-    "SELECT * FROM teachers WHERE teacher_fullname = '$teacher' AND School_unique_id = '$school_uid'"));
+    // Getting the teacher's id using the teacher's name
+    $get_teacher_id_query = mysqli_query($conn, 
+        "SELECT teacher_id FROM teachers WHERE teacher_fullname = '$teacher' AND School_unique_id = '$school_uid'");
+    $get_teacher_id = mysqli_fetch_assoc($get_teacher_id_query);
+    if (!$get_teacher_id) {
+        echo "Teacher not found.";
+        exit;
+    }
     $teacher_id = $get_teacher_id['teacher_id'];
 
-    $check = mysqli_query($conn, "SELECT * FROM class_teacher 
-    WHERE Class_id = '$class_id' AND School_unique_id = '$school_uid'");
+    // Check if the class already has a teacher assigned
+    $check_query = mysqli_query($conn, "SELECT * FROM class_teacher 
+        WHERE Class_id = '$class_id' AND School_unique_id = '$school_uid'");
+    $check = mysqli_fetch_assoc($check_query);
 
-    if($check){
-        echo"Class already has a class teacher \nTo change open the class's page";
-         
-    }else{
-        $query = mysqli_query($conn,"INSERT INTO class_teacher (school_unique_id, Class_id, teacher_id) 
-        VALUES ('$school_uid','$class_id','$teacher_id')");
-        if($query){
-            echo"success";
-            #TODO: add logic for notifying the teacher about the position
-
-        }else{
-            echo"something went wrong, Try again.";
+    if ($check) {
+        echo "Class already has a class teacher. To change, open the class's page.";
+    } else {
+        $insert_query = mysqli_query($conn, "INSERT INTO class_teacher (school_unique_id, Class_id, teacher_id) 
+            VALUES ('$school_uid', '$class_id', '$teacher_id')");
+        if ($insert_query) {
+            echo "Success";
+            // TODO: add logic for notifying the teacher about the position
+        } else {
+            echo "Something went wrong. Try again.";
         }
     }
-
-    
 }
+
 #function to generate the otp
 function generateOTP($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

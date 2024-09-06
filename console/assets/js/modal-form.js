@@ -1,89 +1,78 @@
 const modalForm = document.querySelectorAll('.modal-form');
 const addLeft = document.querySelectorAll('.add .left');
 
-let i = 1;
-const numberOfImages = 30
-function getRandomImage(){
-     i = Math.floor(Math.random()*numberOfImages+1)
-     /* 
-     setInterval(getRandomImage,5000) */
+const numberOfImages = 30;
 
-     if(i <= 0){
-      i = 1;
-     }
-     console.log(i)
+function getRandomImage() {
+  return Math.floor(Math.random() * numberOfImages + 1);
 }
 
-addLeft.forEach(card=>{
-    getRandomImage()
-    card.style.background = `linear-gradient(rgba(87, 165, 120, 0.5),
+addLeft.forEach(card => {
+  const i = getRandomImage();
+  card.style.background = `linear-gradient(rgba(87, 165, 120, 0.5),
     rgba(9, 66, 77, 0.8)), url("${assetsAt}/img/random/img${i}.jpg") center`;
-    card.style.backgroundSize = "cover"
-    
-})
+  card.style.backgroundSize = "cover";
+});
 
-//function that submits the form to the server 
-const submitForm = (form, id)=>{
-    continueBtn = form.querySelector(".button button"),
-    errorText = form.querySelector(".error-text");
-    inputs = form.querySelectorAll("input")
+const submitForm = (form, id) => {
+  const continueBtn = form.querySelector(".button button");
+  const errorText = form.querySelector(".error-text");
+  const inputs = form.querySelectorAll("input");
 
-    loadingState(continueBtn,btnInitialText,true)
-    //submitting the formData form each form
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "server/add.php", true);
-    xhr.onload = ()=>{
-      if(xhr.readyState === XMLHttpRequest.DONE){
-          if(xhr.status === 200){
-              let data = xhr.response;
-              if(data === "success"){
-                inputs.forEach(input=>{
-                  input.value = "";
-                })
-                errorText.style.background = "#7df3598f";
-                errorText.style.border = "1px solid #9bff7c8f"
-                errorText.style.display = "block";
-                errorText.textContent = displaySuccessText(id)
-                loadingState(continueBtn,btnInitialText,false)
-              }else{
-                errorText.style.display = "block";
-                errorText.textContent = data;   
-                loadingState(continueBtn,btnInitialText,false)
-              }
-          }
+  loadingState(continueBtn, continueBtn.innerHTML, true);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "server/add.php", true);
+  xhr.onload = () => {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        const data = xhr.response;
+        if (data === "success") {
+          inputs.forEach(input => {
+            input.value = "";
+          });
+          errorText.style.background = "#7df3598f";
+          errorText.style.border = "1px solid #9bff7c8f";
+          errorText.style.display = "block";
+          errorText.textContent = displaySuccessText(id);
+        } else {
+          errorText.style.display = "block";
+          errorText.textContent = data;
+          loadingState(continueBtn, continueBtn.innerHTML, false);
+        }
+        loadingState(continueBtn, continueBtn.innerHTML, false);
       }
     }
-    let formData = new FormData(form);
-    console.log(formData)
-    xhr.send(formData);
-}
+  };
 
-modalForm.forEach(form =>{
-    form.addEventListener("submit",(e)=>{
-        e.preventDefault()
-        console.log("id:",e.target.id)
-        submitForm(form,e.target.id)
-    })
-})
+  const formData = new FormData(form);
+  xhr.send(formData);
+};
+
+modalForm.forEach(form => {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    submitForm(form, e.target.id);
+  });
+});
 
 function displaySuccessText(id) {
-  switch(id){
+  switch (id) {
     case "teacher":
-      return "Teacher was added successfully."
-    case  "class":
-      return "Class was created successfully."
+      return "Teacher was added successfully.";
+    case "class":
+      return "Class was created successfully.";
     case "class-teacher":
-      return "Class-teacher was assigned successfully."
+      return "Class-teacher was assigned successfully.";
     default:
-      return"Task was successfully."
+      return "Task was successfully.";
   }
 }
-function loadingState(button,initialtext,isLoading) {
-  if(isLoading){
-    console.log(isLoading)
-    button.innerHTML = `<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>`
-  }else{
-    console.log(isLoading)
-    button.innerHTML = initialtext
+
+function loadingState(button, initialText, isLoading) {
+  if (isLoading) {
+    button.innerHTML = `<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>`;
+  } else {
+    button.innerHTML = initialText;
   }
 }

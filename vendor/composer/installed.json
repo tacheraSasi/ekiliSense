@@ -1,0 +1,49 @@
+{
+    "packages": [
+        {
+            "name": "tachera/ekilirelay",
+            "version": "v1.0.0",
+            "version_normalized": "1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tacheraSasi/ekilirelay-composer.git",
+                "reference": "544a514500942b0ec49ead471b1af3a6fa03519c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tacheraSasi/ekilirelay-composer/zipball/544a514500942b0ec49ead471b1af3a6fa03519c",
+                "reference": "544a514500942b0ec49ead471b1af3a6fa03519c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "time": "2024-09-04T10:57:00+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "ekilie\\EkiliRelay\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "tacheraSasi",
+                    "email": "tacherasasi@gmail.com"
+                }
+            ],
+            "description": "A PHP package for sending emails using EkiliRelay API.",
+            "support": {
+                "issues": "https://github.com/tacheraSasi/ekilirelay-composer/issues",
+                "source": "https://github.com/tacheraSasi/ekilirelay-composer/tree/v1.0.0"
+            },
+            "install-path": "../tachera/ekilirelay"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

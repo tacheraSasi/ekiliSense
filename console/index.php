@@ -1045,7 +1045,6 @@ $students_count = mysqli_num_rows($get_students);
     }
     
   </script>
-  <a href="https://www.producthunt.com/posts/ekilisense?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-ekilisense" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=481333&theme=dark" alt="ekiliSense - AI&#0045;powered&#0032;school&#0032;management&#0032;made&#0032;easy&#0032;as&#0032;service | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>

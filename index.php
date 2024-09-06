@@ -4,16 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Transforming learning with ekiliSense - an AI automated school management system. Join Tachera Sasi on the journey of excellence. Explore ekiliSense's innovative features and insights at insights.tachera.com.">
+  <meta name="description" content="Transforming learning with ekiliSense - an AI automated school management system. .">
   <meta name="keywords" content="ekiliSense, school management system,ekili, ekilie,ekiliSense,ekilieconvo, education technology, Tachera Sasi, AI, insights, ekiliSense CEO">
   <meta name="author" content="ekiliSense - The Future of Learning  , Learn smart">
   <meta property="og:title" content="ekiliSense - The Future of Learning">
-  <meta property="og:description" content="Transforming education with ekiliSense - an AI automated school management system. Join Tachera Sasi on the journey of excellence. Explore ekiliSense's innovative features and insights at insights.tachera.com.">
+  <meta property="og:description" content="Transforming education with ekiliSense - an AI automated school management system. .">
   <meta property="og:image" content="https://www.ekilie.com/assets/img/favicon.jpeg"> 
   <meta property="og:url" content="https://www.ekilie.com/assets/img/favicon.jpeg">
   <meta name="twitter:card" content="https://www.ekilie.com/assets/img/favicon.jpeg">
   <meta name="twitter:title" content="ekiliSense - The Future of Learning">
-  <meta name="twitter:description" content="Transforming education with ekiliSense - an AI automated school management system. Join Tachera Sasi on the journey of excellence. Explore ekiliSense's innovative features and insights at insights.tachera.com.">
+  <meta name="twitter:description" content="Transforming education with ekiliSense - an AI automated school management system. .">
   <meta name="twitter:image" content="https://www.ekilie.com/assets/img/favicon.jpeg"> 
   <link rel="canonical" href="https://www.sense.ekilie.com">
 
