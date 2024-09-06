@@ -35,6 +35,7 @@ const submitForm = (form, id) => {
           errorText.style.border = "1px solid #9bff7c8f";
           errorText.style.display = "block";
           errorText.textContent = displaySuccessText(id);
+          loadingState(continueBtn, continueBtn.innerHTML, false);
         } else {
           errorText.style.display = "block";
           errorText.textContent = data;

@@ -65,10 +65,9 @@ function getNumStd($conn,$class_id){
 
   <title>ekiliSense | <?=$school['School_name']?> | classes</title>
   
-
   <!-- Favicons -->
-  <link href="../assets/img/favicon.png" rel="icon">
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
+  <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
