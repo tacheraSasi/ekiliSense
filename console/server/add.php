@@ -70,37 +70,47 @@ function addSubject($conn, $school_uid){
 }
 
 #function to add teachers
-function addTeacher($conn, $school_uid,$school_name){
-    $name = mysqli_real_escape_string($conn,$_POST['name']);
-    $email = mysqli_real_escape_string($conn,$_POST['email']);
-    $mobile = mysqli_real_escape_string($conn,$_POST['mobile']);
-    $check = mysqli_query($conn, "SELECT * FROM teachers 
-    WHERE teacher_email = '$email' AND School_unique_id = '$school_uid'");
+function addTeacher($conn, $school_uid, $school_name) {
+    # Sanitize and validate input
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $mobile = mysqli_real_escape_string($conn, $_POST['mobile']);
 
-    if(mysqli_num_rows($check)>0){
-        echo"Teacher already exists";
-    }else{
+    # Check if the teacher already exists
+    $check_query = mysqli_query($conn, "SELECT * FROM teachers 
+        WHERE teacher_email = '$email' AND School_unique_id = '$school_uid'");
+
+    if (mysqli_num_rows($check_query) > 0) {
+        echo "Teacher already exists";
+    } else {
+        # Generate unique teacher ID
         $teacher_uid = UID();
-        echo $teacher_uid;
-        $query = mysqli_query($conn,"INSERT INTO teachers (school_unique_id,teacher_id, teacher_fullname, teacher_email, teacher_active_phone) 
-        VALUES ('$school_uid','$teacher_uid','$name','$email','$mobile')");
-        if($query){
-            #getting the otp
+        
+        # Insert new teacher into the database
+        $insert_teacher_query = mysqli_query($conn, "INSERT INTO teachers 
+            (school_unique_id, teacher_id, teacher_fullname, teacher_email, teacher_active_phone) 
+            VALUES ('$school_uid', '$teacher_uid', '$name', '$email', '$mobile')");
+        
+        if ($insert_teacher_query) {
+            # Generate OTP
             $otp = generateOTP(10);
-            #inserting the otp into the database
-            $insert_otp = mysqli_query($conn,"INSERT INTO otps (teacher_email, school_id, value) VALUES ('$email', '$school_uid', '$otp')");
-            if($insert_otp){
-                #sending the verification email to the teacher
-                sendMail($email,$name,$otp,$school_name);
+            
+            # Insert OTP into the database
+            $insert_otp_query = mysqli_query($conn, "INSERT INTO otps 
+                (teacher_email, school_id, value) VALUES ('$email', '$school_uid', '$otp')");
+            
+            if ($insert_otp_query) {
+                # Send verification email
+                sendMail($email, $name, $otp, $school_name);
+            } else {
+                echo "Failed to generate OTP. Please try again.";
             }
-        }else{
-            echo"something went wrong, Try again.";
+        } else {
+            echo "Something went wrong. Please try again.";
         }
     }
-
-    
-
 }
+
 
 #function to add classes
 function addClass($conn, $school_uid){
@@ -131,7 +141,7 @@ function addClassTeacher($conn, $school_uid) {
         exit;
     }
 
-    // Getting the class id using the class name
+    # Getting the class id using the class name
     $get_class_id_query = mysqli_query($conn, 
         "SELECT Class_id FROM classes WHERE Class_name = '$class' AND School_unique_id = '$school_uid'");
     $get_class_id = mysqli_fetch_assoc($get_class_id_query);
@@ -141,7 +151,7 @@ function addClassTeacher($conn, $school_uid) {
     }
     $class_id = $get_class_id['Class_id'];
 
-    // Getting the teacher's id using the teacher's name
+    # Getting the teacher's id using the teacher's name
     $get_teacher_id_query = mysqli_query($conn, 
         "SELECT teacher_id FROM teachers WHERE teacher_fullname = '$teacher' AND School_unique_id = '$school_uid'");
     $get_teacher_id = mysqli_fetch_assoc($get_teacher_id_query);
@@ -151,7 +161,7 @@ function addClassTeacher($conn, $school_uid) {
     }
     $teacher_id = $get_teacher_id['teacher_id'];
 
-    // Check if the class already has a teacher assigned
+    # Check if the class already has a teacher assigned
     $check_query = mysqli_query($conn, "SELECT * FROM class_teacher 
         WHERE Class_id = '$class_id' AND School_unique_id = '$school_uid'");
     $check = mysqli_fetch_assoc($check_query);
@@ -162,8 +172,8 @@ function addClassTeacher($conn, $school_uid) {
         $insert_query = mysqli_query($conn, "INSERT INTO class_teacher (school_unique_id, Class_id, teacher_id) 
             VALUES ('$school_uid', '$class_id', '$teacher_id')");
         if ($insert_query) {
-            echo "Success";
-            // TODO: add logic for notifying the teacher about the position
+            echo "success";
+            # TODO: add logic for notifying the teacher about the position
         } else {
             echo "Something went wrong. Try again.";
         }
@@ -185,16 +195,16 @@ function generateOTP($length = 10) {
 }
 #function to generate teachers uid
 function UID(){
-    // $characters = 'abcdefghijklmnopqrstuvwxyz';
+    # $characters = 'abcdefghijklmnopqrstuvwxyz';
     $ran_id = rand(time(), 10000);
     $uid ="$ran_id";
-    // $uid .= "_";
-    // $max = strlen($characters) - 1;
+    # $uid .= "_";
+    # $max = strlen($characters) - 1;
     
-    // // Generate random characters from the character set
-    // for ($i = 0; $i < 4 ; $i++) {
-    //     $uid .= $characters[rand(0, $max)];
-    // }
+    # # Generate random characters from the character set
+    # for ($i = 0; $i < 4 ; $i++) {
+    #     $uid .= $characters[rand(0, $max)];
+    # }
     
     return $uid;
 
@@ -230,7 +240,7 @@ function sendMail($email, $name, $otp,$school_name) {
                 To start exploring our platform and accessing your account, please click the button below to verify your email address:
             </p>
             <div style="text-align: center; margin-top: 20px;">
-                <a href="https://auth.ekilie.com/sense/verify/?otp='.$otp.'&user='.$email.'" style="background-color: #8cc75c; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Verify Account</a>
+                <a href="https:#auth.ekilie.com/sense/verify/?otp='.$otp.'&user='.$email.'" style="background-color: #8cc75c; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Verify Account</a>
             </div>
             <p style="color: #eee; margin-top: 20px;">
                 Once your account is verified, you will unlock full access to our platform and resources, empowering you to elevate your teaching experience at <b> '.$school_name.'</b>. You will be able to:
@@ -258,6 +268,6 @@ function sendMail($email, $name, $otp,$school_name) {
     if(mail($email, $subject, $message, $headers)) {
         echo "success";
     } else {
-        echo "Something went Wrong.";
+        echo "Teacher added but failed to send email";
     }
 }
