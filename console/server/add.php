@@ -8,22 +8,62 @@ if(!isset($school_uid)){
     exit;
 }
 
+//  echo "connected"; #for debugging purposes
+
 #getting the school details 
 $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
 $school = mysqli_fetch_array($get_info);
 $school_name = $school['School_name'];
 
-if($formType == 'teacher'){
-    addTeacher($conn, $school_uid,$school_name);
-} 
-else if($formType == 'class'){
-    addClass($conn, $school_uid);
-}else if($formType == 'class-teacher'){
-    addClassTeacher($conn, $school_uid);
-}else if($formType == 'student'){
-    addStudent($conn, $school_uid);
-}else if($formType == 'subject'){
-    addSubject($conn, $school_uid);
+switch($formType) {
+    case 'teacher':
+        addTeacher($conn, $school_uid, $school_name);
+        break;
+    case 'class':
+        addClass($conn, $school_uid);
+        break;
+    case 'class-teacher':
+        addClassTeacher($conn, $school_uid);
+        break;
+    case 'student':
+        addStudent($conn, $school_uid);
+        break;
+    case 'subject':
+        addSubject($conn, $school_uid);
+        break;
+    case 'plan':
+        addPlan($conn,$school_uid);
+        break;
+    default:
+        echo "Invalid form type!";
+        break;
+}
+
+#function to add plan
+function addPlan($conn,$school_uid){
+    $title = mysqli_real_escape_string($conn,$_POST['plan-title']);
+    $desc = mysqli_real_escape_string($conn,$_POST['plan-desc']);
+    $progress = mysqli_real_escape_string($conn,$_POST['progress']);
+    $owner = mysqli_real_escape_string($conn,$_POST['owner']);
+    $uid = planUID();
+
+    $insert_plan = mysqli_query($conn,"INSERT INTO plans
+    (school_uid,uid,owner,title,description,progress)
+    VALUE ('$school_uid','$uid','$owner','$title','$desc','$progress')");
+
+    if($insert_plan){
+        echo "success";
+    
+    }else{
+        echo "Something Went wrong,Please try again";
+    }
+
+
+}
+function planUID() {
+    # Generating 8 random characters (letters and numbers)
+    $randomString = bin2hex(random_bytes(4)); # 4 bytes = 8 characters in hex
+    return 'plan-'. $_SESSION['School_uid'] .'-'. $randomString;
 }
 
 #function to add student

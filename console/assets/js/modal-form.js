@@ -1,7 +1,7 @@
 const modalForm = document.querySelectorAll('.modal-form');
 const addLeft = document.querySelectorAll('.add .left');
 
-const numberOfImages = 30;
+const numberOfImages = 35;
 
 function getRandomImage() {
   return Math.floor(Math.random() * numberOfImages + 1);

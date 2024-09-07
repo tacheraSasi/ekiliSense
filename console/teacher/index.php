@@ -208,16 +208,7 @@ $teacher = mysqli_fetch_array($get_teacher);
           <span>Teaching plans</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="../classes">
-          <i class="bi bi-buildings-fill"></i>
-          <span>Classes</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
 
-      
-
-      
 
     </ul>
 

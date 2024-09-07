@@ -941,9 +941,6 @@ $students_count = mysqli_num_rows($get_students);
   <!-- Vendor JS Files -->
   <script>
     let assetsAt= "assets"
-  </script>
-  <script src="assets/js/modal-form.js"></script>
-  <script>
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     let roomId = urlParams.get('u')
@@ -951,8 +948,9 @@ $students_count = mysqli_num_rows($get_students);
     if(roomId=='new'){
       window.location.href = 'v1/'
     }
-    
   </script>
+  <script src="assets/js/modal-form.js"></script>
+
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>

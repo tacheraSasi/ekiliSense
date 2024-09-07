@@ -4,7 +4,7 @@ const addLeft = document.querySelectorAll('.add .left');
 
 let i = 1;
 function getRandomImage(){
-     i = Math.floor(Math.random()*16)
+     i = Math.floor(Math.random()*35)
      /* 
      setInterval(getRandomImage,5000) */
 
@@ -26,28 +26,29 @@ addLeft.forEach(card=>{
 const submitForm = (form, id)=>{
     continueBtn = form.querySelector(".button button"),
     errorText = form.querySelector(".error-text");
-    inputs = form.querySelectorAll("input")
+    inputs = form.querySelectorAll(".plan-input")
     console.log("form submitted")
 
     //submitting the formData form each form
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "../../server/add.php", true);
+    xhr.open("POST", "../server/add.php", true);
     xhr.onload = ()=>{
       if(xhr.readyState === XMLHttpRequest.DONE){
           if(xhr.status === 200){
-              let data = xhr.response;
-              if(data === "success"){
-                inputs.forEach(input=>{
-                  input.value = "";
-                })
-                errorText.style.background = "#7df3598f";
-                errorText.style.border = "1px solid #9bff7c8f"
-                errorText.style.display = "block";
-                errorText.textContent = displaySuccessText(id)
-              }else{
-                errorText.style.display = "block";
-                errorText.textContent = data;
-              }
+            let data = xhr.response;
+            console.log(data)
+            if(data === "success"){
+              inputs.forEach(input=>{
+                input.value = "";
+              })
+              errorText.style.background = "#7df3598f";
+              errorText.style.border = "1px solid #9bff7c8f";
+              errorText.style.display = "block";
+              errorText.textContent = displaySuccessText(id);
+            }else{
+              errorText.style.display = "block";
+              errorText.textContent = data;
+            }
           }
       }
     }
@@ -67,11 +68,9 @@ modalForm.forEach(form =>{
 
 function displaySuccessText(id) {
   switch(id){
-    case "student":
-      return "Student was added successfully."
-    case  "subject":
-      return "Subject was created successfully."
+    case "plan":
+      return "Plan was created successfully.";
     default:
-      return"Task was successfully."
+      return"Task was successfully.";
   }
 }

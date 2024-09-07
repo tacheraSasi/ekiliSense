@@ -1,13 +1,13 @@
 <?php
 session_start();
-include_once "../../config.php";
-include_once "../functions/timeAgo.php";
+include_once "../../../config.php";
+include_once "../../functions/timeAgo.php";
 if(!(isset($_SESSION['School_uid']))){
   header("location:../../auth");
 }
 if(!(isset($_SESSION['teacher_email']))){
-  header("location:https://auth.ekilie.com/sense/teacher");
-}
+    header("location:https://auth.ekilie.com/sense/teacher");
+  }
 // $teacher_email = "";//////####
 $teacher_email = $_SESSION['teacher_email'];
 
@@ -30,28 +30,28 @@ $teacher = mysqli_fetch_array($get_teacher);
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title> <?=$school['School_name']?> | <?=$teacher['teacher_fullname'];?></title>
+  <title> <?=$school['School_name']?> | teacher | <?=$teacher['teacher_fullname'];?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <!-- Favicons -->
-  <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
-  <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
+  <link href="https://www.ekilie.com/../assets/img/favicon.jpeg" rel="icon">
+  <link href="https://www.ekilie.com/../assets/img/favicon.jpeg" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../../assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <link href="../assets/css/style.css" rel="stylesheet">
-  <link href="../assets/css/custom.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
+  <link href="../../assets/css/custom.css" rel="stylesheet">
 
 </head>
 
@@ -157,7 +157,7 @@ $teacher = mysqli_fetch_array($get_teacher);
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="../../assets/img/user.png" alt="Profile" class="rounded-circle">
+            <img src="../../../assets/img/user.png" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"><?=$school['School_name']?></span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -212,7 +212,17 @@ $teacher = mysqli_fetch_array($get_teacher);
           <span>Teaching plans</span>
         </a>
       </li><!-- End Dashboard Nav -->
-    
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../classes">
+          <i class="bi bi-buildings-fill"></i>
+          <span>Classes</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      
+
+      
+
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -247,7 +257,7 @@ $teacher = mysqli_fetch_array($get_teacher);
                       display: flex;
                       justify-content: flex-start;">
                         <div class="logo-container">
-                          <img src="../../assets/img/favicon.jpeg" alt="" class="logo">
+                          <img src="../../../assets/img/favicon.jpeg" alt="" class="logo">
                           <div class="logo-text">ekilie.</div>
                         </div>
                       </div>
@@ -271,22 +281,21 @@ $teacher = mysqli_fetch_array($get_teacher);
                     <p class="sub-heading">
                       Bringing Artificial intelligence closer to education
                     </p>
-                    <form class="modal-form" id="plan"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
+                    <form class="modal-form" id="class"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
                         <div class="error-text" style="
                           background-color: rgba(243, 89, 89, 0.562);
                           border:solid 1px rgba(243, 89, 89, 0.822);
                           color:#fff;
                           padding:6px;
-                          border-radius:8px;">
+                          border-radius:8px;">💀
                         </div>
                       <!-- TODO: add emojis to the plcaholder -->
-                      <input type="hidden" name="form-type" value="plan" >
-                      <input type="hidden" name="owner" value="<?=$teacher_email?>" >
+                      <input type="hidden" name="form-type" value="class" >
                       <div class=" field input">
-                        <input class="plan-input" style="width: 100%;"  type="text" name="plan-title"  placeholder="Plan Title " required>
+                        <input style="width: 100%;"  type="text" name="plan-title"  placeholder="Plan Title " required>
                       </div>
                       <div class=" field input">
-                        <textarea class="plan-input" name="plan-desc" id="desc" rows="4" placeholder="Plan description"></textarea>
+                        <textarea name="plan-desc" id="desc" rows="4" placeholder="Plan description"></textarea>
                       </div>
                       <div class="field input">
                         <label for="progress">Progress</label>
@@ -423,16 +432,16 @@ $teacher = mysqli_fetch_array($get_teacher);
   <!-- Vendor JS Files -->
   <script src="js/plans.js"></script>
   
-  <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="../assets/vendor/echarts/echarts.min.js"></script>
-  <script src="../assets/vendor/quill/quill.min.js"></script>
-  <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="../../assets/vendor/echarts/echarts.min.js"></script>
+  <script src="../../assets/vendor/quill/quill.min.js"></script>
+  <script src="../../assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="../../assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="../../assets/vendor/php-email-form/validate.js"></script>
 
-  <script src="../assets/js/main.js"></script>
+  <script src="../../assets/js/main.js"></script>
 
 </body>
 
