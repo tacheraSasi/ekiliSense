@@ -107,7 +107,7 @@ button:hover {
   align-items: center;
   text-align: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
   color: #888;
   overflow-y: auto;
 

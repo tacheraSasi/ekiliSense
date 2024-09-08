@@ -49,8 +49,9 @@ $students_count = mysqli_num_rows($get_students);
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Console | ekiliSense</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <meta name="description" content="The ekiliSense Console for efficient school management. Utilize advanced tools to automate, track, and optimize educational operations. Join the future of smart school administration with ekiliSense.">
+  <meta name="keywords" content="ekiliSense, ekili, ekilie, ekilisense, school management system, education automation, school console, smart management, school operations, edtech, education technology, academic management, ekili education, ekili school, ekili management">
+
 
   <!-- Favicons -->
   <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
@@ -640,7 +641,7 @@ $students_count = mysqli_num_rows($get_students);
                     display: flex;
                     justify-content: flex-start;">
                       <div class="logo-container">
-                        <img src="../../assets/img/favicon.jpeg" alt="" class="logo">
+                        <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="" class="logo">
                         <div class="logo-text">ekilie.</div>
                       </div>
                     </div>
@@ -712,7 +713,7 @@ $students_count = mysqli_num_rows($get_students);
                     display: flex;
                     justify-content: flex-start;">
                       <div class="logo-container">
-                        <img src="../../assets/img/favicon.jpeg" alt="" class="logo">
+                        <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="" class="logo">
                         <div class="logo-text">ekilie.</div>
                       </div>
                     </div>
@@ -798,7 +799,7 @@ $students_count = mysqli_num_rows($get_students);
                     display: flex;
                     justify-content: flex-start;">
                       <div class="logo-container">
-                        <img src="../../assets/img/favicon.jpeg" alt="" class="logo">
+                        <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="" class="logo">
                         <div class="logo-text">ekilie.</div>
                       </div>
                     </div>
@@ -865,7 +866,7 @@ $students_count = mysqli_num_rows($get_students);
                     display: flex;
                     justify-content: flex-start;">
                       <div class="logo-container">
-                        <img src="../../assets/img/favicon.jpeg" alt="" class="logo">
+                        <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="" class="logo">
                         <div class="logo-text">ekilie.</div>
                       </div>
                     </div>
@@ -883,37 +884,37 @@ $students_count = mysqli_num_rows($get_students);
                   
                 </div>
                 <div class="right">
-                  <h1>Upgrade to ekiliSense premium</h1>
-                  <p class="sub-heading">
-                    Bringing Artificial intelligence closer to education
-                  </p>
-                  <form class="modal-form" id="class"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
-                  <div class="error-text" style="
-                        background-color: rgba(243, 89, 89, 0.562);
-                        border:solid 1px rgba(243, 89, 89, 0.822);
-                        color:#fff;
-                        padding:6px;
-                        border-radius:8px;">
-                      </div>
-                    <!-- TODO: add emojis to the plcaholder -->
-                    <input type="hidden" name="form-type" value="class" >
-                    <div class=" field input">
-                      <input style="width: 100%;"  type="text" name="class-name"  placeholder="Write the class name here " required>
-                    </div>
-                    
+                  <h1 style="font-size: 30px;">Upgrade to ekiliSense premium</h1>
                   
-                    <div class="input-container field button">
-                        <button  id="submit" title="create class" type="submit">CREATE</button>
+                  <form class="modal-form" id="upgrade" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" style="max-width: 400px; margin: 0 auto; padding: 20px; background-color: #1c1c1e; border-radius: 10px; color: #fff;">
+                    <h3 style="text-align: center; margin-bottom: 10px; color: #fff;">$30/month</h3>
+
+                    <!-- Feature List -->
+                    <ul class="list-group" style="margin-bottom: 15px; background-color: transparent;">
+                      
+                      <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
+                        <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Unlimited emails and sms to all you users
+                      </li>
+                      <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
+                        <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Priority Customer Support
+                      </li>
+                      <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
+                        <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Reliable AI integration
+                      </li>
+                      <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
+                        <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Customizable Dashboard & Unlimited ekiliSense features
+                      </li>
+                    </ul>
+
+                    <!-- Button -->
+                    <div class="input-container field button text-center">
+                      <button id="submit" title="Upgrade to Premium" type="submit" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;  border: none;">
+                        <i class="bi bi-rocket-takeoff"></i> Upgrade
+                      </button>
                     </div>
-                    <div class="link" style="color:lightgrey">Need help?
-                      <a href="../onboarding/" style="color:#33995d;text-decoration:none">
-                       Contact Support
-                      </a>
-                    </div> 
-          
-                   
-          
                   </form>
+
+
                   
                 </div>
               </div>
