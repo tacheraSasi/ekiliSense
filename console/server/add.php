@@ -280,7 +280,7 @@ function sendMail($email, $name, $otp,$school_name) {
                 To start exploring our platform and accessing your account, please click the button below to verify your email address:
             </p>
             <div style="text-align: center; margin-top: 20px;">
-                <a href="https:#auth.ekilie.com/sense/verify/?otp='.$otp.'&user='.$email.'" style="background-color: #8cc75c; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Verify Account</a>
+                <a href="https://auth.ekilie.com/sense/verify/?otp='.$otp.'&user='.$email.'" style="background-color: #8cc75c; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Verify Account</a>
             </div>
             <p style="color: #eee; margin-top: 20px;">
                 Once your account is verified, you will unlock full access to our platform and resources, empowering you to elevate your teaching experience at <b> '.$school_name.'</b>. You will be able to:

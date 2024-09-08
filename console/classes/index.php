@@ -265,65 +265,73 @@ function getNumStd($conn,$class_id){
           
             <!-- upgrade btn -->
             <div class="modal fade " id="upgrade" tabindex="-1">
-              <div class="modal-dialog modal-xl ">
-                <div class="modal-content card">
-                  <div class="add">
-                    <div class="add-card">
-                      <div class="left">
-                        <div class="top-container">
-                          <div style="
-                          display: flex;
-                          justify-content: flex-start;">
-                            <div class="logo-container">
-                              <img src="../../assets/img/favicon.jpeg" alt="" class="logo">
-                              <div class="logo-text">ekilie.</div>
-                            </div>
-                          </div>
-                          <div class="middle-content">
-                            <h1>ekiliSense</h1>
-                            <h2 id="typingText" style="display: inline;"></h2>
-                            <span class="cursor"></span>
+            <div class="modal-dialog modal-xl ">
+              <div class="modal-content card">
+                <div class="add">
+                  <div class="add-card">
+                    <div class="left">
+                      <div class="top-container">
+                        <div style="
+                        display: flex;
+                        justify-content: flex-start;">
+                          <div class="logo-container">
+                            <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="" class="logo">
+                            <div class="logo-text">ekilie.</div>
                           </div>
                         </div>
-                        <div class="bottom-container">
-                          "Unlock premium features with ekiliSense. 
-                          Gain access to advanced tools and insights to 
-                          elevate your educational experience."
+                        <div class="middle-content">
+                          <h1>ekiliSense</h1>
+                          <h2 id="typingText" style="display: inline;"></h2>
+                          <span class="cursor"></span>
                         </div>
-                        
                       </div>
-                      <div class="right">
-                        <h1>Upgrade to ekiliSense premium</h1>
-                        <p class="sub-heading">
-                          Bringing Artificial intelligence closer to education
-                        </p>
-                        <form class="modal-form" id="class"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
-                        <div class="error-text" style="
-                              background-color: rgba(243, 89, 89, 0.562);
-                              border:solid 1px rgba(243, 89, 89, 0.822);
-                              color:#fff;
-                              padding:6px;
-                              border-radius:8px;">
-                            </div>
-                          <!-- TODO: add emojis to the plcaholder -->
-                          <input type="hidden" name="form-type" value="class" >
-                          <div class=" field input">
-                            <input style="width: 100%;"  type="text" name="class-name"  placeholder="Write the class name here " required>
-                          </div>
+                      <div class="bottom-container">
+                        "Unlock premium features with ekiliSense. 
+                        Gain access to advanced tools and insights to 
+                        elevate your educational experience."
+                      </div>
+                      
+                    </div>
+                    <div class="right">
+                      <h1 style="font-size: 30px;">Upgrade to ekiliSense premium</h1>
+                      
+                      <form class="modal-form" id="upgrade" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" style="max-width: 400px; margin: 0 auto; padding: 20px; background-color: #1c1c1e; border-radius: 10px; color: #fff;">
+                        <h3 style="text-align: center; margin-bottom: 10px; color: #fff;">$30/month</h3>
+
+                        <!-- Feature List -->
+                        <ul class="list-group" style="margin-bottom: 15px; background-color: transparent;">
                           
-                        
-                          <div class="input-container field button">
-                              <button  id="submit" title="create class" type="submit">CREATE</button>
-                          </div>
-                         
-                        </form>
-                        
-                      </div>
+                          <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Unlimited emails and sms to all you users
+                          </li>
+                          <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Priority Customer Support
+                          </li>
+                          <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Reliable AI integration
+                          </li>
+                          <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Customizable Dashboard & Unlimited ekiliSense features
+                          </li>
+                        </ul>
+
+                        <!-- Button -->
+                        <div class="input-container field button text-center">
+                          <button id="submit" title="Upgrade to Premium" type="submit" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;  border: none;">
+                            <i class="bi bi-rocket-takeoff"></i> Upgrade
+                          </button>
+                        </div>
+                      </form>
+
+
+                      
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+
           </div>
         </div>
       </section>
