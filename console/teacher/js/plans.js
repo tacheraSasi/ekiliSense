@@ -74,3 +74,23 @@ function displaySuccessText(id) {
       return"Task was successfully.";
   }
 }
+
+//displaying the users plans
+function fetchPlans() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "../server/get_plans.php", true);
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          
+          var plansContent = xhr.responseText;
+          
+          document.querySelector(".plans-list").innerHTML = plansContent;
+      }
+  };
+  xhr.send();
+}
+
+// Call fetchPlans() function to fetch and display plans when the page loads
+setInterval(()=>{
+fetchPlans()
+},500)

@@ -318,90 +318,11 @@ $teacher = mysqli_fetch_array($get_teacher);
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <div class="plans-list">
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn"  data-bs-toggle="modal" data-bs-target="#verticalycentered">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                    <div class="modal fade" id="verticalycentered" tabindex="-1">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content card">
-                          <div class="modal-header">
-                            <h5 class="modal-title">⚠️Alert</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <h2>Are you sure you want to delete this🤷🤷‍♂️?</h2>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn del-btn"><i class="bi bi-trash"> </i> Delete</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta 
-                  
-                </div>
-              </div>
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta pariatur molestias enim sunt mollitia, facilis animi itaque doloremque velit voluptates tenetur, iste ratione? Veniam!
-                </div>
-              </div>
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta pariatur molestias enim sunt mollitia, facilis animi itaque doloremque velit voluptates tenetur, iste ratione? Veniam!
-                </div>
-              </div>
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta pariatur molestias enim sunt mollitia, facilis animi itaque doloremque velit voluptates tenetur, iste ratione? Veniam!
-                </div>
-              </div>
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta pariatur molestias enim sunt mollitia, facilis animi itaque doloremque velit voluptates tenetur, iste ratione? Veniam!
-                </div>
-              </div>
+              <div class="spinner-grow" role="status"></div>
+                <span class="">Loading...</span>
             </div>
+              
+            
         </div>
       </div>
     </section>
