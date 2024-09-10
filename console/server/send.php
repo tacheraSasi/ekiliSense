@@ -109,7 +109,7 @@ function sendMail($email, $name,$school_name,$title,$message) {
         <div style="margin-top: 20px; padding: 20px; background-color: rgba(255, 255, 255, 0.45); border-radius: 10px;">
             <p>Dear ' . $name . ',</p> <br>
            
-            <pre>'.$message.'</pre>
+            <pre style="font-family:inherit;">'.$message.'</pre>
         </div>
             
         <div style="margin-top: 20px; font-style: italic; text-align: center; color: #a6ec6d;">
