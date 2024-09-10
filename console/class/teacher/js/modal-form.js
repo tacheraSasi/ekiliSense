@@ -26,7 +26,7 @@ addLeft.forEach(card=>{
 const submitForm = (form, id)=>{
     continueBtn = form.querySelector(".button button"),
     errorText = form.querySelector(".error-text");
-    inputs = form.querySelectorAll("input")
+    inputs = form.querySelectorAll("input #input-not-hidden")
 
     let btnInitialText = continueBtn.innerText
     

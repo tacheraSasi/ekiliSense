@@ -17,7 +17,7 @@ function get_plans(){
         $model_target = $plan['school_uid'].$uid;
 
         echo '
-            <div class="plan">
+            <a href="plan.php?ref='.$uid.'" style="color:inherit" class="plan">
                 <!-- <div class="plan-header">
                   <button class="del-btn"  data-bs-toggle="modal" data-bs-target="#'.$model_target.'">
                     <i class="bi bi-trash"></i>
@@ -44,14 +44,14 @@ function get_plans(){
                   </button>
                 </div> -->
                 <div class="plan-body d-flex justify-between flex-column">
-                    <b>'.$title.'</b><br>
-                    '.$desc.'
+                    <strong><b>'.$title.'</b></strong><br>
+                    <pre>'.$desc.'</pre>
                     <div class="progress mt-3">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: '.$progress.'%" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success"  role="progressbar" style="width: '.$progress.'%" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   
                 </div>
-            </div>
+            </a>
         
         ';
 

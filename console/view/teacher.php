@@ -239,7 +239,14 @@ function editTeacher($conn,$school_uid,$teacher_id){
 
                   <!-- Profile Edit Form -->
 
-                  <?php 
+                  <?php
+                  if(isset($_POST['save-changes'])){
+                    editTeacher($conn,$school_uid,$teacher['teacher_id']);
+                    echo"
+                    <script>window.location.reload</script>
+                    ";
+                  }
+                   
                   if(!$isVerified){
 
                   ?>

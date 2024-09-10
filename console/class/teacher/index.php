@@ -498,7 +498,7 @@ $subject_num = mysqli_num_rows($subjects);
                     <input type="hidden" name="form-type" value="subject" >
                     <input type="hidden" name="class" value="<?=$class_id?>" >
                     <div class=" field input">
-                      <input style="width: 100%;"  type="text" name="subject-name"  placeholder="Write the subject name here" required>
+                      <input style="width: 100%;" id="input-not-hidden"  type="text" name="subject-name"  placeholder="Write the subject name here" required>
                     </div>
                     <div class=" field input">
                       <select name="choosen-subject-teacher" id="choose-class-teacher">

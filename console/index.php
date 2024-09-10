@@ -237,6 +237,12 @@ $students_count = mysqli_num_rows($get_students);
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="./performance">
+          <i class="bi bi-rocket-takeoff"></i>
+          <span>Perfomance</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="https://convo.ekilie.com">
         <i class="bi bi-camera-video"></i>
           <span>Convo</span>
@@ -313,7 +319,7 @@ $students_count = mysqli_num_rows($get_students);
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card" style="border-radius: 1rem;">
 
-                <div class="card-body" title="CLICK TO ADD">
+                <div class="card-body">
                   <h5 class="card-title">Students <span>| all</span></h5>
 
                   <div class="d-flex align-items-center">
@@ -337,7 +343,7 @@ $students_count = mysqli_num_rows($get_students);
 
                 
 
-                <div class="card-body" title="CLICK TO ADD">
+                <div class="card-body">
                   <h5 class="card-title">Teachers <span>| all</span></h5>
 
                   <div class="d-flex align-items-center">
@@ -361,7 +367,7 @@ $students_count = mysqli_num_rows($get_students);
               <div class="card info-card customers-card">
 
                 
-                <div class="card-body" title="CLICK TO ADD" >
+                <div class="card-body" >
                   <h5 class="card-title">Classes <span>| all</span></h5>
 
                   <div class="d-flex align-items-center">

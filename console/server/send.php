@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once "../../onboarding/server/config.php";
+include_once "../../config.php";
 $school_uid = $_SESSION['School_uid'];
 
 #getting the school details 

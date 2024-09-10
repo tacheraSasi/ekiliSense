@@ -254,7 +254,7 @@ function sendMail($email, $name, $otp,$school_name) {
     # Setting email headers
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: $school_name  <support@ekilie.com>";#change this email later on to no reply
+    $headers .= "From: $school_name  <support@ekilie.com>";#TODO:change this email later on to no reply
     
     # Email subject
     $subject = "$school_name verification | ekiliSense";

@@ -28,18 +28,24 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link <?=$page=="plans"?"":"collapsed"?>" href="./plans.php">
+          <i class="bi bi-pen"></i>
+          <span>Teaching plans</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="send.php">
           <i class="bi bi-send"></i>
           <span>Send</span>
         </a>
-      </li>
+      </li> -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="./announcements">
+        <a class="nav-link <?=$page=="results"?"":"collapsed"?>" href="results.php">
           <i class="bi bi-emoji-expressionless"></i>
           <span>Results</span>
         </a> 
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="./announcements">
           <i class="bi bi-house"></i>
           <span>Library</span>
@@ -50,24 +56,19 @@
         <i class="bi bi-camera-video"></i>
           <span>Convo</span>
         </a>
-      </li>
+      </li> -->
 
 
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="profile.php">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Help?</span>
-        </a>
-      </li><!-- End help Page Nav -->
+    
 
       
 

@@ -17,7 +17,7 @@ addLeft.forEach(card => {
 const submitForm = (form, id) => {
   const continueBtn = form.querySelector(".button button");
   const errorText = form.querySelector(".error-text");
-  const inputs = form.querySelectorAll("input");
+  const inputs = form.querySelectorAll("input ");
 
   loadingState(continueBtn, continueBtn.innerHTML, true);
 
@@ -29,8 +29,13 @@ const submitForm = (form, id) => {
         const data = xhr.response;
         if (data === "success") {
           inputs.forEach(input => {
-            input.value = "";
-          });
+            console.log(input.target)
+            console.log(input.type)
+            if(input.type != "hidden"){
+              input.value = "";
+
+            }
+          }); 
           errorText.style.background = "#7df3598f";
           errorText.style.border = "1px solid #9bff7c8f";
           errorText.style.display = "block";

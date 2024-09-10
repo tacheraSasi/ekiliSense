@@ -17,7 +17,7 @@ function getRandomImage(){
 addLeft.forEach(card=>{
     getRandomImage()
     card.style.background = `linear-gradient(rgba(87, 165, 120, 0.5),
-    rgba(9, 66, 77, 0.8)), url("../assets/img/random/img${i}.jpg") center`;
+    rgba(9, 66, 77, 0.8)), url("../../assets/img/random/img${i}.jpg") center`;
     card.style.backgroundSize = "cover"
     
 })
@@ -31,7 +31,7 @@ const submitForm = (form, id)=>{
 
     //submitting the formData form each form
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "../server/add.php", true);
+    xhr.open("POST", "../../server/add.php", true);
     xhr.onload = ()=>{
       if(xhr.readyState === XMLHttpRequest.DONE){
           if(xhr.status === 200){
@@ -78,7 +78,7 @@ function displaySuccessText(id) {
 //displaying the users plans
 function fetchPlans() {
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "../server/get_plans.php", true);
+  xhr.open("GET", "../../server/get_plans.php", true);
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
           

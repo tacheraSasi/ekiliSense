@@ -2,11 +2,9 @@
 session_start();
 include_once "../../config.php";
 include_once "../functions/timeAgo.php";
-if(!(isset($_SESSION['School_uid']))){
-  header("location:../../auth");
-}
-if(!(isset($_SESSION['teacher_email']))){
-    header("location:https://auth.ekilie.com/sense/teacher");
+
+if(!isset($_SESSION['teacher_email']) || !isset($_SESSION['School_uid'])){
+  header("location:https://auth.ekilie.com/sense/teacher");
 }
 $teacher_email = "";//////####
 $teacher_email = $_SESSION['teacher_email'];
@@ -70,86 +68,6 @@ $teacher = mysqli_fetch_array($get_teacher);
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        
-        <!-- <li>
-          <a href="" class="btn btn-success mx-2">Upgrade</a>
-        </li> -->
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-success badge-number">4</span>
-          </a><!-- End Notification Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-
-        </li><!-- End Notification Nav -->
-
-        
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -177,7 +95,7 @@ $teacher = mysqli_fetch_array($get_teacher);
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="./logout.php">
+              <a class="dropdown-item d-flex align-items-center" href="./logout.php?logout_id=<?php echo $teacher_email?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -337,41 +255,10 @@ $teacher = mysqli_fetch_array($get_teacher);
 
                 </div>
                 <div class="tab-pane fade profile-edit pt-3" id="work-attendance">
-
-                  <!-- Profile Edit Form -->
-                  <form>
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input  name="fullName" type="text" class="form-control" id="fullName" placeholder="Enter Name" value="<?=$teacher['teacher_fullname'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input  name="phone" type="text" class="form-control" id="Phone"placeholder="Enter Phone"  value="<?=$teacher['teacher_active_phone'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input  name="email" type="email" class="form-control" id="Email" placeholder="Enter Email"  value="<?=$teacher['teacher_email'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input  name="address" type="text" class="form-control" id="Address"placeholder="Enter Address"  value="<?=$teacher['teacher_home_address'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
+                  <div class="alert alert-dark bg-dark text-light border-0 alert-dismissible fade show" role="alert">
+                      To sign/mark your work attendance today you need to be within 100m of your workspace
+                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
 
                 </div>
 

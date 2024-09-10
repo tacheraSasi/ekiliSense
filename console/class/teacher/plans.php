@@ -2,12 +2,10 @@
 session_start();
 include_once "../../../config.php";
 include_once "../../functions/timeAgo.php";
-if(!(isset($_SESSION['School_uid']))){
-  header("location:../../auth");
+
+if(!isset($_SESSION['teacher_email']) || !isset($_SESSION['School_uid'])){
+  header("location:https://auth.ekilie.com/sense/teacher");
 }
-if(!(isset($_SESSION['teacher_email']))){
-    header("location:https://auth.ekilie.com/sense/teacher");
-  }
 // $teacher_email = "";//////####
 $teacher_email = $_SESSION['teacher_email'];
 
@@ -30,12 +28,12 @@ $teacher = mysqli_fetch_array($get_teacher);
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title> <?=$school['School_name']?> | teacher | <?=$teacher['teacher_fullname'];?></title>
+  <title> <?=$school['School_name']?> | <?=$teacher['teacher_fullname'];?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <!-- Favicons -->
-  <link href="https://www.ekilie.com/../assets/img/favicon.jpeg" rel="icon">
-  <link href="https://www.ekilie.com/../assets/img/favicon.jpeg" rel="apple-touch-icon">
+  <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
+  <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -56,176 +54,9 @@ $teacher = mysqli_fetch_array($get_teacher);
 </head>
 
 <body>
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="#" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block">ekiliSense </span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
-
-
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
-        <!-- <li>
-          <a href="" class="btn btn-success mx-2">Upgrade</a>
-        </li> -->
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-success badge-number">4</span>
-          </a><!-- End Notification Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-
-        </li><!-- End Notification Nav -->
-
-        
-        <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="../../../assets/img/user.png" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$school['School_name']?></span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6><?=$school['School_name']?></h6>
-              <span><?=$teacher['teacher_fullname']?></span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="./logout.php">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
-            </li>
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="./">
-          <i class="bi bi-grid"></i>
-          <span>Home</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
-        <a class="nav-link " href="./plans.php">
-          <i class="bi bi-pen"></i>
-          <span>Teaching plans</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="../classes">
-          <i class="bi bi-buildings-fill"></i>
-          <span>Classes</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-      
-
-      
-
-    </ul>
-
-  </aside><!-- End Sidebar-->
+  <?php include_once "./includes/topbar.php"?>
+  <?php $page = "plans"; include_once "./includes/sidebar.php"?>
 
   <main id="main" class="main">
     <div class="d-flex justify-content-between flex-wrap" 
@@ -247,74 +78,75 @@ $teacher = mysqli_fetch_array($get_teacher);
           </button>
           
           <div class="modal fade " id="add-plan" tabindex="-1">
-          <div class="modal-dialog modal-xl ">
-            <div class="modal-content card">
-              <div class="add">
-                <div class="add-card">
-                  <div class="left">
-                    <div class="top-container">
-                      <div style="
-                      display: flex;
-                      justify-content: flex-start;">
-                        <div class="logo-container">
-                          <img src="../../../assets/img/favicon.jpeg" alt="" class="logo">
-                          <div class="logo-text">ekilie.</div>
+            <div class="modal-dialog modal-xl ">
+              <div class="modal-content card">
+                <div class="add">
+                  <div class="add-card">
+                    <div class="left">
+                      <div class="top-container">
+                        <div style="
+                        display: flex;
+                        justify-content: flex-start;">
+                          <div class="logo-container">
+                            <img src="../../../assets/img/favicon.jpeg" alt="" class="logo">
+                            <div class="logo-text">ekilie.</div>
+                          </div>
+                        </div>
+                        <div class="middle-content">
+                          <h1>ekiliSense</h1>
+                          <h2 id="typingText" style="display: inline;"></h2>
+                          <span class="cursor"></span>
                         </div>
                       </div>
-                      <div class="middle-content">
-                        <h1>ekiliSense</h1>
-                        <h2 id="typingText" style="display: inline;"></h2>
-                        <span class="cursor"></span>
-                      </div>
-                    </div>
-                    <div class="bottom-container">
-                      Embark on an Odyssey of Technological Marvels with EkiliSense:
-                      Traverse the Digital Frontiers of AI-Driven Education
-                      Immerse Yourself in the Wonders of Machine Learning and Automation
-                      Uncover Hidden Gems and Revolutionary Insights
-                      Together, Let's Forge a Brighter Future for Learning!
-                    </div>
-                    
-                  </div>
-                  <div class="right">
-                    <h1>Add a teaching plan</h1>
-                    <p class="sub-heading">
-                      Bringing Artificial intelligence closer to education
-                    </p>
-                    <form class="modal-form" id="class"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
-                        <div class="error-text" style="
-                          background-color: rgba(243, 89, 89, 0.562);
-                          border:solid 1px rgba(243, 89, 89, 0.822);
-                          color:#fff;
-                          padding:6px;
-                          border-radius:8px;">💀
-                        </div>
-                      <!-- TODO: add emojis to the plcaholder -->
-                      <input type="hidden" name="form-type" value="class" >
-                      <div class=" field input">
-                        <input style="width: 100%;"  type="text" name="plan-title"  placeholder="Plan Title " required>
-                      </div>
-                      <div class=" field input">
-                        <textarea name="plan-desc" id="desc" rows="4" placeholder="Plan description"></textarea>
-                      </div>
-                      <div class="field input">
-                        <label for="progress">Progress</label>
-                        <input style="width: 100%;" type="range" name="progress" id="progress" value="50">
+                      <div class="bottom-container">
+                        Embark on an Odyssey of Technological Marvels with EkiliSense:
+                        Traverse the Digital Frontiers of AI-Driven Education
+                        Immerse Yourself in the Wonders of Machine Learning and Automation
+                        Uncover Hidden Gems and Revolutionary Insights
+                        Together, Let's Forge a Brighter Future for Learning!
                       </div>
                       
-                    
-                      <div class="input-container field button">
-                          <button  id="submit" title="create class" type="submit">CREATE</button>
-                      </div>
-                    </form>
+                    </div>
+                    <div class="right">
+                      <h1>Add a teaching plan</h1>
+                      <p class="sub-heading">
+                        Bringing Artificial intelligence closer to education
+                      </p>
+                      <form class="modal-form" id="plan"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
+                          <div class="error-text" style="
+                            background-color: rgba(243, 89, 89, 0.562);
+                            border:solid 1px rgba(243, 89, 89, 0.822);
+                            color:#fff;
+                            padding:6px;
+                            border-radius:8px;">
+                          </div>
+                        <!-- TODO: add emojis to the plcaholder -->
+                        <input type="hidden" name="form-type" value="plan" >
+                        <input type="hidden" name="owner" value="<?=$teacher_email?>" >
+                        <div class=" field input">
+                          <input class="plan-input" style="width: 100%;"  type="text" name="plan-title"  placeholder="Plan Title " required>
+                        </div>
+                        <div class=" field input">
+                          <textarea class="plan-input" name="plan-desc" id="desc" rows="4" placeholder="Plan description"></textarea>
+                        </div>
+                        <div class="field input">
+                          <label for="progress">Progress</label>
+                          <input style="width: 100%;" type="range" name="progress" id="progress" value="50">
+                        </div>
+                        
+                      
+                        <div class="input-container field button">
+                            <button  id="submit" title="create class" type="submit">CREATE</button>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
-      </form>
+      </div>
     </div>
 
               
@@ -326,91 +158,12 @@ $teacher = mysqli_fetch_array($get_teacher);
                 The school's ekiliSense admin will be able to access and see your teaching plans
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="plans-list">
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn"  data-bs-toggle="modal" data-bs-target="#verticalycentered">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                    <div class="modal fade" id="verticalycentered" tabindex="-1">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content card">
-                          <div class="modal-header">
-                            <h5 class="modal-title">⚠️Alert</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <h2>Are you sure you want to delete this🤷🤷‍♂️?</h2>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn del-btn"><i class="bi bi-trash"> </i> Delete</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta 
-                  
-                </div>
-              </div>
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta pariatur molestias enim sunt mollitia, facilis animi itaque doloremque velit voluptates tenetur, iste ratione? Veniam!
-                </div>
-              </div>
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta pariatur molestias enim sunt mollitia, facilis animi itaque doloremque velit voluptates tenetur, iste ratione? Veniam!
-                </div>
-              </div>
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta pariatur molestias enim sunt mollitia, facilis animi itaque doloremque velit voluptates tenetur, iste ratione? Veniam!
-                </div>
-              </div>
-              <div class="plan">
-                <div class="plan-header">
-                  <button class="del-btn">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div>
-                <div class="plan-body">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse voluptate suscipit ab ad ipsam dicta pariatur molestias enim sunt mollitia, facilis animi itaque doloremque velit voluptates tenetur, iste ratione? Veniam!
-                </div>
-              </div>
+            <div class="plans-list" id="plans-list">
+              <div class="spinner-grow" role="status"></div>
+                <span class="">Loading...</span>
             </div>
+              
+            
         </div>
       </div>
     </section>
