@@ -11,12 +11,20 @@ class ComposerStaticInit675a61c542eef9f226e492e7ce9ed3f8
         array (
             'ekilie\\EkiliRelay\\' => 18,
         ),
+        'T' => 
+        array (
+            'Twilio\\' => 7,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'ekilie\\EkiliRelay\\' => 
         array (
             0 => __DIR__ . '/..' . '/tachera/ekilirelay/src',
+        ),
+        'Twilio\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twilio/sdk/src/Twilio',
         ),
     );
 

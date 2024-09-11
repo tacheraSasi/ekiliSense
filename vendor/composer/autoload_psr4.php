@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ekilie\\EkiliRelay\\' => array($vendorDir . '/tachera/ekilirelay/src'),
+    'Twilio\\' => array($vendorDir . '/twilio/sdk/src/Twilio'),
 );

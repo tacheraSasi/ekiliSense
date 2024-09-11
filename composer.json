@@ -1,5 +1,6 @@
 {
     "require": {
-        "tachera/ekilirelay": "^1.0"
+        "tachera/ekilirelay": "^1.0",
+        "twilio/sdk": "^8.3"
     }
 }

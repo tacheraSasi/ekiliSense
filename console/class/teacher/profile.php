@@ -253,7 +253,7 @@ if(isset($_POST['save-changes'])){
                             
                             </div>
                             <div class="right">
-                            <h1>Sign you attendance</h1>
+                            <h1>Sign your attendance</h1>
                             <div class="alert alert-dark bg-dark text-light border-0 alert-dismissible fade show" role="alert">
                                 Allow geolocation to give us your current location <br>
                                 So that we make sure you are really at work
