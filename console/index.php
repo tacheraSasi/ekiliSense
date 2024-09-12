@@ -4,6 +4,7 @@ include_once "../config.php";
 if(!(isset($_SESSION['School_uid']))){
   header("location:../auth");
 }
+
 #if the user is a teacher 
 if(isset($_SESSION['teacher_email'])){
   $t_email = $_SESSION['teacher_email'];

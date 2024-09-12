@@ -18,6 +18,9 @@ if(isset($_GET["tid"])){
     #getting the teachers details
     $tid = $_GET["tid"];
     $get_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE School_unique_id = '$school_uid' AND teacher_id = '$tid'");
+
+    $subjects = mysqli_query($conn,"SELECT * FROM subjects WHERE teacher_id = '$tid'");
+
     if(mysqli_num_rows($get_teacher)>0){
         $teacher = mysqli_fetch_array($get_teacher);
         $teacher_name = $teacher["teacher_fullname"];
@@ -45,7 +48,7 @@ function editTeacher($conn,$school_uid,$teacher_id){
   `teacher_active_phone` = '$phone', `teacher_home_address` = '$address' WHERE 
   `teachers`.`teacher_id` = '$teacher_id' AND `teachers`.`School_unique_id` = '$school_uid'";
   #TODO:Check if verified
-
+  
   $update = mysqli_query($conn,$query);
   $isUpdated = false;
   if($update){
@@ -54,6 +57,9 @@ function editTeacher($conn,$school_uid,$teacher_id){
   
 
 }
+
+#getting subjects info
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -341,6 +347,52 @@ function editTeacher($conn,$school_uid,$teacher_id){
             </div>
           </div>
 
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Table of all Subjects taught by <?=$teacher_name?></h5>
+                
+                <!-- Table with stripped rows -->
+                <table class="table datatable table-dark">
+                  <thead>
+                    <tr>
+                      <th>S/N</th>
+                      <th>Subject name</th>
+                      <th>Class</th>
+                      <th>Number of students </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    while ($row_std = mysqli_fetch_array($subjects)) {
+                        $class_id = $row_std['class_id'];
+                        $q = "select * from students where class_id = '$class_id'";
+                        $r = mysqli_query($conn, $q);
+                        $num_std = mysqli_num_rows($r);
+                        $class_info = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM classes WHERE Class_id = '$class_id' AND school_unique_id = '$school_uid' "));
+                        $class_name = $class_info['Class_name']
+
+                      ?>
+                      
+                        <tr>
+                          <td><?=$row_std['subject_id']?></td>
+                          <td><?=$row_std['subject_name']?></td>
+                          <td><?=$class_name?></td>
+                          <td><?=$num_std?></td>
+                          
+                        </tr>
+                      
+                    <?php
+                    }
+                    ?>
+                  
+                  </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+  
+              </div>
+            </div>
         </div>
         <?php
             }else{

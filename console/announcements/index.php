@@ -185,9 +185,15 @@ function getClassTeacher($conn,$class_id){
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="./announcements">
+        <a class="nav-link " href="./">
           <i class="bi bi-bell"></i>
           <span>Announcements</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../performance">
+          <i class="bi bi-rocket-takeoff"></i>
+          <span>Perfomance</span>
         </a>
       </li>
       <li class="nav-item">

@@ -157,6 +157,12 @@ $get_teachers = mysqli_query($conn, "SELECT * FROM teachers WHERE school_unique_
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="../performance">
+          <i class="bi bi-rocket-takeoff"></i>
+          <span>Perfomance</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" target="_blank" href="https://convo.ekilie.com">
         <i class="bi bi-camera-video"></i>
           <span>Convo</span>
