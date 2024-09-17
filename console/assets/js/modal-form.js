@@ -15,6 +15,10 @@ addLeft.forEach(card => {
 });
 
 const submitForm = (form, id) => {
+  if(id === "sign-attendance"){
+    stuffSignAttendance()
+    return
+  }
   const continueBtn = form.querySelector(".button button");
   const errorText = form.querySelector(".error-text");
   const inputs = form.querySelectorAll("input ");
@@ -81,4 +85,9 @@ function loadingState(button, initialText, isLoading) {
   } else {
     button.innerHTML = initialText;
   }
+}
+
+function stuffSignAttendance(){
+  console.log("signed")
+
 }

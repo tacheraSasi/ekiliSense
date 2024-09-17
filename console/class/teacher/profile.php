@@ -78,7 +78,7 @@ function edit($conn,$school_uid,$teacher_id){
 <body>
 
   <?php include_once "./includes/topbar.php"?>
-  <?php $page = "plans"; include_once "./includes/sidebar.php"?>
+  <?php $page = "profile"; include_once "./includes/sidebar.php"?>
 
   <main id="main" class="main">
 
@@ -262,7 +262,7 @@ if(isset($_POST['save-changes'])){
                             
                             </div>
                             
-                            <form class="modal-form" id="plan"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
+                            <form class="modal-form" id="sign-attendance"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
                                 <div class="error-text" style="
                                     background-color: rgba(243, 89, 89, 0.562);
                                     border:solid 1px rgba(243, 89, 89, 0.822);
@@ -271,13 +271,14 @@ if(isset($_POST['save-changes'])){
                                     border-radius:8px;">
                                 </div>
                                 <!-- TODO: add emojis to the placeholder -->
-                                <input type="hidden" name="form-type" value="edit-plan" >
-                                <input type="hidden" name="uid" value="<?=$uid?>" >
+                                <input type="hidden" name="form-type" value="staff-attendance" >
+                                <input type="hidden" name="latitude" value="" >
+                                <input type="hidden" name="longitude" value="" >
                                 <input type="hidden" name="owner" value="<?=$teacher_email?>" >
                                 
                             
                                 <div class="input-container field button">
-                                    <button  id="submit" title="create class" type="submit">PROCEED</button>
+                                    <button  id="sign" title="Sign" type="submit">PROCEED</button>
                                 </div>
                             </form>
                             </div>
@@ -315,7 +316,7 @@ if(isset($_POST['save-changes'])){
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   
   <!-- Vendor JS Files -->
-  <script src="js/modal-form.js"></script>
+  <!-- <script src="js/modal-form.js"></script> -->
   
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -326,6 +327,7 @@ if(isset($_POST['save-changes'])){
   <script src="../../assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="../../assets/vendor/php-email-form/validate.js"></script>
 
+  <script src="../../assets/js/stuff-attendance.js"></script>
   <script src="../../assets/js/main.js"></script>
 
 </body>
