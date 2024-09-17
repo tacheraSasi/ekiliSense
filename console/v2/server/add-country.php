@@ -1,6 +1,7 @@
 <?php 
 session_start();
-include_once "../../../onboarding/server/config.php";
+include_once "../../../config.php";
+
 
 $school_unique_id = $_SESSION['School_uid'];
 $country = mysqli_real_escape_string($conn, $_POST['country']);

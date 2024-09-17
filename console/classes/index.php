@@ -232,6 +232,7 @@ function getNumStd($conn,$class_id){
                       <th><b>C</b>lass teacher</th>
                       <th>No. Students </th>
                       <th>Created </th>
+                      <th>Action </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -255,6 +256,11 @@ function getNumStd($conn,$class_id){
                           </td>
                           <td><?=getNumStd($conn,$row_class['Class_id']) > 0 ?getNumStd($conn,$row_class['Class_id']):"None yet"?></td>
                           <td><?=timeAgo(strtotime($row_class['created_at']))?></td>
+                          <td>
+                            <a href="../view/teacher.php?class_id="  rel="noopener noreferrer" class="btn btn-secondary">
+                              view
+                            </a>
+                          </td>
                         </tr>
                       
                     <?php

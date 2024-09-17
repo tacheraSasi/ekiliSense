@@ -15,9 +15,11 @@ $school_uid = $_SESSION['School_uid'];
 $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
 $school = mysqli_fetch_array($get_info);
 
-#getting the teachers information
-$get_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE school_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
-$teacher = mysqli_fetch_array($get_teacher);
+#getting the class teachers details
+$get_class_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE School_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
+$teacher = mysqli_fetch_array($get_class_teacher);
+$teacher_id = $teacher['teacher_id'];
+$teacher_name = $teacher['teacher_fullname'];
 
 function edit($conn,$school_uid,$teacher_id){
     $name = mysqli_real_escape_string($conn,$_POST['fullname']);
