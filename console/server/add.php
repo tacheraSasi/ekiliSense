@@ -8,7 +8,7 @@ if(!isset($school_uid)){
     exit;
 }
 
-//  echo "connected"; #for debugging purposes
+// connected echo ""; #for debugging purposes
 
 #getting the school details 
 $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
@@ -34,6 +34,9 @@ switch($formType) {
     case 'plan':
         addPlan($conn,$school_uid);
         break;
+    case 'stuff-attendance':
+        addStuffAttendance($conn,$school_uid);
+        break;
     default:
         echo "Invalid form type!";
         break;
@@ -58,6 +61,11 @@ function addPlan($conn,$school_uid){
         echo "Something Went wrong,Please try again";
     }
 
+
+}
+
+function addStuffAttendance($conn,$school_uid){
+    echo "signed successfull";
 
 }
 function planUID() {

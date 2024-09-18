@@ -1,0 +1,130 @@
+
+EkiliSense - School Task Automation (Ordered by Relevance and Difficulty)
+Tech Stack: Bare PHP, HTML, JS, CSS
+
+1. Attendance Tracking & Reporting (High Relevance - Low Difficulty)
+   - Steps:
+     a. Build attendance input forms for teachers (PHP, HTML, JS).
+     b. Store attendance data in a database.
+     c. Implement real-time notification system using PHP mail() function.
+     d. Generate attendance reports (PDF or HTML).
+
+2. Homework Assignment & Submission (High Relevance - Low to Medium Difficulty)
+   - Steps:
+     a. Create a form for teachers to assign homework (PHP, HTML, JS).
+     b. Store homework assignments in a database.
+     c. Build student portal for submission tracking.
+     d. Use PHP to manage file uploads and validate homework submissions.
+     e. Auto-grade simple quizzes (JS and PHP).
+
+3. Exam Scheduling & Results Management (High Relevance - Medium Difficulty)
+   - Steps:
+     a. Create a scheduler for exams (PHP, JS for calendar functionality).
+     b. Automate exam grading and result calculations.
+     c. Build a result reporting system and allow parent access.
+     d. Use PHP and JS for sending real-time result notifications.
+
+4. Classroom Scheduling & Timetable Management (High Relevance - Medium Difficulty)
+   - Steps:
+     a. Build timetable generator using PHP and JS.
+     b. Store class, teacher, and room availability in a database.
+     c. Automate timetable conflict detection using PHP.
+     d. Create a dashboard for real-time updates.
+
+5. Parent-Teacher Communication (High Relevance - Medium Difficulty)
+   - Steps:
+     a. Build a messaging system using PHP mail() function.
+     b. Set up chatbots (JS and PHP for responses).
+     c. Automate scheduled parent updates via email.
+     d. Implement automated meeting scheduling (JS calendar).
+
+6. Fee Management & Payments (Medium Relevance - Medium Difficulty)
+   - Steps:
+     a. Build an invoice generator in PHP (with HTML forms for inputs).
+     b. Integrate online payments using payment gateway APIs.
+     c. Automate fee tracking with email reminders for due payments.
+
+7. Event and Extracurricular Activity Management (Medium Relevance - Medium Difficulty)
+   - Steps:
+     a. Create event management forms for scheduling (PHP, HTML).
+     b. Automate event reminders for participants (JS, PHP for email).
+     c. Build a portal to manage student signups for events.
+
+8. Learning Content Distribution & Progress Tracking (Medium Relevance - Medium Difficulty)
+   - Steps:
+     a. Create content upload system for teachers (PHP, HTML forms).
+     b. Automate content distribution to students.
+     c. Build personalized student learning dashboards (PHP, JS for dynamic data).
+     d. Track progress using quizzes (JS) and generate reports.
+
+9. Behavior & Disciplinary Monitoring (Medium Relevance - Medium Difficulty)
+   - Steps:
+     a. Create a behavior logging system for teachers (PHP forms).
+     b. Set up automated parent alerts for incidents (PHP mail).
+     c. Build a reward system for good behavior (JS for gamification).
+
+10. Library and Resource Management (Medium Relevance - Low to Medium Difficulty)
+    - Steps:
+      a. Build book reservation forms (PHP, HTML).
+      b. Automate due date reminders (PHP mail).
+      c. Create real-time book availability checker using JS.
+
+11. School Transportation Management (Low Relevance - High Difficulty)
+    - Steps:
+      a. Build a GPS tracking system for school buses (PHP integration with GPS API).
+      b. Automate real-time alerts for bus arrivals and departures (JS).
+      c. Generate reports on transportation efficiency and student tracking.
+
+12. Cafeteria & Nutrition Management (Low Relevance - Medium Difficulty)
+    - Steps:
+      a. Build meal pre-ordering system for students (PHP, HTML).
+      b. Track nutrition and send daily summaries to parents.
+      c. Automate food inventory management using PHP.
+
+13. Student Health Monitoring (Low Relevance - Medium Difficulty)
+    - Steps:
+      a. Create health records management system (PHP forms).
+      b. Automate reminders for vaccination and check-ups (PHP mail).
+      c. Build a health report generator for parents.
+
+14. School Announcements and Newsletters (Low Relevance - Low Difficulty)
+    - Steps:
+      a. Automate announcements and newsletters (PHP forms).
+      b. Set up email scheduling for newsletters using PHP.
+      c. Build notification system for students and parents.
+
+15. Student Performance Analytics (Medium Relevance - High Difficulty)
+    - Steps:
+      a. Build data collection system for academic performance (PHP).
+      b. Automate student progress reports (PDF or HTML generation).
+      c. Use JS to generate charts and graphs for student analytics.
+
+16. Teacher Performance & Evaluations (Low Relevance - High Difficulty)
+    - Steps:
+      a. Build an evaluation system for teachers (PHP forms).
+      b. Automate report generation on teacher performance (JS for data visualization).
+      c. Track progress based on student feedback.
+
+17. Virtual Classrooms and E-Learning (High Relevance - High Difficulty)
+    - Steps:
+      a. Build video streaming integration (PHP with video API).
+      b. Create live chat and participation tools (JS for real-time functionality).
+      c. Automate class recording and distribution to absent students.
+
+18. AI-Powered Student Support and Chatbots (High Relevance - High Difficulty)
+    - Steps:
+      a. Build a chatbot using JS for front-end interaction.
+      b. Use PHP for backend logic and integration.
+      c. Automate help responses based on student input and performance data.
+
+19. Extracurricular Management (Medium Relevance - Medium Difficulty)
+    - Steps:
+      a. Build a sign-up system for clubs and activities (PHP forms).
+      b. Automate reminders for participation.
+      c. Track student performance in extracurriculars.
+
+20. Automatic Syllabus Tracking (High Relevance - Medium Difficulty)
+    - Steps:
+      a. Automate tracking of syllabus progress using PHP.
+      b. Build progress bars for teachers to visualize completion (JS).
+      c. Send automated reminders to teachers about pending syllabus sections.

@@ -66,6 +66,12 @@ modalForm.forEach(form =>{
     form.addEventListener("submit",(e)=>{
         e.preventDefault()
         console.log("id:",e.target.id)
+        if(e.target.id === "sign-attendance"){
+          let sumbitTo = "../../server/add.php"
+          console.log("signed")
+          stuffAttendance(sumbitTo)
+          return
+        }
         submitForm(form,e.target.id)
     })
 })

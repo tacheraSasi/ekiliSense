@@ -18,10 +18,10 @@ if($formType == "single"){
 
 function markPresent($conn,$student_id,$is_all = false){
     $now = date('Y-m-d');
-    $check = mysqli_query($conn,"select * from attendance where 
+    $check = mysqli_query($conn,"select * from student_attendance where 
     student_id = '$student_id' and attendance_date = '$now'");
     if(mysqli_num_rows($check) == 0){
-        $query = mysqli_query($conn,"INSERT INTO attendance (student_id,status) 
+        $query = mysqli_query($conn,"INSERT INTO student_attendance (student_id,status) 
         VALUES ('$student_id',1) ON DUPLICATE KEY UPDATE status= 1");
 
         if($query){
