@@ -116,7 +116,7 @@ $subjects = mysqli_query($conn,"SELECT * FROM subjects WHERE class_id = '$class_
                           <td><?=$subj_teacher?></td>
                           <td><?=timeAgo(strtotime($row_std['created_at']))?></td>
                           <td>
-                            <a href="../teacher?id=<?=$row_std['subject_id']?>&suid=<?=$school_uid?>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                            <a href="./view/subject.php?subject=<?=$row_std['subject_uid']?>"  class="btn btn-secondary">
                               Manage
                             </a>
                           </td>

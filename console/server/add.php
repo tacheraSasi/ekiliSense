@@ -106,9 +106,12 @@ function addSubject($conn, $school_uid){
     $teacher = mysqli_real_escape_string($conn,$_POST["choosen-subject-teacher"]); #TODO:remove the id from the frontend
     $class = mysqli_real_escape_string($conn,$_POST['class']);
     $subjectName = mysqli_real_escape_string($conn,$_POST['subject-name']);
+    
+    $subject_uid = randString(15);
+    #TODO: add in aloop to check if the uid already exists in the database
 
-    $insert_subject = mysqli_query($conn,"INSERT INTO subjects (subject_name,School_unique_id,class_id,teacher_id)
-    VALUE ('$subjectName','$school_uid','$class','$teacher')");
+    $insert_subject = mysqli_query($conn,"INSERT INTO subjects (subject_uid,subject_name,School_unique_id,class_id,teacher_id)
+    VALUE ('$subject_uid','$subjectName','$school_uid','$class','$teacher')");
 
     if($insert_subject){
         echo "success";
@@ -141,7 +144,7 @@ function addTeacher($conn, $school_uid, $school_name) {
         
         if ($insert_teacher_query) {
             # Generate OTP
-            $otp = generateOTP(10);
+            $otp = randString(10);
             
             # Insert OTP into the database
             $insert_otp_query = mysqli_query($conn, "INSERT INTO otps 
@@ -229,17 +232,17 @@ function addClassTeacher($conn, $school_uid) {
 }
 
 #function to generate the otp
-function generateOTP($length = 10) {
+function randString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $otp = '';
+    $string = '';
     $max = strlen($characters) - 1;
     
     # Generating random characters from the character set
     for ($i = 0; $i < $length; $i++) {
-        $otp .= $characters[rand(0, $max)];
+        $string .= $characters[rand(0, $max)];
     }
     
-    return $otp;
+    return $string;
 }
 #function to generate teachers uid
 function UID(){

@@ -102,12 +102,14 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
                 <h5 class="card-title">Table of all students in <?=$class_info['Class_name']?> class</h5>
                 
                 <!-- Table with stripped rows -->
-                <table class="table  table-dark  table-hover" style="overflow:auto">
+                <table class="table  table-dark  table-hover datatable" style="overflow:auto">
                   <thead>
                     <tr>
                       <th>S/N</th>
                       <th>Student</th>
                       <th>Attended today</th>
+                      <th>view</th>
+                      <th>parents</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -145,6 +147,16 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
                                 <span><?=$is_marked?"Marked":"Mark present"?></span>
                               </button>
                             </form>
+                          </td>
+                          <td>
+                            <a href="./view/student.php?stid=<?=$row_std['student_id']?>"  class="btn btn-secondary">
+                              view
+                            </a>
+                          </td>
+                          <td>
+                            <a href="./view/student.php?stid=<?=$row_std['student_id']?>"  class="btn btn-success">
+                              <i class="bi bi-phone"></i> contact
+                            </a>
                           </td>
                         </tr>
                       

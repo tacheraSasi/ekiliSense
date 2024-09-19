@@ -17,6 +17,7 @@ const stuffAttendance = (sumbitTo)=>{
     if (navigator.geolocation) {
         loadingState(signBtn,"PROCEED",true)
         navigator.geolocation.getCurrentPosition(function(position) {
+            console.log("position",position)
             const userLatitude = position.coords.latitude;
             const userLongitude = position.coords.longitude;
             const distance = calculateDistance(userLatitude, userLongitude, officeLatitude, officeLongitude);

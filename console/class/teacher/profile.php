@@ -257,7 +257,7 @@ function edit($conn,$school_uid,$teacher_id){
                             
                             </div>
                             <div class="right">
-                            <h1>Sign your attendance</h1>
+                            <h3><span class="badge bg-danger">beta</span></h3>                            <h1>Sign your attendance</h1>
                             <div class="alert alert-dark bg-dark text-light border-0 alert-dismissible fade show" role="alert">
                                 Allow geolocation to give us your current location <br>
                                 So that we make sure you are really at work
@@ -313,10 +313,12 @@ function edit($conn,$school_uid,$teacher_id){
                       <th>Subject name</th>
                       <th>Class</th>
                       <th>Number of students </th>
+                      <th>view</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
+                    $n = 1;
                     while ($row_std = mysqli_fetch_array($subjects)) {
                         $class_id = $row_std['class_id'];
                         $q = "select * from students where class_id = '$class_id'";
@@ -328,14 +330,18 @@ function edit($conn,$school_uid,$teacher_id){
                       ?>
                       
                         <tr>
-                          <td><?=$row_std['subject_id']?></td>
+                          <td><?=$n?></td>
                           <td><?=$row_std['subject_name']?></td>
                           <td><?=$class_name?></td>
                           <td><?=$num_std?></td>
+                          <td>
+                            <a href="" class="btn btn-secondary">view</a>
+                          </td>
                           
                         </tr>
                       
                     <?php
+                    $n++;
                     }
                     ?>
                   

@@ -271,40 +271,28 @@ if(isset($_GET["stid"])){
             </a>
         </li><!-- End Dashboard Nav -->
         <li class="nav-item">
-            <a class="nav-link " href="students.php?class=<?=$class_id?>">
+            <a class="nav-link " href="../students.php?class=<?=$class_id?>">
             <i class="bi bi-people"></i>
             <span>Students</span>
             </a>
         </li><!-- End Dashboard Nav -->
         <li class="nav-item">
-            <a class="nav-link  collapsed" href="subjects.php">
+            <a class="nav-link  collapsed" href="../subjects.php">
             <i class="bi bi-book"></i>
             <span>Subjects</span>
             </a>
         </li><!-- End Dashboard Nav -->
         <li class="nav-item">
-            <a class="nav-link  collapsed" href="attendance.php">
+            <a class="nav-link  collapsed" href="../attendance.php">
             <i class="bi bi-clock"></i>
             <span>Attendance</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="send.php">
-            <i class="bi bi-send"></i>
-            <span>Send</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="./announcements">
+            <a class="nav-link collapsed" href="../results.php">
             <i class="bi bi-emoji-expressionless"></i>
             <span>Results</span>
             </a> 
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="./announcements">
-            <i class="bi bi-house"></i>
-            <span>Library</span>
-            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="https://convo.ekilie.com">

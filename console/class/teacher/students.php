@@ -122,7 +122,7 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
                           <td><?=$row_std['parent_email']?></td>
                           <td><?=timeAgo(strtotime($row_std['created_at']))?></td>
                           <td>
-                            <a href="./view/student.php?stid=<?=$row_std['student_id']?>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                            <a href="./view/student.php?stid=<?=$row_std['student_id']?>"  class="btn btn-secondary">
                               Manage
                             </a>
                           </td>
