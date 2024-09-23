@@ -294,12 +294,7 @@ if(isset($_GET["stid"])){
             <span>Results</span>
             </a> 
         </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="https://convo.ekilie.com">
-            <i class="bi bi-camera-video"></i>
-            <span>Convo</span>
-            </a>
-        </li>
+       
 
 
         <li class="nav-heading">Pages</li>
@@ -311,12 +306,6 @@ if(isset($_GET["stid"])){
             </a>
         </li><!-- End Profile Page Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-contact.html">
-            <i class="bi bi-envelope"></i>
-            <span>Help?</span>
-            </a>
-        </li><!-- End help Page Nav -->
 
         
 
