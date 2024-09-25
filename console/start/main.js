@@ -26,13 +26,15 @@ downloadMobileButton.addEventListener("click", () => {
             }
             deferredPrompt = null; // Clear the deferred prompt
         });
+    } else {
+        console.log('No deferred prompt available'); // Log when there's no prompt
     }
 });
 
 // Add event listener for Windows download button
 downloadWinButton.addEventListener("click", () => {
     // Start download for Windows
-    const downloadUrl = "https://init.ekilie.com/win/setup.exe"; // This is where the setup.exe is located
+    const downloadUrl = "https://init.ekilie.com/win/setup.exe"; // URL for setup.exe
     const a = document.createElement("a");
     a.href = downloadUrl;
     a.download = "setup.exe"; // Suggests the filename for download
