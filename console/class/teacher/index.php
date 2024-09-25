@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include_once "../../../config.php";
 if(!(isset($_SESSION['School_uid']) && isset($_SESSION['teacher_email']))){
   header("location:https://auth.ekilie.com/sense/teacher");
@@ -237,6 +238,7 @@ $subject_num = mysqli_num_rows($subjects);
               </div>
             </div><!-- End Reports -->
 
+            
 
 
           </div>

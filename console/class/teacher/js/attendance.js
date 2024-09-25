@@ -1,4 +1,5 @@
 const markAttendance = document.querySelectorAll('.attendance-mark')
+// console.log(markAttendance)
 
 const submitForm = (form)=>{
     continueBtn = form.querySelector("button");

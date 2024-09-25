@@ -11,22 +11,24 @@ $teacher_email = $_SESSION['teacher_email'];
 
 if($formType == "single"){
     $student_id = $_POST['student'];
-    markPresent($conn,$student_id,$school_uid);
+    $class_id = $_POST['class_id'];
+    markPresent($conn,$student_id,$school_uid,$class_id);
 }else if($formType == "all"){
     markAll($conn);
 }
 
-function markPresent($conn,$student_id,$school_uid,$is_all = false){
+function markPresent($conn,$student_id,$school_uid,$class_id,$is_all = false){
     #getting the students info
     $get_std_info = mysqli_query($conn, "select * from students where student_id = '$student_id' and school_uid = '$school_uid'");
     $now = date('Y-m-d');# for later usage, by dafault attendace_date takes the current timestamp
+
 
     $check = mysqli_query($conn,"select * from student_attendance where 
     student_id = '$student_id' and attendance_date = '$now'");
 
     if(mysqli_num_rows($check) == 0){
-        $query = mysqli_query($conn,"INSERT INTO student_attendance (student_id,status) 
-        VALUES ('$student_id',1) ON DUPLICATE KEY UPDATE status= 1");
+        $query = mysqli_query($conn,"INSERT INTO student_attendance (student_id,school_uid,class_id,status) 
+        VALUES ('$student_id','$school_uid','$class_id',1) ON DUPLICATE KEY UPDATE status= 1");
 
         if($query){
             if(!$is_all){
@@ -52,7 +54,7 @@ function markAll($conn){
 
     while($student = mysqli_fetch_array($get_students)){
         $std = $student["student_id"];
-        markPresent($conn,$std,$school_uid,true);
+        markPresent($conn,$std,$school_uid,$class_id,true);
     }
     #then
     echo "success";

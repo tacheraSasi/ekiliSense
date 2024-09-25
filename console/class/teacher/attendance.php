@@ -133,6 +133,7 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
                           <td>
                             <form method="post" class="attendance-mark" id="<?=$row_std['student_id']?>">
                               <input type="hidden" name="student" value="<?=$row_std['student_id']?>">
+                              <input type="hidden" name="class" value="<?=$row_std['class_id']?>">
                               <input type="hidden" name="form-type" value="single">
                               <button type="submit" 
                                 class="btn btn-secondary"
@@ -178,15 +179,7 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
     
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>ekiliSense<span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-    From <a href="https://tachera.com/Insights/">ekilie</a>
-    </div>
-  </footer><!-- End Footer -->
+  
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   
