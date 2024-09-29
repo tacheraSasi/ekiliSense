@@ -123,7 +123,7 @@ function getNumStd($conn,$class_id){
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="profile.php">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
               </a>
@@ -133,7 +133,7 @@ function getNumStd($conn,$class_id){
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="../logout.php?ref=<?=$school_uid?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -257,7 +257,7 @@ function getNumStd($conn,$class_id){
                           <td><?=getNumStd($conn,$row_class['Class_id']) > 0 ?getNumStd($conn,$row_class['Class_id']):"None yet"?></td>
                           <td><?=timeAgo(strtotime($row_class['created_at']))?></td>
                           <td>
-                            <a href="../view/teacher.php?class_id="  rel="noopener noreferrer" class="btn btn-secondary">
+                            <a href="../view/class.php?class_id=<?=$row_class['Class_id']?>&school=<?=$row_class['school_unique_id']?>"  rel="noopener noreferrer" class="btn btn-secondary">
                               view
                             </a>
                           </td>
@@ -350,15 +350,6 @@ function getNumStd($conn,$class_id){
     
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>ekiliSense<span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-    From <a href="https://tachera.com/Insights/">ekilie</a>
-    </div>
-  </footer><!-- End Footer -->
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   

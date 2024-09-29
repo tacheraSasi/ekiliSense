@@ -118,6 +118,7 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
                     while ($row_std = mysqli_fetch_array($students)) {
                       $student_id = $row_std['student_id'];
                       $now = date('Y-m-d');
+                      // echo $now;
                       $is_marked = false;
                       $check = mysqli_query($conn,"select * from student_attendance where 
                       student_id = '$student_id' and attendance_date = '$now'");

@@ -27,8 +27,8 @@ function markPresent($conn,$student_id,$school_uid,$class_id,$is_all = false){
     student_id = '$student_id' and attendance_date = '$now'");
 
     if(mysqli_num_rows($check) == 0){
-        $query = mysqli_query($conn,"INSERT INTO student_attendance (student_id,school_uid,class_id,status) 
-        VALUES ('$student_id','$school_uid','$class_id',1) ON DUPLICATE KEY UPDATE status= 1");
+        $query = mysqli_query($conn,"INSERT INTO student_attendance (student_id,school_uid,class_id,attendance_date,status) 
+        VALUES ('$student_id','$school_uid','$class_id','$now',1) ON DUPLICATE KEY UPDATE status= 1");
 
         if($query){
             if(!$is_all){

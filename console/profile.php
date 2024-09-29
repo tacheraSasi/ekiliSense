@@ -1,3 +1,48 @@
+<?php
+session_start();
+include_once "../config.php";
+if(!(isset($_SESSION['School_uid']))){
+  header("location:../auth");
+}
+
+#if the user is a teacher 
+if(isset($_SESSION['teacher_email'])){
+  $t_email = $_SESSION['teacher_email'];
+  $suid = $_SESSION['School_uid'];
+  #getting the teacher's id using the teacher's name
+  $get_teacher_id = mysqli_fetch_assoc(mysqli_query($conn, 
+  "SELECT * FROM teachers WHERE teacher_email = '$t_email' AND School_unique_id = '$suid'"));
+  $t_id = $get_teacher_id['teacher_id'];
+
+  $check_is_class_teacher = mysqli_query($conn,
+  "SELECT * FROM class_teacher WHERE school_unique_id = '$suid' AND teacher_id = '$t_id'");
+  
+  if(mysqli_num_rows($check_is_class_teacher) > 0){
+    header("location:./class/teacher/");
+  }else{
+    header("location:./teacher/");
+  }
+}
+$school_uid = $_SESSION['School_uid'];
+
+#getting the school details 
+$get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
+$school = mysqli_fetch_array($get_info);
+$school_name = $school['School_name'];
+
+#getting the list of classes
+$get_classes = mysqli_query($conn, "SELECT * FROM classes WHERE school_unique_id = '$school_uid'");
+$classes_count = mysqli_num_rows($get_classes);
+
+#getting the list of teachers
+$get_teachers = mysqli_query($conn, "SELECT * FROM teachers WHERE School_unique_id = '$school_uid'");
+$teachers_count = mysqli_num_rows($get_teachers);
+
+#getting the list of students
+$get_students = mysqli_query($conn, "SELECT * FROM students WHERE school_uid = '$school_uid'");
+$students_count = mysqli_num_rows($get_students);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,13 +50,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Users / Profile - NiceAdmin Bootstrap Template</title>
+  <title><?=$school_name?> | ekiliSense</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
+  <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -139,7 +184,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="profile.php">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
               </a>
@@ -169,7 +214,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="./">
+        <a class="nav-link collapsed" href="./">
           <i class="bi bi-grid"></i>
           <span>Home</span>
         </a>
@@ -193,6 +238,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="./performance">
+          <i class="bi bi-rocket-takeoff"></i>
+          <span>Perfomance</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="https://convo.ekilie.com">
         <i class="bi bi-camera-video"></i>
           <span>Convo</span>
@@ -204,7 +255,7 @@
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="profile.php">
+        <a class="nav-link " href="profile.php">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
@@ -220,14 +271,8 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Users</li>
-          <li class="breadcrumb-item active">Profile</li>
-        </ol>
-      </nav>
+      <h1><i class="bi bi-person"> </i> Profile</h1>
+      
     </div><!-- End Page Title -->
 
     <section class="section profile">
@@ -237,9 +282,8 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2>Kevin Anderson</h2>
-              <h3>Web Designer</h3>
+              <h2><?=$school_name?></h2>
+              <h3>Account</h3>
               <div class="social-links mt-2">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -279,43 +323,28 @@
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                   <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+                  <p class="small fst-italic"><?=$school['about']?></p>
 
-                  <h5 class="card-title">Profile Details</h5>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                  </div>
+                  <h5 class="card-title">Account Details</h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Company</div>
-                    <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Web Designer</div>
+                    <div class="col-lg-3 col-md-4 label ">School Name</div>
+                    <div class="col-lg-9 col-md-8"><?=$school_name?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Country</div>
-                    <div class="col-lg-9 col-md-8">USA</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                    <div class="col-lg-9 col-md-8"><?=$school['country']?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                    <div class="col-lg-9 col-md-8"><?=$school['School_phone']?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                    <div class="col-lg-9 col-md-8"><?=$school['School_email']?></div>
                   </div>
 
                 </div>
@@ -324,98 +353,84 @@
 
                   <!-- Profile Edit Form -->
                   <form>
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
-                      </div>
-                    </div>
+                    
 
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                      <label for="schoolName" class="col-md-4 col-lg-3 col-form-label">School Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="schoolName" type="text" class="form-control" id="schoolName" value="<?=$school['School_name']?>">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
+                        <textarea name="about" class="form-control" id="about" style="background-color:#444;outline:none;border:none;color:#fff;height: 100px;"><?=$school['about']?></textarea>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="country" type="text" class="form-control" id="Country" value="<?=$school['country']?>">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="phone" type="text" class="form-control" id="Phone" value="<?=$school['School_phone']?>">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="email" type="email" class="form-control" id="Email" value="<?=$school['School_email']?>">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
                       </div>
                     </div>
 
@@ -432,28 +447,28 @@
                   <form>
 
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+                      <label for="schoolName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
                       <div class="col-md-8 col-lg-9">
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                          <input  type="checkbox" id="changesMade" checked>
                           <label class="form-check-label" for="changesMade">
                             Changes made to your account
                           </label>
                         </div>
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
+                          <input  type="checkbox" id="newProducts" checked>
                           <label class="form-check-label" for="newProducts">
                             Information on new products and services
                           </label>
                         </div>
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
+                          <input  type="checkbox" id="proOffers">
                           <label class="form-check-label" for="proOffers">
                             Marketing and promo offers
                           </label>
                         </div>
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+                          <input  type="checkbox" id="securityNotify" checked disabled>
                           <label class="form-check-label" for="securityNotify">
                             Security alerts
                           </label>
@@ -475,21 +490,24 @@
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="password" type="password" class="form-control" id="currentPassword">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="newpassword" type="password" class="form-control" id="newPassword">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="renewpassword" type="password" class="form-control" id="renewPassword">
                       </div>
                     </div>
 
@@ -511,15 +529,7 @@
 
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Ekilie</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-    From <a href="https://tachera.com/Insights/">Insights</a>
-    </div>
-  </footer><!-- End Footer -->
+  
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -533,7 +543,6 @@
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
 </body>

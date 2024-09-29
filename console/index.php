@@ -1,9 +1,10 @@
 <?php
 session_start();
 include_once "../config.php";
-if(!(isset($_SESSION['School_uid']))){
+if(!isset($_SESSION['School_uid'])){
   header("location:../auth");
 }
+// var_dump($_SESSION);
 
 #if the user is a teacher 
 if(isset($_SESSION['teacher_email'])){
@@ -95,6 +96,15 @@ $students_count = mysqli_num_rows($get_students);
           
         </li>
         <li class="nav-item dropdown">
+
+        <button id="ekilie-ai-btn" class=" nav-link nav-icon d-flex align-items-center justify-content-center" 
+            data-bs-toggle="modal" data-bs-target="#modalAI-ekiliSense"
+            style="border:none;outline:none;border-radius:50%">
+            <i class="bi bi-robot"></i>
+        </button>
+
+        </li><!-- End Messages Nav -->
+        <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">4</span>
@@ -148,14 +158,7 @@ $students_count = mysqli_num_rows($get_students);
               <hr class="dropdown-divider">
             </li>
 
-            <li class="notification-item">
-              <i class="bi bi-file-earmark-text text-primary"></i>
-              <div>
-                <h4>Exam Results Published</h4>
-                <p>Results for the latest term exams have been published.</p>
-                <p>6 hrs. ago</p>
-              </div>
-            </li>
+            
 
             <li>
               <hr class="dropdown-divider">
@@ -184,7 +187,7 @@ $students_count = mysqli_num_rows($get_students);
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="profile.php">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
               </a>
@@ -194,7 +197,7 @@ $students_count = mysqli_num_rows($get_students);
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?=$school_uid?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -405,7 +408,7 @@ $students_count = mysqli_num_rows($get_students);
                             labels: ['Teachers', 'Students', 'Parents'],
                             datasets: [{
                               label: 'Users',
-                              data: [<?=$teachers_count?>, <?=$students_count?>, 0],
+                              data: [<?=$teachers_count?>, <?=$students_count?>, <?=$students_count/2?>],
                               backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(153, 102, 255, 0.2)',
@@ -934,29 +937,11 @@ $students_count = mysqli_num_rows($get_students);
     
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Ekilie</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-    From <a href="https://tachera.com/Insights/">Insights</a>
-    </div>
-  </footer><!-- End Footer -->
+
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   
-  <!-- Vendor JS Files -->
-  <script>
-    let assetsAt= "assets"
-    const queryString = window.location.search
-    const urlParams = new URLSearchParams(queryString)
-    let roomId = urlParams.get('u')
-    console.log(typeof(roomId))
-    if(roomId=='new'){
-      window.location.href = 'v1/'
-    }
-  </script>
+
   <script src="assets/js/modal-form.js"></script>
 
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -969,6 +954,157 @@ $students_count = mysqli_num_rows($get_students);
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <script src="assets/js/main.js"></script>
+
+  <!-- JS Files -->
+  <script>
+    let assetsAt= "assets"
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    let roomId = urlParams.get('u')
+    console.log(typeof(roomId))
+    if(roomId=='new'){
+      window.location.href = 'v1/'
+    }
+
+    //logic
+const form = document.getElementById("talk-to-assistant");
+const input = document.querySelector(".input-field")
+const sendBtn = document.getElementById("send-btn");
+const itagSend = document.getElementById("i-send");
+const chatContainer = document.querySelector('#chat_container');
+const modalBody = document.querySelector('#ekilie-ai-body')
+const BASE_API_URL = 'https://ekilie.onrender.com'
+
+const schoolName = <?=$school['School_name']?>
+console.log(form)
+console.log("current school is "+schoolName)
+
+form.onsubmit = (e)=>{
+    e.preventDefault();
+
+}
+
+
+let loadInterval
+
+function loader(element) {
+    element.innerHTML = '<div class="loader"></div>'
+
+    // loadInterval = setInterval(() => {
+    //     // Update the text content of the loading indicator
+    //     element.textContent += '.';
+
+    //     // If the loading indicator has reached three dots, reset it
+    //     if (element.innerHTML === '<div class="loader"></div>') {
+    //         element.textContent = '';
+    //     }
+    // }, 300);
+}
+function typeText(element, text) {
+    let index = 0
+
+    let interval = setInterval(() => {
+        if (index < text.length) {
+            element.innerHTML += text.charAt(index)
+            index++
+        } else {
+            clearInterval(interval)
+        }
+    }, 20)
+}
+
+function generateUniqueId() {
+    const timestamp = Date.now();
+    const randomNumber = Math.random();
+    const hexadecimalString = randomNumber.toString(16);
+
+    return `id-${timestamp}-${hexadecimalString}`;
+}
+
+
+function chatStripe(isAi, value, uniqueId) {
+    return (
+        `
+        <div class="ekilie-chat ${isAi ? 'ai' : ''}">
+          <div class="role ${isAi ? 'assistant' : 'user'}">${isAi ? 'ekilie' : 'me'}</div>
+          <span id=${uniqueId}>${value}</span>
+        </div>
+    `
+    )
+}
+
+const handleSubmit = async (e)=>{
+    e.preventDefault()
+    let prompt = input.value
+    input.value=''
+
+    
+    // user's chatstripe
+    chatContainer.innerHTML += chatStripe(false, prompt)
+    // bot's chatstripe
+    const uniqueId = generateUniqueId()
+    chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
+
+    
+    modalBody.scrollTop = modalBody.scrollHeight;
+
+    // specific message div 
+    const messageDiv = document.getElementById(uniqueId)
+
+    // messageDiv.innerHTML = "..."
+    loader(messageDiv)
+
+    const response = await fetch(`../aiHelper.php`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ prompt: `Current School ${schoolName}: ${prompt}` }),
+    })
+    clearInterval(loadInterval)
+    messageDiv.innerHTML = " "
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data.text)
+        const parsedData = data.text.trim() // trims any trailing spaces/'\n' 
+
+        typeText(messageDiv, parsedData)
+    } else {
+        const err = await response.text()
+
+        messageDiv.innerHTML = "Something went wrong  😿 😿"
+        alert(err)
+    }
+
+}
+
+// sendBtn.addEventListener('click',()=>{
+//     handleSubmit()
+// })
+
+// input.onkeyup = ()=>{
+//     if(input.value != ""){
+//         sendBtn.classList.add("active");
+//         itagSend.classList.add("active");
+//     }else{
+//         sendBtn.classList.remove("active");
+//         itagSend.classList.remove("active");
+//     }
+// }
+
+form.addEventListener('submit', handleSubmit)
+input.addEventListener('keyup', (e) => {
+    if(input.value != ""){
+        sendBtn.classList.add("active");
+        itagSend.classList.add("active");
+    }else{
+        sendBtn.classList.remove("active");
+        itagSend.classList.remove("active");
+    }
+    
+})
+</script>
 
 </body>
 

@@ -6,7 +6,7 @@ if(!(isset($_SESSION['School_uid']) && isset($_SESSION['teacher_email']))){
   header("location:https://auth.ekilie.com/sense/teacher");
 }
 $school_uid = $_SESSION['School_uid'];  
-$_SESSION['teacher_email'] = "tacherasasi@gmail.com"; #hard-coded value will change 
+// $_SESSION['teacher_email'] = "tacherasasi@gmail.com"; #hard-coded value will change 
 $teacher_email = $_SESSION['teacher_email'];
 
 #getting the school details 

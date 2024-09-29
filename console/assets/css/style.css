@@ -19,8 +19,13 @@
   --btn-bg:#23492b;
   --btn-text:#a4c7ae;
   --btn-light-bg:#65c08bc4;
+  --label-text:#799482;
+  --social-icons-color:#65c08bc4
+  
 }
-
+input[type=checkbox]{
+  cursor: pointer;
+}
 body {
   font-family: "Open Sans", sans-serif;
   background: var(--body-bg-color);
@@ -1081,7 +1086,7 @@ hr{
 .profile .profile-card .social-links a {
   font-size: 20px;
   display: inline-block;
-  color: rgba(1, 41, 112, 0.5);
+  color: var(--btn-light-bg);
   line-height: 0;
   margin-right: 10px;
   transition: 0.3s;
@@ -1102,12 +1107,12 @@ hr{
 
 .profile .profile-overview .label {
   font-weight: 600;
-  color: #9fafccf5;
+  color: var(--label-text);
 }
 
 .profile .profile-edit label {
   font-weight: 600;
-  color: #9fafccf5;
+  color: var(--label-text);
 }
 
 .profile .profile-edit img {

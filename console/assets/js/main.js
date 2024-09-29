@@ -345,6 +345,58 @@
     </button>
     `
   }
+
+  // const pageTitle = document.querySelector("title")
+  // pageTitle.innerText = "Profile page"
+  // console.log(pageTitle)
+
+
+  // ai modal 
+const mainSection = document.querySelector("main");
+
+
+  // The modal content you want to append
+const modalHTML = `
+    <div class="modal fade" id="modalAI-ekiliSense" tabindex="-1" style="z-index: 9999999999;">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content card" style="height: 100%;">
+          <div class="modal-header" style="border-bottom: #b8eeab solid 1px;">
+            <h5 class="modal-title"><i class="bi bi-robot"></i> ekilie</h5>
+            <button type="button" class="btn text-warning" style="color:#fff" data-bs-dismiss="modal" aria-label="Close">X</button>
+          </div>
+          <div class="modal-body" id="ekilie-ai-body">
+            <div id="chat_container">
+              <div class="ekilie-chat ai">
+                <div class="role assistant"><span>ekilie</span></div>
+                <span>Hello, how can I help? 🙃🙃</span>
+              </div>
+              <!-- <div class="ekilie-chat">
+                <div class="role user">me</div>
+                <span>What?</span>
+              </div>
+              <div class="ekilie-chat ai">
+                <div class="role assistant"><span>ekilie</span></div>
+              </div> -->
+            </div>
+          </div>
+          <div class="modal-footer" style="justify-content:center; border-top: #b8eeab solid 1px;">
+            <form method="post" class="typing-area" id="talk-to-assistant">
+              <input type="text" name="prompt" class="input-field" placeholder="Talk to me" autocomplete="off">
+              <button type="submit" id="send-btn"><i class="bx bxs-send" id="i-send"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+// Appending the modal HTML to the main section
+mainSection.insertAdjacentHTML("beforeend", modalHTML);
+console.log(mainSection)
+
+
+
+    
   
 
 })();
