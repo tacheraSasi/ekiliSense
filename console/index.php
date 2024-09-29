@@ -941,7 +941,7 @@ $students_count = mysqli_num_rows($get_students);
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   
-
+  <script>let assetsAt= "assets";</script>
   <script src="assets/js/modal-form.js"></script>
 
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -957,7 +957,7 @@ $students_count = mysqli_num_rows($get_students);
 
   <!-- JS Files -->
   <script>
-    let assetsAt= "assets"
+    
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     let roomId = urlParams.get('u')
