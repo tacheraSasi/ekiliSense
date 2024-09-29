@@ -179,7 +179,7 @@ $students_count = mysqli_num_rows($get_students);
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?=$school['School_name']?></h6>
+              <h6 id="school-name-h6"><?=$school['School_name']?></h6>
               <span>ekiliSense</span>
             </li>
             <li>
@@ -975,7 +975,7 @@ const chatContainer = document.querySelector('#chat_container');
 const modalBody = document.querySelector('#ekilie-ai-body')
 const BASE_API_URL = 'https://ekilie.onrender.com'
 
-const schoolName = <?=$school['School_name']?>
+const schoolName = document.getElementById("school-name-h6").innerText
 console.log(form)
 console.log("current school is "+schoolName)
 
