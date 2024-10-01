@@ -60,7 +60,7 @@ function get_plans(){
                     <strong><b>'.$title.'</b></strong><br>
                     <pre>'.$desc.'</pre>
                     <div class="progress mt-3">
-                        <div class="progress-bar '.$bg_color.'"  role="progressbar" style="width: '.$progress.'%" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar '.$bg_color.'"  role="progressbar" style="width: '.$progress.'%" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100">'.$progress.'%</div>
                     </div>
                   
                 </div>
