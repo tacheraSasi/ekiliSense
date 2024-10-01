@@ -20,8 +20,13 @@
   --btn-text:#a4c7ae;
   --btn-light-bg:#65c08bc4;
   --label-text:#799482;
-  --social-icons-color:#65c08bc4
+  --social-icons-color:#65c08bc4;
+  --bs-btn-close-color:white;
   
+}
+.btn-close{
+  color:white !important
+
 }
 input[type=checkbox]{
   cursor: pointer;
@@ -324,8 +329,11 @@ hr{
   opacity: 1;
 }
 /* Close Button */
-.btn-close {
+.custom-btn-close {
   background-size: 25%;
+  background-color: transparent;
+  border:none;
+  color:white !important
 }
 
 .btn-close:focus {

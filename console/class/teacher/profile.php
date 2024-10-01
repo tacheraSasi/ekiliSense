@@ -303,7 +303,7 @@ function edit($conn,$school_uid,$teacher_id){
         <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Subjects i teach</h5>
+                <h5 class="card-title">Subjects you are assigned to teach</h5>
                 
                 <!-- Table with stripped rows -->
                 <table class="table datatable table-dark">

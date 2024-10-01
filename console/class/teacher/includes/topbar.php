@@ -11,6 +11,13 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
+        <!-- <li class="nav-item">
+          <button id="ekilie-ai-btn" class=" nav-link nav-icon d-flex align-items-center justify-content-center" 
+              data-bs-toggle="modal" data-bs-target="#modalAI-ekiliSense"
+              style="border:none;outline:none;border-radius:50%">
+              <i class="bi bi-robot"></i>
+          </button>
+        </li> -->
 
         <li class="nav-item dropdown pe-3">
 

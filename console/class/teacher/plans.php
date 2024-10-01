@@ -16,8 +16,11 @@ $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$schoo
 $school = mysqli_fetch_array($get_info);
 
 #getting the teachers information
-$get_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE school_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
-$teacher = mysqli_fetch_array($get_teacher);
+$get_class_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE School_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
+$teacher = mysqli_fetch_array($get_class_teacher);
+$teacher_id = $teacher['teacher_id'];
+$teacher_name = $teacher['teacher_fullname'];
+
 
 
 ?>
@@ -131,7 +134,7 @@ $teacher = mysqli_fetch_array($get_teacher);
                         </div>
                         <div class="field input">
                           <label for="progress">Progress</label>
-                          <input style="width: 100%;" type="range" name="progress" id="progress" value="50">
+                          <input style="width: 100%;" type="range" name="progress" id="progress" value="10">
                         </div>
                         
                       

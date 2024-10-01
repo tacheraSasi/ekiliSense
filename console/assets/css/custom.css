@@ -282,6 +282,17 @@ table{
   cursor: pointer;
   overflow-y: auto;
 }
+.plans-list .plan-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.plans-list .plan-top span{
+  opacity: .8;
+}
+.plans-list .plan-top .timeago{
+  color:#646464
+}
 
 .plans-list .plan .plan-header{
   background-color: #191c1fd8;

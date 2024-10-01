@@ -16,8 +16,11 @@ $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$schoo
 $school = mysqli_fetch_array($get_info);
 
 #getting the teachers information
-$get_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE school_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
-$teacher = mysqli_fetch_array($get_teacher);
+$get_class_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE School_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
+$teacher = mysqli_fetch_array($get_class_teacher);
+$teacher_id = $teacher['teacher_id'];
+$teacher_name = $teacher['teacher_fullname'];
+
 
 #checking if the url is correct
 $isValidUrl = false;
@@ -31,15 +34,64 @@ if(isset($_GET["ref"])){
       $progress = $plan["progress"];
       $desc = $plan["description"];
       $uid = $plan["uid"];
+      $timeAgo = timeAgo(strtotime($plan['created_at']));
+        $status = "pending";
+
+        #TOstatus later on put this in a separate file
+        if($progress > 80){
+          $status = "almost_done";
+        }else if ($progress > 20 && $progress < 40){
+          $status = "not_moving";
+        }else if ($progress > 40 && $progress < 60){
+          $status = "pending";
+        }else if ($progress >= 60){
+          $status = "in_progress";
+        }else{
+          $status = "started";
+        }
+
+        #bg-colors
+        if($status == "almost_done"){
+          $bg_color = "bg-success";
+        }else if ($status == "not_moving"){
+          $bg_color = "bg-warning";
+        }else if ($status == "pending"){
+          $bg_color = "bg-info";
+        }else if ($status == "in_progress"){
+          $bg_color = "bg-secondary";
+        }else{
+          $bg_color = "bg-primary";
+        }
+
+        #text color
+        $textColor = $bg_color == "bg-info" || $bg_color == "bg-warning" ? "text-dark":""; 
+
   }else{
-      $isError = true;
+      $isValidUrl = true;
   }
 }else{
   #TODO:some sort of error message
-  $isError = true;
+  $isValidUrl = true;
   exit;
 }
 
+
+#deleting the plan
+if(isset($_POST['delete-plan'])){
+  delPlan($conn,$school_uid,$_POST['plan-ref']);
+};
+
+function delPlan($conn,$school_uid,$plan_ref){
+  $delete_query = mysqli_query($conn,
+  "DELETE FROM plans WHERE `plans`.`uid` = '$plan_ref' AND school_uid = '$school_uid'");
+
+  if($delete_query){
+    header("location:./plans.php");
+  }else{
+    $delError = "Something went wrong, Failed to delete";
+  }
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -80,8 +132,11 @@ if(isset($_GET["ref"])){
   <?php $page = "plans"; include_once "./includes/sidebar.php"?>
 
   <main id="main" class="main">
-  <div class="d-flex justify-content-between flex-wrap" 
-    style="margin:1rem auto;">
+    <?php
+        if(!$isValidUrl){
+    ?>
+    <div class="d-flex justify-content-between flex-wrap" 
+      style="margin:1rem auto;">
         <button 
           type="submit" 
           class="btn  btn-danger"
@@ -89,22 +144,23 @@ if(isset($_GET["ref"])){
           data-bs-target="#delete-plan">
             <i class="bi bi-trash"></i>
             <span>Delete</span>
-          </button>
+        </button>
           <!-- The delete modal -->
           <div class="modal fade" id="delete-plan" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content card">
                 <div class="modal-header">
                   <h5 class="modal-title">⚠️Alert</h5>
-                  <button type="button" class="btn-close" style="color:white" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button type="button" class="custom-btn-close" style="color:white" data-bs-dismiss="modal" >X</button>
                 </div>
                 <div class="modal-body">
-                  <h2>Are you sure you want to delete this🤷🤷‍♂️?</h2>
+                  <h2>Are you sure you want to delete this🤷 🤷‍♂️?</h2>
                 </div>
-                <div class="modal-footer">
+                <form class="modal-footer" method="post" >
+                  <input type="hidden" name="plan-ref" value="<?=$_GET["ref"]?>">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-danger"><i class="bi bi-trash"> </i> Delete</button>
-                </div>
+                  <button type="submit" name="delete-plan" class="btn btn-danger"><i class="bi bi-trash"> </i> Delete</button>
+                </form>
               </div>
             </div>
           </div>
@@ -148,11 +204,11 @@ if(isset($_GET["ref"])){
                       
                     </div>
                     <div class="right">
-                      <h1>Add a teaching plan</h1>
+                      <h1>Edit plan</h1>
                       <p class="sub-heading">
                         Bringing Artificial intelligence closer to education
                       </p>
-                      <form class="modal-form" id="plan"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
+                      <form class="modal-form-edit" id="edit-plan"  action="server/manage-plans.php" method="POST" enctype="multipart/form-data" autocomplete="off" >
                           <div class="error-text" style="
                             background-color: rgba(243, 89, 89, 0.562);
                             border:solid 1px rgba(243, 89, 89, 0.822);
@@ -177,7 +233,7 @@ if(isset($_GET["ref"])){
                         
                       
                         <div class="input-container field button">
-                            <button  id="submit" title="create class" type="submit">CREATE</button>
+                            <button  id="submit" name="edit-plan" title="create class" type="submit">Edit Plan</button>
                         </div>
                       </form>
                     </div>
@@ -192,20 +248,31 @@ if(isset($_GET["ref"])){
  
              
     <section class="section profile">
-        <?php
-            if(!$isValidUrl){
-        ?>
+       
       <div class="row">
         <div class="col-lg-12">
+          <?php
+            if(isset($delError)):
+          ?>
+          <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+            <?=$delError?>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <?php endif ?>
             
             <div class="plans-list">
               <div style="color:inherit" class="plan-single" >
                   
                   <div class="plan-body d-flex justify-between flex-column">
+                    <div class="plan-top d-flex justify-between">
+                      <span class="badge rounded-pill <?=$bg_color?> <?=$textColor?> "><?=$status?></span>
+                      <span class="flex-end timeago"><?=$timeAgo?></span>
+                    </div>
                       <strong><b><?=$title?></b></strong><br>
+                      
                       <pre><?=$desc?></pre>
                       <div class="progress mt-3">
-                          <div class="progress-bar bg-success"  role="progressbar" style="width: <?=$progress?>%" aria-valuenow="<?=$progress?>" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar <?=$bg_color?>"  role="progressbar" style="width: <?=$progress?>%" aria-valuenow="<?=$progress?>" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                     
                   </div>
@@ -215,37 +282,25 @@ if(isset($_GET["ref"])){
             
         </div>
       </div>
-        <?php
-            }else{
-        ?>
-        <div class="col-lg-12">
-            <div class="alert alert-dark bg-dark border-0 text-light alert-dismissible fade show" role="alert">
-            <span class="alert-heading"> ⚠️Something Went wrong </span>
-            <p>Oops looks like something went Wrong<br>This page is not available ❌😒</p>
-            </div>
-        </div>
-        <?php
-            }
-        ?>
+        
     </section>
-
-
+    <?php
+        }else{
+    ?>
+    <div class="col-lg-12">
+        <div class="alert alert-dark bg-dark border-0 text-light alert-dismissible fade show" role="alert">
+        <span class="alert-heading"> ⚠️Something Went wrong </span>
+        <p>Oops looks like something went Wrong<br>This page is not available ❌😒</p>
+        </div>
+    </div>
+    <?php
+        }
+    ?>
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>ekiliSense<span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-    From <a href="https://ekilie.com">ekilie</a>
-    </div>
-  </footer><!-- End Footer -->
-  
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
   <!-- Vendor JS Files -->
   <script src="js/plans.js"></script>
+  
   
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

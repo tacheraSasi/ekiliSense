@@ -3,8 +3,10 @@ session_start();
 
 function get_plans(){
     include_once "../../config.php";
+    include_once "../functions/timeAgo.php";
     $owner = $_SESSION['teacher_email'];
     $school_uid = $_SESSION['School_uid'];
+    
 
     $query = mysqli_query($conn,"select * from plans where 
     owner = '$owner' and school_uid = '$school_uid' order by created_at desc");
@@ -14,40 +16,51 @@ function get_plans(){
         $progress = $plan["progress"];
         $desc = $plan["description"];
         $uid = $plan["uid"];
-        $model_target = $plan['school_uid'].$uid;
+        $timeAgo = timeAgo(strtotime($plan['created_at']));
+        $status = "pending";
+
+        #status
+        if($progress > 80){
+          $status = "almost_done";
+        }else if ($progress > 20 && $progress < 40){
+          $status = "not_moving";
+        }else if ($progress > 40 && $progress < 60){
+          $status = "pending";
+        }else if ($progress >= 60){
+          $status = "in_progress";
+        }else{
+          $status = "started";
+        }
+
+        #bg-colors
+        if($status == "almost_done"){
+          $bg_color = "bg-success";
+        }else if ($status == "not_moving"){
+          $bg_color = "bg-warning";
+        }else if ($status == "pending"){
+          $bg_color = "bg-info";
+        }else if ($status == "in_progress"){
+          $bg_color = "bg-secondary";
+        }else{
+          $bg_color = "bg-primary";
+        }
+
+        #text color
+        $textColor = $bg_color == "bg-info" || $bg_color == "bg-warning" ? "text-dark":""; 
+
 
         echo '
             <a href="plan.php?ref='.$uid.'" style="color:inherit" class="plan">
-                <!-- <div class="plan-header">
-                  <button class="del-btn"  data-bs-toggle="modal" data-bs-target="#'.$model_target.'">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                    <div class="modal fade" id="'.$model_target.'" tabindex="-1">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content card">
-                          <div class="modal-header">
-                            <h5 class="modal-title">⚠️Alert</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <h2>Are you sure you want to delete this🤷🤷‍♂️?</h2>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn del-btn"><i class="bi bi-trash"> </i> Delete</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  <button class="">
-                    <i class="bi bi-pen"></i>
-                  </button>
-                </div> -->
+                
                 <div class="plan-body d-flex justify-between flex-column">
+                    <div class="plan-top d-flex justify-between">
+                      <span class="badge rounded-pill '.$bg_color.' '.$textColor.' ">'.$status.'</span>
+                      <span class="flex-end timeago">'.$timeAgo.'</span>
+                    </div>
                     <strong><b>'.$title.'</b></strong><br>
                     <pre>'.$desc.'</pre>
                     <div class="progress mt-3">
-                        <div class="progress-bar bg-success"  role="progressbar" style="width: '.$progress.'%" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar '.$bg_color.'"  role="progressbar" style="width: '.$progress.'%" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   
                 </div>

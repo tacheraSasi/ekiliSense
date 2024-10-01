@@ -179,6 +179,7 @@
   const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
 
+  //rich text editor config
   tinymce.init({
     selector: 'textarea.tinymce-editor',
     plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
@@ -394,7 +395,13 @@ const modalHTML = `
 mainSection.insertAdjacentHTML("beforeend", modalHTML);
 console.log(mainSection)
 
+//alert close btn
+// const alertCloseBtn = document.querySelectorAll(".btn-close")
 
+// forEach(btn=>{
+//   btn.classList = "custom-close-btn text-white"
+//   btn.innerHTML = "X"
+// })
 
     
   

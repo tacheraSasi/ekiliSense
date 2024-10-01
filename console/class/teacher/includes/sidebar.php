@@ -10,7 +10,7 @@
         </a>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link  <?=$page=="students"?"":"collapsed"?>" href="students.php?class=<?=$class_id?>">
+        <a class="nav-link  <?=$page=="students"?"":"collapsed"?>" href="students.php">
           <i class="bi bi-people"></i>
           <span>Students</span>
         </a>
@@ -75,3 +75,4 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+
