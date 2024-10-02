@@ -52,7 +52,7 @@ if(isset($_SESSION['School_uid'])){
     <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link rel="stylesheet" href="auth.css">
-    <title>ekiliSense</title>
+    <title>ekiliSense Login</title>
 
 </head>
 <body>
