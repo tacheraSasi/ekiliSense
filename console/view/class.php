@@ -54,39 +54,9 @@ if(isset($_GET["class_id"])){
     exit;
 }
 
-// if(isset($_POST['save-changes'])){
-//   editClass($conn,$school_uid,$_GET["class_id"]);
-// }
-
-function editClass($conn,$school_uid,$class_id){
-  $name = mysqli_real_escape_string($conn,$_POST['className']);
-  $class_teacher = mysqli_real_escape_string($conn,$_POST['choosen-class-teacher']);
-  // var_dump($_POST);
-
-  $queryClassName = "UPDATE `classes` SET `Class_name` = '$name' WHERE 
-  `classes`.`Class_id` = '$class_id' AND `classes`.`school_unique_id` = '$school_uid'";
-  
-  $queryClassTeacher = "UPDATE `class_teacher` SET `teacher_id` = '$class_teacher' WHERE 
-  `class_teacher`.`Class_id` = '$class_id' AND `class_teacher`.`school_unique_id` = '$school_uid'";
-  
-  
-  $updateClassName = mysqli_query($conn,$queryClassName);
-  $updateClassTeacher = mysqli_query($conn,$queryClassTeacher);
-  $isUpdated = false;
-  if($updateClassName && $updateClassTeacher){
-    $isUpdated = true;
-  }
-
-  $req_uri = $_SERVER['REQUEST_URI'];
-  header("location:$req_uri");
-  
-
-}
 
 #getting students info
 $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_id' AND school_uid = '$school_uid'  ORDER BY `students`.`student_first_name` ASC")
-
-
 
 ?>
 <!DOCTYPE html>
@@ -272,19 +242,10 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
 
                   <!-- Profile Edit Form -->
 
-                  <?php
-                  if(isset($_POST['save-changes'])){
-                    editClass($conn,$school_uid,$_GET['class_id']);
-                    echo"
-                    <script>
-                      window.location.reload
-                    </script>
-                    ";
-                  }
-                   
-
-                  ?>
-                  <form method="post" action="#">
+              
+                  <form method="post" action="../server/manage-class.php">
+                    <!-- hidden inputs -->
+                     <input type="hidden" name="class" value="<?=$class_id?>">
                     <div class="row mb-3">
                       <label for="className" class="col-md-4 col-lg-3 col-form-label">Class Name</label>
                       <div class="col-md-8 col-lg-9">
@@ -341,11 +302,12 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <h2>Are you sure you want to delete <?=$class_name?>'s account🤷🤷‍♂️?</h2>
+                                        <h4>Due to security policies you can not delete <?=$class_name?>. To change this go to settings</h4>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-danger"><i class="bi bi-trash"> </i> Delete</button>
+                                        <button type="button" class="btn btn-success text-light"> ⚙️ <a href="../profile.php">Settings</a></button>
+                                        <!-- <button type="button" class="btn btn-danger"><i class="bi bi-trash"> </i> Delete</button> -->
                                     </div>
                                     </div>
                                 </div>
@@ -483,12 +445,7 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   
-  <script>
-    let isUpdated = <?=$isUpdated?>
-    if(isUpdated){
-      window.reload
-    }
-  </script>
+ 
   <!-- Vendor JS Files -->
   <script src="../assets/js/modal-form.js"></script>
   

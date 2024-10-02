@@ -8,13 +8,13 @@ if(!(isset($_SESSION['School_uid']) && isset($_SESSION['teacher_email']))){
 
 if(isset($_POST['edit-plan'])){
     $refferer = $_SERVER['HTTP_REFERER'];
-    if(editPlan($conn,$school_uid)){
+    if(editPlan($conn)){
         header("location:$refferer");
     }
 };
 
 
-function editPlan($conn,$school_uid){
+function editPlan($conn){
     $title = $_POST["plan-title"];
     $progress = $_POST["progress"];
     $desc = $_POST["plan-desc"];

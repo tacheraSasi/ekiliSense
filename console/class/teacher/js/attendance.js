@@ -1,6 +1,15 @@
 const markAttendance = document.querySelectorAll('.attendance-mark')
 // console.log(markAttendance)
 
+markAttendance.forEach(mark => {
+  console.log(mark)
+  mark.addEventListener("submit",(event)=>{
+    console.log("mark")
+    event.preventDefault()
+    submitForm(mark)
+  })
+})
+
 const submitForm = (form)=>{
     continueBtn = form.querySelector("button");
 
@@ -35,10 +44,4 @@ const submitForm = (form)=>{
     let formData = new FormData(form);
     xhr.send(formData);
 }
-markAttendance.forEach(mark=>{
-  mark.addEventListener("submit",(e)=>{
-    console.log(mark)
-    e.preventDefault()
-    submitForm(mark)
-  })
-})
+

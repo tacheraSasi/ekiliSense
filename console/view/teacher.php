@@ -13,7 +13,7 @@ $school = mysqli_fetch_array($get_info);
 $school_name = $school["School_name"];
 
 $isError = false;
-$isVerified = false;
+$isVerified = false;#teacher verification
 if(isset($_GET["tid"])){
     #getting the teachers details
     $tid = $_GET["tid"];
@@ -34,29 +34,7 @@ if(isset($_GET["tid"])){
     exit;
 }
 
-if(isset($_POST['save-changes'])){
-  editTeacher($conn,$school_uid,$teacher['teacher_id']);
-}
 
-function editTeacher($conn,$school_uid,$teacher_id){
-  $name = mysqli_real_escape_string($conn,$_POST['fullname']);
-  $email = mysqli_real_escape_string($conn,$_POST['email']);
-  $phone = mysqli_real_escape_string($conn,$_POST['phone']);
-  $address = mysqli_real_escape_string($conn,$_POST['address']);
-
-  $query = "UPDATE `teachers` SET `teacher_fullname` = '$name',`teacher_email` = '$email', 
-  `teacher_active_phone` = '$phone', `teacher_home_address` = '$address' WHERE 
-  `teachers`.`teacher_id` = '$teacher_id' AND `teachers`.`School_unique_id` = '$school_uid'";
-  #TODO:Check if verified
-  
-  $update = mysqli_query($conn,$query);
-  $isUpdated = false;
-  if($update){
-    $isUpdated = true;
-  }
-  
-
-}
 
 #getting subjects info
 
@@ -239,6 +217,11 @@ function editTeacher($conn,$school_uid,$teacher_id){
                     <div class="col-lg-9 col-md-8"><?=$teacher['teacher_active_phone'];?></div>
                   </div>
 
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Address</div>
+                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_home_address'];?></div>
+                  </div>
+
                 </div>
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
@@ -254,9 +237,11 @@ function editTeacher($conn,$school_uid,$teacher_id){
                   }
                    
                   if(!$isVerified){
-
+                    #checking if the teacher is not verified
                   ?>
-                  <form method="post" action="#">
+                  <form method="post" action="../server/manage-teacher.php">
+                    <!-- hidden inputs -->
+                     <input type="hidden" name="teacher" value="<?=$teacher['teacher_id']?>">
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
@@ -286,11 +271,11 @@ function editTeacher($conn,$school_uid,$teacher_id){
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" name="save-changes" class="btn btn-primary">Save Changes</button>
+                      <button type="submit" name="save-changes" class="btn btn-secondary">Save Changes</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
                   <?php 
-                  }else{
+                  }else{#teacher is verified
                   ?>
                    <div class="col-lg-12">
                        <div class="alert alert-dark bg-dark border-0 text-light alert-dismissible fade show" role="alert">
@@ -327,11 +312,12 @@ function editTeacher($conn,$school_uid,$teacher_id){
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <h2>Are you sure you want to delete <?=$teacher_name?>'s account🤷🤷‍♂️?</h2>
+                                    <h4>Due to security policies you can not delete <?=$teacher_name?>'s account. To change this go to settings</h4>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-trash"> </i> Delete</button>
+                                    <button type="button" class="btn btn-success text-light"> ⚙️ <a href="../profile.php">Settings</a></button>
+                                    <!-- <button type="button" class="btn btn-danger"><i class="bi bi-trash"> </i> Delete</button> -->
                                 </div>
                                 </div>
                             </div>
@@ -423,12 +409,7 @@ function editTeacher($conn,$school_uid,$teacher_id){
   
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   
-  <script>
-    let isUpdated = <?=$isUpdated?>
-    if(isUpdated){
-      window.reload
-    }
-  </script>
+  
   <!-- Vendor JS Files -->
   <script src="../assets/js/modal-form.js"></script>
   

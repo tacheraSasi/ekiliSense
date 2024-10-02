@@ -4,7 +4,7 @@ include_once "../../../../config.php";
 if(!(isset($_SESSION['School_uid']) && isset($_SESSION['teacher_email']))){
   echo "Access denied";
   exit;
-}
+} 
 $formType = $_POST['form-type'];
 $school_uid = $_SESSION['School_uid'];  
 $teacher_email = $_SESSION['teacher_email'];

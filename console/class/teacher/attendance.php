@@ -45,8 +45,7 @@ $students = mysqli_query($conn,"SELECT * FROM students WHERE class_id = '$class_
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>ekiliSense | <?=$school['School_name']?> | attendance</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  
 
   <!-- Favicons -->
   <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">

@@ -964,7 +964,7 @@ $students_count = mysqli_num_rows($get_students);
       window.location.href = 'v1/'
     }
 
-    //logic
+//AI assistant logic
 const form = document.getElementById("talk-to-assistant");
 const input = document.querySelector(".input-field")
 const sendBtn = document.getElementById("send-btn");
@@ -1062,12 +1062,20 @@ const handleSubmit = async (e)=>{
     clearInterval(loadInterval)
     messageDiv.innerHTML = " "
 
-    if (response.ok) {
+    if (response.ok) {//TODO:fix this here 
         const data = await response.json();
-        console.log(data.text)
-        const parsedData = data.text.trim() // trims any trailing spaces/'\n' 
+        if (data){
+          console.log(data.text)
+          const parsedData = data.text.trim() // trims any trailing spaces/'\n' 
+          typeText(messageDiv, parsedData)
+        }else{
+          const err = await response.text()
+          console.log(err)
 
-        typeText(messageDiv, parsedData)
+          messageDiv.innerHTML = "Something went wrong  😿 😿"
+
+        }
+
     } else {
         const err = await response.text()
 
