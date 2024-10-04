@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Transforming learning with ekiliSense - an AI automated school management system. .">
-  <meta name="keywords" content="ekiliSense, school management system,ekili, ekilie,ekiliSense,ekilieconvo, education technology, Tachera Sasi, AI, insights, ekiliSense CEO">
+  <meta name="keywords" content="ekiliSense, school management system,ekili, ekilie,ekiliSense,ekilieSense,ekilieconvo, education technology, Tachera Sasi, AI, insights, ekiliSense CEO">
   <meta name="author" content="ekiliSense - The Future of Learning  , Learn smart">
   <meta property="og:title" content="ekiliSense - The Future of Learning">
   <meta property="og:description" content="Transforming education with ekiliSense - an AI automated school management system. .">
@@ -18,7 +18,7 @@
   <link rel="canonical" href="https://www.sense.ekilie.com">
 
 
-  <title>ekiliSense</title>
+  <title>ekiliSense - AI automated school management system</title>
 
   <!-- Favicons -->
   <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
@@ -247,7 +247,7 @@
 
     <div class="row g-0">
       <div class="col-lg-6 video-play position-relative">
-        <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox play-btn"></a>
+        <a href="" class="glightbox play-btn"></a>
       </div>
       <div class="col-lg-6">
         <div class="content d-flex flex-column justify-content-center h-100">
@@ -407,7 +407,7 @@
                 </div>
                 <p>
                   <i class="bi bi-quote quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                    I have a good feeling about this, I had alot of fun while creating ekiliSense, seeing grow and becoming something great
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
               </div>
@@ -415,15 +415,15 @@
 
             <div class="swiper-slide">
               <div class="testimonial-item">
-                <img src="assets/img/ceo.jpeg" class="testimonial-img" alt="">
-                <h3>Tachera W</h3>
-                <h4>Ceo &amp; Founder</h4>
+                <img src="assets/img/samwel-urio.jpeg" style="object-fit:cover" class="testimonial-img" alt="">
+                <h3>Samwel Urio</h3>
+                <h4>Co - Founder</h4>
                 <div class="stars">
                   <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                 </div>
                 <p>
                   <i class="bi bi-quote quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                    I For sure see ekiliSense bringing artificial intelligence closer to education here in TANZANIA
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
               </div>
@@ -456,7 +456,7 @@
 
           <div class="pricing-header">
             <h3>Free Plan</h3>
-            <h4><sup>$</sup>0<span> / month</span></h4>
+            <h4><span> free forever</span></h4>
           </div>
 
           <ul>
@@ -479,7 +479,7 @@
 
           <div class="pricing-header">
             <h3>Standard Plan</h3>
-            <h4><sup>$</sup>29<span> / month</span></h4>
+            <h4 >10000<sup>Tsh</sup><span> /m</span></h4>
           </div>
 
           <ul>
@@ -491,7 +491,7 @@
           </ul>
 
           <div class="text-center mt-auto">
-            <a href="#" class="buy-btn">Subscribe Now</a>
+            <a href="" class="buy-btn">Subscribe Now</a>
           </div>
 
         </div>
@@ -502,7 +502,7 @@
 
           <div class="pricing-header">
             <h3>Premium Plan</h3>
-            <h4><sup>$</sup>169.99<span> / yearly</span></h4>
+            <h4>30000<sup>Tsh</sup><span> /m</span></h4>
           </div>
 
           <ul>
@@ -681,39 +681,39 @@
           <div class="col-xl-4 col-md-6 d-flex " data-aos="zoom-in" data-aos-delay="400">
             <div class="team-member">
               <div class="member-img">
-                <img src="assets/img/ceo.jpeg" class="img-fluid" alt="">
+                <img src="assets/img/ceo.jpeg" style="width:340px;height: 340px; object-fit:cover" class="img-fluid" alt="">
               </div>
               <div class="member-info">
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
+                  <a href="https://github.com/tacheraSasi"><i class="bi bi-github"></i></a>
                   <a href="https://www.tachera.com"><i class="bi bi-globe"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                  <!-- <a href=""><i class="bi bi-instagram"></i></a> -->
+                  <!-- <a href="wa.me"><i class="bi bi-whatsapp"></i></a> -->
                 </div>
                 <h4>Tachera W Sasi</h4>
                 <span>CEO & Founder</span>
               </div>
             </div>
           </div> 
-<!-- 
+
           <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="600">
             <div class="team-member">
               <div class="member-img">
-                <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
+                <img src="assets/img/samwel-urio.jpeg" style="width:340px;height: 340px; object-fit:cover" class="img-fluid" alt="">
               </div>
               <div class="member-info">
-                <div class="social">
+                <!-- <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
                   <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-                <h4>William Anderson</h4>
-                <span>CTO</span>
+                </div> -->
+                <h4>Samwel Urio</h4>
+                <span>Co- Founder</span>
               </div>
             </div>
           </div>
- -->
+
         </div>
 
       </div>
@@ -757,7 +757,7 @@
               <i class="bi bi-envelope flex-shrink-0"></i>
               <div>
                 <h4>Email:</h4>
-                <p>sense@ekilie.com</p>
+                <p>support@ekilie.com</p>
               </div>
             </div><!-- End Info Item -->
 
@@ -776,7 +776,8 @@
         </div>
 
         <div class="col-lg-8">
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <form id="email-contact-form" method="post" role="form" class="php-email-form">
+            <input type="hidden" name="ekilirelay-apikey" value="relay-6087f8c42d70f0650b9f023adc">
             <div class="row">
               <div class="col-md-6 form-group">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -839,19 +840,19 @@
             <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="#about">About us</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="#services">Services</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="/terms-and-policies/">Terms of service</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="/terms-and-policies/">Privacy policy</a></li>
           </ul>
         </div>
 
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Web Design</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Web Development</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Product Management</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Marketing</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Graphic Design</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">AI automation</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">School management</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Landing Page Builder</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">School Marketing</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Perfomance analysis</a></li>
           </ul>
         </div>
 
@@ -909,8 +910,9 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- <script src="assets/vendor/php-email-form/validate.js"></script> -->
 
+  <script src="assets/js/contact.js" type="module"></script>
   <script src="assets/js/main.js"></script>
 
 </body>
