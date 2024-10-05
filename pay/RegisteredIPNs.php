@@ -1,21 +1,39 @@
-<?php
-include 'acesstoken.php';
-if(APP_ENVIROMENT == 'sandbox'){
-    $getIpnListUrl = "https://cybqa.pesapal.com/pesapalv3/api/URLSetup/GetIpnList";
-}elseif(APP_ENVIROMENT == 'live'){
-    $getIpnListUrl = "https://pay.pesapal.com/v3/api/URLSetup/GetIpnList";
-}else{
+<?php 
+require 'acesstoken.php'; 
+require '../vendor/autoload.php'; 
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
+// Define the environment (sandbox or live)
+if (APP_ENVIROMENT == 'sandbox') {
+    $getIpnListUrl = "https://cybqa.pesapal.com/pesapalv3/api/URLSetup/GetIpnList"; // Sandbox URL
+} elseif (APP_ENVIROMENT == 'live') {
+    $getIpnListUrl = "https://pay.pesapal.com/v3/api/URLSetup/GetIpnList"; // Live URL
+} else {
     echo "Invalid APP_ENVIROMENT";
     exit;
 }
-$headers = array(
-    "Accept: application/json",
-    "Content-Type: application/json",
-    "Authorization: Bearer $token"
-);
-$ch = curl_init($getIpnListUrl);
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-echo $response = curl_exec($ch);
-$responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+
+try {
+    // Create a Guzzle HTTP client instance
+    $client = new Client();
+
+    // Send the GET request to fetch IPN list
+    $response = $client->get($getIpnListUrl, [
+        'headers' => [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $token  // Pass the token for authorization
+        ]
+    ]);
+
+    // Get the response body and output it
+    echo $responseBody = $response->getBody();
+
+    // You can also retrieve the HTTP response code (e.g., 200, 400, etc.)
+    $responseCode = $response->getStatusCode();
+} catch (RequestException $e) {
+    // Handle any errors from Guzzle
+    echo "Error: " . $e->getMessage();
+}
