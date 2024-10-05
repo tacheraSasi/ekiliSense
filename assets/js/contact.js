@@ -9,11 +9,13 @@ const mailer = new EkiliRelay(apiKey)
 
 emailForm.addEventListener("submit",(event)=>{
     event.preventDefault()
-    let to  = emailFormData.get("email")
+    let to  = "support@ekilie.com"
+    let email  = emailFormData.get("email")
     let subject = emailFormData.get("subject")
     let name = emailFormData.get("name")
     let message = emailFormData.get("message")
-    let headers = `From: ${name} <${to}>`
+    let headers = `From: ${name} <${email}>`
+    console.log(email,subject,name)
     mailer.sendEmail(
         to,
         subject,
