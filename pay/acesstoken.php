@@ -1,13 +1,14 @@
 <?php
+require '../parseEnv.php';
 define('APP_ENVIROMENT', 'sandbox'); // sandbox or live
 if(APP_ENVIROMENT == 'sandbox'){
     $apiUrl = "https://cybqa.pesapal.com/pesapalv3/api/Auth/RequestToken"; // Sandbox URL
-    $consumerKey = "";
-    $consumerSecret = "";
+    $consumerKey = getenv("CUSTOMER_KEY");
+    $consumerSecret = getenv("CUSTOMER_SECRET");
 }elseif(APP_ENVIROMENT == 'live'){
     $apiUrl = "https://pay.pesapal.com/v3/api/Auth/RequestToken"; // Live URL
-    $consumerKey = "";
-    $consumerSecret = "";
+    $consumerKey = getenv("CUSTOMER_KEY");
+    $consumerSecret = getenv("CUSTOMER_SECRET");
 }else{
     echo "Invalid APP_ENVIROMENT";
     exit;
