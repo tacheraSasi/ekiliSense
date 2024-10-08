@@ -896,7 +896,7 @@ $students_count = mysqli_num_rows($get_students);
                 <div class="right">
                   <h1 style="font-size: 30px;">Upgrade to ekiliSense premium</h1>
                   
-                  <form class="modal-form" id="upgrade" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" style="max-width: 400px; margin: 0 auto; padding: 20px; background-color: #1c1c1e; border-radius: 10px; color: #fff;">
+                  <form class="modal-form" id="upgrade" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" style="max-width: 400px; margin: 0 auto; padding: 20px; background-color: #1c1c1e; border-radius: 10px; color: #fff;text-align:left">
                     <h3 style="text-align: center; margin-bottom: 10px; color: #fff;">10000 Tsh/month</h3>
 
                     <!-- Feature List -->

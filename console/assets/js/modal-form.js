@@ -23,7 +23,9 @@ const submitForm = (form, id) => {
   const errorText = form.querySelector(".error-text");
   const inputs = form.querySelectorAll("input ");
 
-  loadingState(continueBtn, continueBtn.innerHTML, true);
+  const initialButtonText = continueBtn.innerHTML
+
+  loadingState(continueBtn, initialButtonText, true);
 
   const xhr = new XMLHttpRequest();
   xhr.open("POST", "server/add.php", true);
@@ -33,8 +35,8 @@ const submitForm = (form, id) => {
         const data = xhr.response;
         if (data === "success") {
           inputs.forEach(input => {
-            console.log(input.target)
-            console.log(input.type)
+            // console.log(input.target)
+            // console.log(input.type)
             if(input.type != "hidden"){
               input.value = "";
 
@@ -44,13 +46,13 @@ const submitForm = (form, id) => {
           errorText.style.border = "1px solid #9bff7c8f";
           errorText.style.display = "block";
           errorText.textContent = displaySuccessText(id);
-          loadingState(continueBtn, continueBtn.innerHTML, false);
+          loadingState(continueBtn, initialButtonText, false);
         } else {
           errorText.style.display = "block";
           errorText.textContent = data;
-          loadingState(continueBtn, continueBtn.innerHTML, false);
+          loadingState(continueBtn, initialButtonText, false);
         }
-        loadingState(continueBtn, continueBtn.innerHTML, false);
+        loadingState(continueBtn, initialButtonText, false);
       }
     }
   };
@@ -80,9 +82,11 @@ function displaySuccessText(id) {
 }
 
 function loadingState(button, initialText, isLoading) {
+  // console.log(initialText)
   if (isLoading) {
     button.innerHTML = `<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>`;
   } else {
+    console.log("loading",isLoading)
     button.innerHTML = initialText;
   }
 }

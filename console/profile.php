@@ -283,7 +283,7 @@ $students_count = mysqli_num_rows($get_students);
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
               <h2><?=$school_name?></h2>
-              <h3>Account</h3>
+              <h3>ekiliSense</h3>
               <div class="social-links mt-2">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>

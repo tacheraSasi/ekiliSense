@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 parseEnv('../.env');
 
 // Define the environment (sandbox or live)
-define('APP_ENVIROMENT', 'sandbox'); // Change this to 'live' in production
+define('APP_ENVIROMENT', 'live'); // Change this to 'live' in production
 
 // Set the API URL based on the environment
 if (APP_ENVIROMENT == 'sandbox') {

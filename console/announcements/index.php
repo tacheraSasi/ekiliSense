@@ -134,7 +134,7 @@ function getClassTeacher($conn,$class_id){
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="profile.php">
+              <a class="dropdown-item d-flex align-items-center" href="../profile.php">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
               </a>
