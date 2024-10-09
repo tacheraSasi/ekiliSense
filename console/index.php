@@ -897,13 +897,16 @@ $students_count = mysqli_num_rows($get_students);
                   <h1 style="font-size: 30px;">Upgrade to ekiliSense premium</h1>
                   
                   <form class="modal-form" id="upgrade" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" style="max-width: 400px; margin: 0 auto; padding: 20px; background-color: #1c1c1e; border-radius: 10px; color: #fff;text-align:left">
+                    <input type="hidden" name="school" value="<?=$school_uid?>">
                     <h3 style="text-align: center; margin-bottom: 10px; color: #fff;">10000 Tsh/month</h3>
 
                     <!-- Feature List -->
                     <ul class="list-group" style="margin-bottom: 15px; background-color: transparent;">
                       
                       <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
-                        <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Unlimited emails and sms to all you users
+                        <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> 100 emails and 20 sms to all you users monthly
+
+                        
                       </li>
                       <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
                         <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Priority Customer Support

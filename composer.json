@@ -2,6 +2,7 @@
     "require": {
         "tachera/ekilirelay": "^1.0",
         "twilio/sdk": "^8.3",
-        "guzzlehttp/guzzle": "^7.9"
+        "guzzlehttp/guzzle": "^7.9",
+        "google/apiclient": "^2.17"
     }
 }

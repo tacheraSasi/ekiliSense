@@ -4,7 +4,10 @@ include_once "../config.php";
 if(!(isset($_SESSION['School_uid']))){
   header("location:../auth");
 }
-
+$error;
+if(isset($_SESSION['error'])){
+  $error = $_SESSION['error'];
+}
 #if the user is a teacher 
 if(isset($_SESSION['teacher_email'])){
   $t_email = $_SESSION['teacher_email'];
@@ -51,8 +54,6 @@ $students_count = mysqli_num_rows($get_students);
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title><?=$school_name?> | ekiliSense</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
 
   <!-- Favicons -->
   <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
@@ -71,7 +72,6 @@ $students_count = mysqli_num_rows($get_students);
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
 </head>
@@ -274,6 +274,17 @@ $students_count = mysqli_num_rows($get_students);
       <h1><i class="bi bi-person"> </i> Profile</h1>
       
     </div><!-- End Page Title -->
+    <div class="error">
+      <?php if(isset($error) && $error['source'] == "manage-account"): ?>
+      <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+        <?=$error['message']?>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <?php 
+        $_SESSION['error'] = null;
+        endif 
+      ?>
+    </div>
 
     <section class="section profile">
       <div class="row">
@@ -284,12 +295,12 @@ $students_count = mysqli_num_rows($get_students);
 
               <h2><?=$school_name?></h2>
               <h3>ekiliSense</h3>
-              <div class="social-links mt-2">
+              <!-- <div class="social-links mt-2">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -307,7 +318,7 @@ $students_count = mysqli_num_rows($get_students);
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Account</button>
                 </li>
 
                 <li class="nav-item">
@@ -352,9 +363,7 @@ $students_count = mysqli_num_rows($get_students);
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
-                    
-
+                  <form method="post" action="server/manage-account.php">
                     <div class="row mb-3">
                       <label for="schoolName" class="col-md-4 col-lg-3 col-form-label">School Name</label>
                       <div class="col-md-8 col-lg-9">
@@ -370,21 +379,14 @@ $students_count = mysqli_num_rows($get_students);
                       </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
                       <div class="col-md-8 col-lg-9">
                         <input style="background-color:#444;outline:none;border:none;color:#fff"
                          name="country" type="text" class="form-control" id="Country" value="<?=$school['country']?>">
                       </div>
-                    </div>
+                    </div> -->
 
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input style="background-color:#444;outline:none;border:none;color:#fff"
-                         name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
-                      </div>
-                    </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
@@ -399,6 +401,14 @@ $students_count = mysqli_num_rows($get_students);
                       <div class="col-md-8 col-lg-9">
                         <input style="background-color:#444;outline:none;border:none;color:#fff"
                          name="email" type="email" class="form-control" id="Email" value="<?=$school['School_email']?>">
+                      </div>
+                    </div>
+
+                    <!-- <div class="row mb-3">
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input style="background-color:#444;outline:none;border:none;color:#fff"
+                         name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
                       </div>
                     </div>
 
@@ -432,10 +442,10 @@ $students_count = mysqli_num_rows($get_students);
                         <input style="background-color:#444;outline:none;border:none;color:#fff"
                          name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <button type="submit" name="save-changes" class="btn btn-secondary">Save Changes</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -450,21 +460,21 @@ $students_count = mysqli_num_rows($get_students);
                       <label for="schoolName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
                       <div class="col-md-8 col-lg-9">
                         <div class="form-check">
-                          <input  type="checkbox" id="changesMade" checked>
+                          <input  type="checkbox" id="changesMade" disabled>
                           <label class="form-check-label" for="changesMade">
-                            Changes made to your account
+                            Use School email in the email sender
                           </label>
                         </div>
                         <div class="form-check">
-                          <input  type="checkbox" id="newProducts" checked>
+                          <input  type="checkbox" id="newProducts" disabled>
                           <label class="form-check-label" for="newProducts">
-                            Information on new products and services
+                            Allow delete user policy 
                           </label>
                         </div>
                         <div class="form-check">
                           <input  type="checkbox" id="proOffers">
                           <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
+                            Activate teachers attendance tracker
                           </label>
                         </div>
                         <div class="form-check">
@@ -477,7 +487,7 @@ $students_count = mysqli_num_rows($get_students);
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <button type="submit" class="btn btn-secondary">Save Changes</button>
                     </div>
                   </form><!-- End settings Form -->
 
@@ -485,13 +495,13 @@ $students_count = mysqli_num_rows($get_students);
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
+                  <form method="post" action="server/manage-account.php">
 
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                       <div class="col-md-8 col-lg-9">
                         <input style="background-color:#444;outline:none;border:none;color:#fff"
-                         name="password" type="password" class="form-control" id="currentPassword">
+                         name="password" type="password" class="form-control" id="currentPassword" placeholder="Write your current password">
                       </div>
                     </div>
 
@@ -499,20 +509,20 @@ $students_count = mysqli_num_rows($get_students);
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                       <div class="col-md-8 col-lg-9">
                         <input style="background-color:#444;outline:none;border:none;color:#fff"
-                         name="newpassword" type="password" class="form-control" id="newPassword">
+                         name="newpassword" type="password" class="form-control" id="newPassword" placeholder="Write your new password">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <label for="cPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                       <div class="col-md-8 col-lg-9">
                         <input style="background-color:#444;outline:none;border:none;color:#fff"
-                         name="renewpassword" type="password" class="form-control" id="renewPassword">
+                         name="cpassword" type="password" class="form-control" id="cPassword" placeholder="Confirm your current password">
                       </div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" name="change-password" class="btn btn-secondary">Change Password</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
