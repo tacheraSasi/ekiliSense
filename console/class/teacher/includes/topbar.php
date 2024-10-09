@@ -31,9 +31,9 @@
 
         ?>
         
-        <script>
+        <script> 
           document.getElementById("connect-google").addEventListener("click",()=>{
-            const OAuthGoogleUrl = "http://localhost/ekilie/sense/OAuth/google.php"
+            const OAuthGoogleUrl = "https://sense.ekilie.com/OAuth/google.php"
             window.location.href =OAuthGoogleUrl
           })
         </script>
