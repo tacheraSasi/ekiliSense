@@ -11,6 +11,15 @@ $teacher_email = $_SESSION['teacher_email'];
 
 $school_uid = $_SESSION['School_uid'];
 
+#getting google data
+$get_google_data = mysqli_query($conn,"SELECT * FROM teachers_google WHERE email = '$teacher_email'");
+$isConnectedToGoogle = false;
+
+if (mysqli_num_rows($get_google_data)>0){
+  $isConnectedToGoogle = true; #teacher has connected his account to google
+  $google_data = mysqli_fetch_assoc($get_google_data);
+}
+
 #getting the school details 
 $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
 $school = mysqli_fetch_array($get_info);
@@ -103,7 +112,7 @@ function edit($conn,$school_uid,$teacher_id){
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="../../../assets/img/user.png" alt="Profile" class="rounded-circle">
+              <img src="<?=$isConnectedToGoogle?$google_data['picture_url']:'../../../assets/img/user.png'?>" alt="Profile" class="rounded-circle">
               <h2><?=$teacher['teacher_fullname']?></h2>
               <h3><?=$school['School_name']?></h3>
               <!-- <div class="social-links mt-2">

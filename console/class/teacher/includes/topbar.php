@@ -19,10 +19,29 @@
           </button>
         </li> -->
 
+        <li class="nav-item">
+          <button id="connect-google"  class="d-flex align-items-center gap-2 mx-2  btn btn-secondary" >
+              <i class="bi bi-google"></i>  
+              Connect with google
+          </button>
+        </li>
+        <?php 
+          // require '../../../parseEnv.php';
+          // parseEnv('../../../.env');
+
+        ?>
+        
+        <script>
+          document.getElementById("connect-google").addEventListener("click",()=>{
+            const OAuthGoogleUrl = "http://localhost/ekilie/sense/OAuth/google.php"
+            window.location.href =OAuthGoogleUrl
+          })
+        </script>
+
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="../../../assets/img/user.png" alt="Profile" class="rounded-circle">
+            <img src="<?=$isConnectedToGoogle?$google_data['picture_url']:'../../../assets/img/user.png'?>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2"><?=$school['School_name']?></span>
           </a><!-- End Profile Iamge Icon -->
 

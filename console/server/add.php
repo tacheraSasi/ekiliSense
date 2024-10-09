@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once "../../config.php";
+include_once "../functions/google.php";
 $formType = $_POST['form-type'];
 $school_uid = $_SESSION['School_uid'];
 if(!isset($school_uid)){
@@ -56,6 +57,9 @@ function addPlan($conn,$school_uid){
 
     if($insert_plan){
         echo "success";
+
+        // Syncing the plan with Google Calendar
+        syncPlanWithGoogleCalendar($conn, $owner, $title, $desc);
     
     }else{
         echo "Something Went wrong,Please try again";

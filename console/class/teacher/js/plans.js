@@ -46,6 +46,7 @@ const submitForm = (form, id)=>{
               errorText.style.display = "block";
               errorText.textContent = displaySuccessText(id);
             }else{
+              console.log(data)
               errorText.style.display = "block";
               errorText.textContent = data;
             }
