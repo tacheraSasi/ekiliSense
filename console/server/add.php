@@ -59,6 +59,7 @@ function addPlan($conn,$school_uid){
         echo "success";
 
         // Syncing the plan with Google Calendar
+        //if teacher isConnectedToGoogle
         syncPlanWithGoogleCalendar($conn, $owner, $title, $desc);
     
     }else{
