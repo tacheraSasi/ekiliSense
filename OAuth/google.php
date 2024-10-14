@@ -59,11 +59,12 @@ if (!isset($_GET['code'])) {
 
     // Redirecting back 
 
-    if(isset($_SERVER['HTTP_REFERER'])){
-        $refferer = $_SERVER['HTTP_REFERER'];
-        header("location:$refferer");
-    }else{
-        header('Location: ../console/class/teacher/');
-    }
+    // if(isset($_SERVER['HTTP_REFERER'])){
+    //     $refferer = $_SERVER['HTTP_REFERER'];
+    //     header("location:$refferer");
+    // }else{
+    //     header('Location: ../console/class/teacher/');
+    // }
+    header('Location: ../console/class/teacher/');
     exit();
 }
