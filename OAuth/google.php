@@ -58,6 +58,12 @@ if (!isset($_GET['code'])) {
     mysqli_query($conn, $query);
 
     // Redirecting back 
-    header('Location: ../console/class/teacher/');
+
+    if(isset($_SERVER['HTTP_REFERER'])){
+        $refferer = $_SERVER['HTTP_REFERER'];
+        header("location:$refferer");
+    }else{
+        header('Location: ../console/class/teacher/');
+    }
     exit();
 }
