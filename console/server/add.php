@@ -11,6 +11,15 @@ if(!isset($school_uid)){
 
 // connected echo ""; #for debugging purposes
 
+#getting google data
+$get_google_data = mysqli_query($conn,"SELECT * FROM teachers_google WHERE email = '$teacher_email'");
+$isConnectedToGoogle = false;
+
+if (mysqli_num_rows($get_google_data)>0){
+  $isConnectedToGoogle = true; #teacher has connected his account to google
+  $google_data = mysqli_fetch_assoc($get_google_data);
+}
+
 #getting the school details 
 $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
 $school = mysqli_fetch_array($get_info);
@@ -33,7 +42,7 @@ switch($formType) {
         addSubject($conn, $school_uid);
         break;
     case 'plan':
-        addPlan($conn,$school_uid);
+        addPlan($conn,$school_uid,$isConnectedToGoogle);
         break;
     case 'stuff-attendance':
         addStuffAttendance($conn,$school_uid);
@@ -44,7 +53,7 @@ switch($formType) {
 }
 
 #function to add plan
-function addPlan($conn,$school_uid){
+function addPlan($conn,$school_uid,$isConnectedToGoogle){
     $title = mysqli_real_escape_string($conn,$_POST['plan-title']);
     $desc = mysqli_real_escape_string($conn,$_POST['plan-desc']);
     $progress = mysqli_real_escape_string($conn,$_POST['progress']);
@@ -59,7 +68,7 @@ function addPlan($conn,$school_uid){
         echo "success";
 
         // Syncing the plan with Google Calendar
-        //if teacher isConnectedToGoogle
+        if (!$isConnectedToGoogle) return;
         syncPlanWithGoogleCalendar($conn, $owner, $title, $desc);
     
     }else{

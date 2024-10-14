@@ -1,36 +1,7 @@
 <?php
 session_start();
 include_once "../../../config.php";
-include_once "../../functions/timeAgo.php";
-
-if(!isset($_SESSION['teacher_email']) || !isset($_SESSION['School_uid'])){
-  header("location:https://auth.ekilie.com/sense/teacher");
-}
-$teacher_email = "";//////####
-$teacher_email = $_SESSION['teacher_email'];
-
-$school_uid = $_SESSION['School_uid'];
-
-#getting google data
-$get_google_data = mysqli_query($conn,"SELECT * FROM teachers_google WHERE email = '$teacher_email'");
-$isConnectedToGoogle = false;
-
-if (mysqli_num_rows($get_google_data)>0){
-  $isConnectedToGoogle = true; #teacher has connected his account to google
-  $google_data = mysqli_fetch_assoc($get_google_data);
-}
-
-#getting the school details 
-$get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
-$school = mysqli_fetch_array($get_info);
-
-#getting the class teachers details
-$get_class_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE School_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
-$teacher = mysqli_fetch_array($get_class_teacher);
-$teacher_id = $teacher['teacher_id'];
-$teacher_name = $teacher['teacher_fullname'];
-$subjects = mysqli_query($conn,"SELECT * FROM subjects WHERE teacher_id = '$teacher_id'");
-
+include_once "../../../middlwares/teacher_auth.php";
 
 function edit($conn,$school_uid,$teacher_id){
     $name = mysqli_real_escape_string($conn,$_POST['fullname']);

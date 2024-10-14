@@ -2,36 +2,7 @@
 session_start();
 include_once "../../config.php";
 include_once "../functions/timeAgo.php";
-if(!(isset($_SESSION['School_uid']))){
-  header("location:../../auth");
-}
-$school_uid = $_SESSION['School_uid'];
-
-#if the user is a teacher 
-if(isset($_SESSION['teacher_email'])){
-  $t_email = $_SESSION['teacher_email'];
-  $suid = $_SESSION['School_uid'];
-  #getting the teacher's id using the teacher's name
-  $get_teacher_id = mysqli_fetch_assoc(mysqli_query($conn, 
-  "SELECT * FROM teachers WHERE teacher_email = '$t_email' AND School_unique_id = '$suid'"));
-  $t_id = $get_teacher_id['teacher_id'];
-
-  $check_is_class_teacher = mysqli_query($conn,
-  "SELECT * FROM class_teacher WHERE school_unique_id = '$suid' AND teacher_id = '$t_id'");
-  
-  if(mysqli_num_rows($check_is_class_teacher) > 0){
-    header("location:../class/teacher/");
-  }else{
-    header("location:../teacher/");
-  }
-}
-
-#getting the school details 
-$get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
-$school = mysqli_fetch_array($get_info);
-
-#getting the list of classes
-$get_teachers = mysqli_query($conn, "SELECT * FROM teachers WHERE school_unique_id = '$school_uid'");
+include_once "../../middlwares/school_auth.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">

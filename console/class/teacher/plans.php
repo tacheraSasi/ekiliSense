@@ -2,26 +2,7 @@
 session_start();
 include_once "../../../config.php";
 include_once "../../functions/timeAgo.php";
-
-if(!isset($_SESSION['teacher_email']) || !isset($_SESSION['School_uid'])){
-  header("location:https://auth.ekilie.com/sense/teacher");
-}
-// $teacher_email = "";//////####
-$teacher_email = $_SESSION['teacher_email'];
-
-$school_uid = $_SESSION['School_uid'];
-
-#getting the school details 
-$get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
-$school = mysqli_fetch_array($get_info);
-
-#getting the teachers information
-$get_class_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE School_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
-$teacher = mysqli_fetch_array($get_class_teacher);
-$teacher_id = $teacher['teacher_id'];
-$teacher_name = $teacher['teacher_fullname'];
-
-
+include_once "../../../middlwares/teacher_auth.php";
 
 ?>
 <!DOCTYPE html>
