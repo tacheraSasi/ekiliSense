@@ -1,12 +1,15 @@
 <?php
 session_start();
-if (isset($_SESSION['teacher_email'])) {
+if (isset($_SESSION["teacher_email"])) {
     include_once "../../../../config.php";
-    $logout_id = $_GET['logout_id'];
+    $logout_id = $_GET["logout_id"];
 
     if (isset($logout_id)) {
         // Preparing the SQL statement
-        $stmt = mysqli_prepare($conn, "SELECT * FROM teachers WHERE teacher_email = ?");
+        $stmt = mysqli_prepare(
+            $conn,
+            "SELECT * FROM teachers WHERE teacher_email = ?"
+        );
         mysqli_stmt_bind_param($stmt, "s", $logout_id);
 
         // Executing the statement

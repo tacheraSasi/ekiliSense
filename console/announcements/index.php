@@ -12,7 +12,7 @@ function getClassTeacher($conn,$class_id){
   if(isset($q['teacher_id'])){
     $teacher_id = $q['teacher_id'];
     $get_name = mysqli_fetch_array(mysqli_query($conn,"
-    SELECT * FROM `teacherS` WHERE `teacher_id` = '$teacher_id'"));
+    SELECT * FROM `teachers` WHERE `teacher_id` = '$teacher_id'"));
     return $get_name['teacher_fullname'];
   }else{
     return "Not assigned yet";
@@ -132,9 +132,7 @@ function getClassTeacher($conn,$class_id){
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
-
       <li class="nav-item">
         <a class="nav-link collapsed" href="../">
           <i class="bi bi-grid"></i>

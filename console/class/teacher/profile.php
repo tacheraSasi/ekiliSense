@@ -3,27 +3,24 @@ session_start();
 include_once "../../../config.php";
 include_once "../../../middlwares/teacher_auth.php";
 
-function edit($conn,$school_uid,$teacher_id){
-    $name = mysqli_real_escape_string($conn,$_POST['fullname']);
-    $email = mysqli_real_escape_string($conn,$_POST['email']);
-    $phone = mysqli_real_escape_string($conn,$_POST['phone']);
-    $address = mysqli_real_escape_string($conn,$_POST['address']);
-  
-    $query = "UPDATE `teachers` SET `teacher_fullname` = '$name',`teacher_email` = '$email', 
-    `teacher_active_phone` = '$phone', `teacher_home_address` = '$address' WHERE 
+function edit($conn, $school_uid, $teacher_id)
+{
+    $name = mysqli_real_escape_string($conn, $_POST["fullname"]);
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    $phone = mysqli_real_escape_string($conn, $_POST["phone"]);
+    $address = mysqli_real_escape_string($conn, $_POST["address"]);
+
+    $query = "UPDATE `teachers` SET `teacher_fullname` = '$name',`teacher_email` = '$email',
+    `teacher_active_phone` = '$phone', `teacher_home_address` = '$address' WHERE
     `teachers`.`teacher_id` = '$teacher_id' AND `teachers`.`School_unique_id` = '$school_uid'";
     #TODO:Check if verified
-  
-    $update = mysqli_query($conn,$query);
+
+    $update = mysqli_query($conn, $query);
     $isUpdated = false;
-    if($update){
-      $isUpdated = true;
+    if ($update) {
+        $isUpdated = true;
     }
-    
-  
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +29,9 @@ function edit($conn,$school_uid,$teacher_id){
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title> <?=$school['School_name']?> | teacher | <?=$teacher['teacher_fullname'];?></title>
+  <title> <?= $school["School_name"] ?> | teacher | <?= $teacher[
+     "teacher_fullname"
+ ] ?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <!-- Favicons -->
@@ -59,21 +58,24 @@ function edit($conn,$school_uid,$teacher_id){
 
 <body>
 
-  <?php include_once "./includes/topbar.php"?>
-  <?php $page = "profile"; include_once "./includes/sidebar.php"?>
+  <?php include_once "./includes/topbar.php"; ?>
+  <?php
+  $page = "profile";
+  include_once "./includes/sidebar.php";
+  ?>
 
   <main id="main" class="main">
 
     <div class="pagetitle">
       <h1>
-        <img 
-        src="../../../assets/img/user.png" 
-        alt="Profile" 
+        <img
+        src="../../../assets/img/user.png"
+        alt="Profile"
         class="rounded-circle"
         style="width: 25px;height:25px">
         Me
       </h1>
-      
+
     </div><!-- End Page Title -->
 
     <section class="section profile">
@@ -83,9 +85,11 @@ function edit($conn,$school_uid,$teacher_id){
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="<?=$isConnectedToGoogle?$google_data['picture_url']:'../../../assets/img/user.png'?>" alt="Profile" class="rounded-circle">
-              <h2><?=$teacher['teacher_fullname']?></h2>
-              <h3><?=$school['School_name']?></h3>
+              <img src="<?= $isConnectedToGoogle
+                  ? $google_data["picture_url"]
+                  : "../../../assets/img/user.png" ?>" alt="Profile" class="rounded-circle">
+              <h2><?= $teacher["teacher_fullname"] ?></h2>
+              <h3><?= $school["School_name"] ?></h3>
               <!-- <div class="social-links mt-2">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -126,62 +130,78 @@ function edit($conn,$school_uid,$teacher_id){
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_fullname']?></div>
+                    <div class="col-lg-9 col-md-8"><?= $teacher[
+                        "teacher_fullname"
+                    ] ?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_email'];?></div>
+                    <div class="col-lg-9 col-md-8"><?= $teacher[
+                        "teacher_email"
+                    ] ?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_active_phone'];?></div>
+                    <div class="col-lg-9 col-md-8"><?= $teacher[
+                        "teacher_active_phone"
+                    ] ?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_home_address']?$teacher['teacher_home_address']:"Not added yet."?></div>
+                    <div class="col-lg-9 col-md-8"><?= $teacher[
+                        "teacher_home_address"
+                    ]
+                        ? $teacher["teacher_home_address"]
+                        : "Not added yet." ?></div>
                   </div>
 
                 </div>
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                  <?php
-                  if(isset($_POST['save-changes'])){
-                      edit($conn,$school_uid,$teacher['teacher_id']);
-                      echo"
+                  <?php if (isset($_POST["save-changes"])) {
+                      edit($conn, $school_uid, $teacher["teacher_id"]);
+                      echo "
                       <script>window.location.reload</script>
                       ";
-                  }
-                  ?>
+                  } ?>
                   <!-- Profile Edit Form -->
                   <form method="post">
                     <div class="row mb-3">
                       <label for="fullname" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  name="fullname" type="text" class="form-control" id="fullName" placeholder="Enter Name" value="<?=$teacher['teacher_fullname'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
+                        <input  name="fullname" type="text" class="form-control" id="fullName" placeholder="Enter Name" value="<?= $teacher[
+                            "teacher_fullname"
+                        ] ?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  name="phone" type="text" class="form-control" id="Phone"placeholder="Enter Phone"  value="<?=$teacher['teacher_active_phone'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
+                        <input  name="phone" type="text" class="form-control" id="Phone"placeholder="Enter Phone"  value="<?= $teacher[
+                            "teacher_active_phone"
+                        ] ?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  name="email" type="email" class="form-control" id="Email" placeholder="Enter Email"  value="<?=$teacher['teacher_email'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
+                        <input  name="email" type="email" class="form-control" id="Email" placeholder="Enter Email"  value="<?= $teacher[
+                            "teacher_email"
+                        ] ?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  name="address" type="text" class="form-control" id="Address"placeholder="Enter Home Address"  value="<?=$teacher['teacher_home_address'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
+                        <input  name="address" type="text" class="form-control" id="Address"placeholder="Enter Home Address"  value="<?= $teacher[
+                            "teacher_home_address"
+                        ] ?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
                       </div>
                     </div>
 
@@ -196,10 +216,10 @@ function edit($conn,$school_uid,$teacher_id){
                       To sign/mark your work attendance today you need to be within 100m of your workspace <br>
                       <div class="mt-2">
                         <strong>Present</strong>
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             class="btn btn-secondary mx-2"
-                            data-bs-toggle="modal" 
+                            data-bs-toggle="modal"
                             data-bs-target="#present">
                             <i class="bi bi-geo-alt-fill"></i>
                             <span>Sign</span>
@@ -234,16 +254,16 @@ function edit($conn,$school_uid,$teacher_id){
                                 Uncover Hidden Gems and Revolutionary Insights
                                 Together, Let's Forge a Brighter Future for Learning!
                             </div>
-                            
+
                             </div>
                             <div class="right">
                             <h3><span class="badge bg-danger">beta</span></h3>                            <h1>Sign your attendance</h1>
                             <div class="alert alert-dark bg-dark text-light border-0 alert-dismissible fade show" role="alert">
                                 Allow geolocation to give us your current location <br>
                                 So that we make sure you are really at work
-                            
+
                             </div>
-                            
+
                             <form class="modal-form" id="sign-attendance"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
                                 <div class="error-text" style="
                                     background-color: rgba(243, 89, 89, 0.562);
@@ -256,9 +276,9 @@ function edit($conn,$school_uid,$teacher_id){
                                 <input type="hidden" name="form-type" value="staff-attendance" >
                                 <input type="hidden" name="latitude" value="" >
                                 <input type="hidden" name="longitude" value="" >
-                                <input type="hidden" name="owner" value="<?=$teacher_email?>" >
-                                
-                            
+                                <input type="hidden" name="owner" value="<?= $teacher_email ?>" >
+
+
                                 <div class="input-container field button">
                                     <button  id="sign" title="Sign" type="submit">PROCEED</button>
                                 </div>
@@ -284,7 +304,7 @@ function edit($conn,$school_uid,$teacher_id){
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Subjects you are assigned to teach</h5>
-                
+
                 <!-- Table with stripped rows -->
                 <table class="table datatable table-dark">
                   <thead>
@@ -300,35 +320,39 @@ function edit($conn,$school_uid,$teacher_id){
                     <?php
                     $n = 1;
                     while ($row_std = mysqli_fetch_array($subjects)) {
-                        $class_id = $row_std['class_id'];
+
+                        $class_id = $row_std["class_id"];
                         $q = "select * from students where class_id = '$class_id'";
                         $r = mysqli_query($conn, $q);
                         $num_std = mysqli_num_rows($r);
-                        $class_info = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM classes WHERE Class_id = '$class_id' AND school_unique_id = '$school_uid' "));
-                        $class_name = $class_info['Class_name']
+                        $class_info = mysqli_fetch_array(
+                            mysqli_query(
+                                $conn,
+                                "SELECT * FROM classes WHERE Class_id = '$class_id' AND school_unique_id = '$school_uid' "
+                            )
+                        );
+                        $class_name = $class_info["Class_name"];
+                        ?>
 
-                      ?>
-                      
                         <tr>
-                          <td><?=$n?></td>
-                          <td><?=$row_std['subject_name']?></td>
-                          <td><?=$class_name?></td>
-                          <td><?=$num_std?></td>
+                          <td><?= $n ?></td>
+                          <td><?= $row_std["subject_name"] ?></td>
+                          <td><?= $class_name ?></td>
+                          <td><?= $num_std ?></td>
                           <td>
                             <a href="" class="btn btn-secondary">view</a>
                           </td>
-                          
+
                         </tr>
-                      
-                    <?php
-                    $n++;
+
+                    <?php $n++;
                     }
                     ?>
-                  
+
                   </tbody>
                 </table>
                 <!-- End Table with stripped rows -->
-  
+
               </div>
             </div>
         </div>
@@ -346,13 +370,13 @@ function edit($conn,$school_uid,$teacher_id){
     From <a href="https://ekilie.com">ekilie</a>
     </div>
   </footer><!-- End Footer -->
-  
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
+
   <!-- Vendor JS Files -->
   <script src="../../assets/js/stuff-attendance.js"></script>
   <script src="js/modal-form.js"></script>
-  
+
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/vendor/chart.js/chart.umd.js"></script>

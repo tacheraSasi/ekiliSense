@@ -10,7 +10,7 @@ include_once "../../../middlwares/teacher_auth.php";
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>ekiliSense | <?=$school['School_name']?> | attendance</title>
+  <title>ekiliSense | <?= $school["School_name"] ?> | attendance</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -38,22 +38,27 @@ include_once "../../../middlwares/teacher_auth.php";
 
 <body>
 
-  <?php include_once "./includes/topbar.php"?>
-  <?php $page = "results"; include_once "./includes/sidebar.php"?>
+  <?php include_once "./includes/topbar.php"; ?>
+  <?php
+  $page = "results";
+  include_once "./includes/sidebar.php";
+  ?>
 
   <main id="main" class="main">
-    <div class="d-flex justify-content-between flex-wrap" 
+    <div class="d-flex justify-content-between flex-wrap"
     style="margin:1rem auto;">
       <div class="pagetitle" style="display:inline-block">
-        <h1 style="display:inline-block">Results <i class="bi bi-arrow-right-short"> </i> <?=$class_info['Class_name']?></h1>
+        <h1 style="display:inline-block">Results <i class="bi bi-arrow-right-short"> </i> <?= $class_info[
+            "Class_name"
+        ] ?></h1>
       </div><!-- End Page Title -->
-      
+
     </div>
-    
+
     <section class="section">
         <div class="row">
           <div class="col-lg-12">
-  
+
             <div class="card">
               <div class="card-body">
                 <div class="mt-4">
@@ -62,11 +67,11 @@ include_once "../../../middlwares/teacher_auth.php";
                     <p>Result system is currently not live<br>This will active in feww days</p>
                     </div>
                 </div>
-  
+
           </div>
         </div>
       </section>
-    
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -78,12 +83,12 @@ include_once "../../../middlwares/teacher_auth.php";
     From <a href="https://tachera.com/Insights/">ekilie</a>
     </div>
   </footer><!-- End Footer -->
-  
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
+
   <!-- Vendor JS Files -->
   <script src="js/attendance.js"></script>
-  
+
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/vendor/chart.js/chart.umd.js"></script>

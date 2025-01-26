@@ -10,7 +10,7 @@ include_once "../../../middlwares/teacher_auth.php";
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>ekiliSense | <?=$school['School_name']?> | Students</title>
+  <title>ekiliSense | <?= $school["School_name"] ?> | Students</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -39,27 +39,31 @@ include_once "../../../middlwares/teacher_auth.php";
 
 <body>
 
-  <?php 
-    include_once "./includes/topbar.php";
-    $page = "students"; 
-    include_once "./includes/sidebar.php"
+  <?php
+  include_once "./includes/topbar.php";
+  $page = "students";
+  include_once "./includes/sidebar.php";
   ?>
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Students <i class="bi bi-arrow-right-short"> </i> <?=$class_info['Class_name']?></h1>
+      <h1>Students <i class="bi bi-arrow-right-short"> </i> <?= $class_info[
+          "Class_name"
+      ] ?></h1>
     </div><!-- End Page Title -->
-    
-    
+
+
     <section class="section">
         <div class="row">
           <div class="col-lg-12">
 
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Table of all students in <?=$class_info['Class_name']?> class</h5>
-                
+                <h5 class="card-title">Table of all students in <?= $class_info[
+                    "Class_name"
+                ] ?> class</h5>
+
 
                 <!-- Table with stripped rows -->
                 <table class=" table datatable table-dark ">
@@ -77,40 +81,42 @@ include_once "../../../middlwares/teacher_auth.php";
                   <tbody>
                     <?php
                     $n = 1;
-                    while ($row_std = mysqli_fetch_array($students)) {
+                    while ($row_std = mysqli_fetch_array($students)) { ?>
 
-                      ?>
-                      
                         <tr>
-                          <td><?=$n?></td>
-                          <td><?=$row_std['student_first_name']?></td>
-                          <td><?=$row_std['student_last_name']?></td>
-                          <td><?=$row_std['parent_phone']?$row_std['parent_phone']:"None"?></td>
-                          <td><?=$row_std['parent_email']?></td>
-                          <td><?=timeAgo(strtotime($row_std['created_at']))?></td>
+                          <td><?= $n ?></td>
+                          <td><?= $row_std["student_first_name"] ?></td>
+                          <td><?= $row_std["student_last_name"] ?></td>
+                          <td><?= $row_std["parent_phone"]
+                              ? $row_std["parent_phone"]
+                              : "None" ?></td>
+                          <td><?= $row_std["parent_email"] ?></td>
+                          <td><?= timeAgo(
+                              strtotime($row_std["created_at"])
+                          ) ?></td>
                           <td>
-                            <a href="./view/student.php?stid=<?=$row_std['student_id']?>"  class="btn btn-secondary">
+                            <a href="./view/student.php?stid=<?= $row_std[
+                                "student_id"
+                            ] ?>"  class="btn btn-secondary">
                               Manage
                             </a>
                           </td>
                         </tr>
-                      
-                    <?php
-                    $n++;
-                    }
+
+                    <?php $n++;}
                     ?>
-                  
+
                   </tbody>
                 </table>
                 <!-- End Table with stripped rows -->
-  
+
               </div>
             </div>
-  
+
           </div>
         </div>
       </section>
-    
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -122,12 +128,12 @@ include_once "../../../middlwares/teacher_auth.php";
     From <a href="https://tachera.com/Insights/">ekilie</a>
     </div>
   </footer><!-- End Footer -->
-  
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
+
   <!-- Vendor JS Files -->
   <script src="../../assets/js/modal-form.js"></script>
-  
+
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/vendor/chart.js/chart.umd.js"></script>

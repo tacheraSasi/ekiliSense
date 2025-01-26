@@ -11,7 +11,7 @@ include_once "../../../middlwares/teacher_auth.php";
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Console | ekiliSense</title>
-  
+
   <!-- Favicons -->
   <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
   <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
@@ -31,7 +31,7 @@ include_once "../../../middlwares/teacher_auth.php";
 
   <link href="../../assets/css/style.css" rel="stylesheet">
   <link href="../../assets/css/custom.css" rel="stylesheet">
-  
+
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-99HVMVD8V2"></script>
@@ -46,49 +46,54 @@ include_once "../../../middlwares/teacher_auth.php";
 
 <body>
 
-  <?php include_once "./includes/topbar.php"?>
-  <?php $page = "index"; include_once "./includes/sidebar.php"?>
+  <?php include_once "./includes/topbar.php"; ?>
+  <?php
+  $page = "index";
+  include_once "./includes/sidebar.php";
+  ?>
 
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Class <i class="bi bi-arrow-right-short"> </i> <?=$class_info['Class_name']?></h1>
+      <h1>Class <i class="bi bi-arrow-right-short"> </i> <?= $class_info[
+          "Class_name"
+      ] ?></h1>
     </div><!-- End Page Title -->
-    
-    
+
+
     <section class="section dashboard">
       <div class="row">
-       
+
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
             <div class="manage-btn-container">
               <div class="manage-content">
-                <button 
-                  type="button" 
-                  data-bs-toggle="modal" 
-                  data-bs-target="#add-student-modal" 
-                  class="manage-btn" 
+                <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add-student-modal"
+                  class="manage-btn"
                   style="background-color: #a0845f;">
                   <i class="bi bi-people"></i>
                   Add a student
                 </button>
-                
-                <button 
-                  type="button" 
-                  data-bs-toggle="modal" 
-                  data-bs-target="#add-subject-modal" 
-                  class="manage-btn" 
+
+                <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add-subject-modal"
+                  class="manage-btn"
                   style="background-color: #815fa0;">
                   <i class="bi bi-book"></i>
                  Add a subject
                 </button>
 
-                <!-- <button 
-                  type="button"  
-                  data-bs-toggle="modal" 
-                  data-bs-target="#add-class-teacher-modal" 
-                  class="manage-btn" 
+                <!-- <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add-class-teacher-modal"
+                  class="manage-btn"
                   style="background-color: #64a05f;">
                   <i class="bi bi-person"></i>
                   Add Class teacher
@@ -108,7 +113,7 @@ include_once "../../../middlwares/teacher_auth.php";
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?=$student_num?></h6>
+                      <h6><?= $student_num ?></h6>
                       <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
  -->
                     </div>
@@ -130,7 +135,7 @@ include_once "../../../middlwares/teacher_auth.php";
                       <i class="bi bi-person"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?=$subject_num?></h6>
+                      <h6><?= $subject_num ?></h6>
                       <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
  -->
                     </div>
@@ -141,7 +146,7 @@ include_once "../../../middlwares/teacher_auth.php";
             </div><!-- End of Card -->
 
             <div class="col-12">
-              
+
               <div class="card">
 
                 <div class="card-body">
@@ -207,7 +212,7 @@ include_once "../../../middlwares/teacher_auth.php";
               </div>
             </div><!-- End Reports -->
 
-            
+
 
 
           </div>
@@ -368,7 +373,7 @@ include_once "../../../middlwares/teacher_auth.php";
                     Uncover Hidden Gems and Revolutionary Insights
                     Together, Let's Forge a Brighter Future for Learning!
                   </div>
-                  
+
                 </div>
                 <div class="right">
                   <h1>Add a student</h1>
@@ -385,7 +390,7 @@ include_once "../../../middlwares/teacher_auth.php";
                       </div>
                     <!-- TODO: add emojis to the placeholder -->
                     <input type="hidden" name="form-type" value="student" >
-                    <input type="hidden" name="class" value="<?=$class_id?>" >
+                    <input type="hidden" name="class" value="<?= $class_id ?>" >
                     <div class=" field input">
                       <input style="width: 100%;"  type="text" name="fname"  placeholder="Student's first name " required>
                     </div>
@@ -395,11 +400,11 @@ include_once "../../../middlwares/teacher_auth.php";
                     <div class=" field input">
                       <input style="width: 100%;"  type="text" name="email"  placeholder="Parent's email " >
                     </div>
-                    
+
                     <div class=" field input" >
                       <input style="width: 100%;" type="tel" name="mobile"  placeholder="Parent's mobile" >
                     </div>
-                    
+
                     <div class="input-container field button">
                         <button  id="submit" title="add teacher" type="submit">ADD</button>
                     </div>
@@ -407,17 +412,17 @@ include_once "../../../middlwares/teacher_auth.php";
                       <a href="../onboarding/" style="color:#33995d;text-decoration:none">
                        Contact Support
                       </a>
-                    </div> 
-          
+                    </div>
+
                   </form>
-                  
+
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-     
+
       <!-- add-subject -->
       <div class="modal fade " id="add-subject-modal" tabindex="-1">
         <div class="modal-dialog modal-xl ">
@@ -447,7 +452,7 @@ include_once "../../../middlwares/teacher_auth.php";
                     Uncover Hidden Gems and Revolutionary Insights
                     Together, Let's Forge a Brighter Future for Learning!
                   </div>
-                  
+
                 </div>
                 <div class="right">
                   <h1>Create a subject</h1>
@@ -464,23 +469,23 @@ include_once "../../../middlwares/teacher_auth.php";
                       </div>
                     <!-- TODO: add emojis to the plcaholder -->
                     <input type="hidden" name="form-type" value="subject" >
-                    <input type="hidden" name="class" value="<?=$class_id?>" >
+                    <input type="hidden" name="class" value="<?= $class_id ?>" >
                     <div class=" field input">
                       <input style="width: 100%;" id="input-not-hidden"  type="text" name="subject-name"  placeholder="Write the subject name here" required>
                     </div>
                     <div class=" field input">
                       <select name="choosen-subject-teacher" id="choose-class-teacher">
                         <option value="Choose a teacher">Choose a teacher</option>
-                        <?php
-                          while($row_teacher = mysqli_fetch_array($get_teachers)){
-                            $teacher_name = $row_teacher['teacher_fullname'];
-                            $teacher_id = $row_teacher['teacher_id'];
+                        <?php while (
+                            $row_teacher = mysqli_fetch_array($get_teachers)
+                        ) {
+                            $teacher_name = $row_teacher["teacher_fullname"];
+                            $teacher_id = $row_teacher["teacher_id"];
                             echo "<option value='$teacher_id'>$teacher_name</option>";
-                          }
-                        ?>
+                        } ?>
                       </select>
                     </div>
-                  
+
                     <div class="input-container field button">
                         <button  id="submit" title="create class" type="submit">CREATE</button>
                     </div>
@@ -489,11 +494,11 @@ include_once "../../../middlwares/teacher_auth.php";
                        Contact Support
                       </a>
                     </div>  -->
-          
-                   
-          
+
+
+
                   </form>
-                  
+
                 </div>
               </div>
             </div>
@@ -502,7 +507,7 @@ include_once "../../../middlwares/teacher_auth.php";
       </div>
 
     </section>
-    
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -514,12 +519,12 @@ include_once "../../../middlwares/teacher_auth.php";
     From <a href="https://tachera.com/Insights/">ekilie</a>
     </div>
   </footer><!-- End Footer -->
-  
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
+
   <!-- Vendor JS Files -->
   <script src="js/modal-form.js"></script>
-    
+
   <a href="https://www.producthunt.com/posts/ekilisense?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-ekilisense" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=481333&theme=dark" alt="ekiliSense - AI&#0045;powered&#0032;school&#0032;management&#0032;made&#0032;easy&#0032;as&#0032;service | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

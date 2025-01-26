@@ -3,7 +3,6 @@ session_start();
 include_once "../../../config.php";
 include_once "../../functions/timeAgo.php";
 include_once "../../../middlwares/teacher_auth.php";
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +11,9 @@ include_once "../../../middlwares/teacher_auth.php";
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title> <?=$school['School_name']?> | <?=$teacher['teacher_fullname'];?></title>
+  <title> <?= $school["School_name"] ?> | <?= $teacher[
+     "teacher_fullname"
+ ] ?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <!-- Favicons -->
@@ -39,11 +40,14 @@ include_once "../../../middlwares/teacher_auth.php";
 
 <body>
 
-  <?php include_once "./includes/topbar.php"?>
-  <?php $page = "plans"; include_once "./includes/sidebar.php"?>
+  <?php include_once "./includes/topbar.php"; ?>
+  <?php
+  $page = "plans";
+  include_once "./includes/sidebar.php";
+  ?>
 
   <main id="main" class="main">
-    <div class="d-flex justify-content-between flex-wrap" 
+    <div class="d-flex justify-content-between flex-wrap"
     style="margin:1rem auto;">
         <div class="pagetitle">
         <h1>
@@ -52,15 +56,15 @@ include_once "../../../middlwares/teacher_auth.php";
         </h1>
         </div><!-- End Page Title -->
         <div>
-          <button 
-          type="submit" 
+          <button
+          type="submit"
           class="btn btn-secondary"
-          data-bs-toggle="modal" 
+          data-bs-toggle="modal"
           data-bs-target="#add-plan">
             <i class="bi bi-clipboard-plus"></i>
             <span>Add Plan</span>
           </button>
-          
+
           <div class="modal fade " id="add-plan" tabindex="-1">
             <div class="modal-dialog modal-xl ">
               <div class="modal-content card">
@@ -89,7 +93,7 @@ include_once "../../../middlwares/teacher_auth.php";
                         Uncover Hidden Gems and Revolutionary Insights
                         Together, Let's Forge a Brighter Future for Learning!
                       </div>
-                      
+
                     </div>
                     <div class="right">
                       <h1>Add a teaching plan</h1>
@@ -106,7 +110,7 @@ include_once "../../../middlwares/teacher_auth.php";
                           </div>
                         <!-- TODO: add emojis to the plcaholder -->
                         <input type="hidden" name="form-type" value="plan" >
-                        <input type="hidden" name="owner" value="<?=$teacher_email?>" >
+                        <input type="hidden" name="owner" value="<?= $teacher_email ?>" >
                         <div class=" field input">
                           <input class="plan-input" style="width: 100%;"  type="text" name="plan-title"  placeholder="Plan Title " required>
                         </div>
@@ -117,8 +121,8 @@ include_once "../../../middlwares/teacher_auth.php";
                           <label for="progress">Progress</label>
                           <input style="width: 100%;" type="range" name="progress" id="progress" value="10">
                         </div>
-                        
-                      
+
+
                         <div class="input-container field button">
                             <button  id="submit" title="create class" type="submit">CREATE</button>
                         </div>
@@ -133,8 +137,8 @@ include_once "../../../middlwares/teacher_auth.php";
       </div>
     </div>
 
-              
-             
+
+
     <section class="section profile">
       <div class="row">
         <div class="col-lg-12">
@@ -146,8 +150,8 @@ include_once "../../../middlwares/teacher_auth.php";
               <div class="spinner-grow" role="status"></div>
                 <span class="">Loading...</span>
             </div>
-              
-            
+
+
         </div>
       </div>
     </section>
@@ -163,12 +167,12 @@ include_once "../../../middlwares/teacher_auth.php";
     From <a href="https://ekilie.com">ekilie</a>
     </div>
   </footer><!-- End Footer -->
-  
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
+
   <!-- Vendor JS Files -->
   <script src="js/plans.js"></script>
-  
+
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/vendor/chart.js/chart.umd.js"></script>
