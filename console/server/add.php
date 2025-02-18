@@ -3,7 +3,7 @@ session_start();
 include_once "../../config.php";
 include_once "../functions/google.php";
 $formType = $_POST['form-type'];
-$school_uid = $_SESSION['School_uid'];
+$school_uid = $_SESSION['School_uid']; 
 if(!isset($school_uid)){
     echo "ACCESS DENIED";
     exit;
