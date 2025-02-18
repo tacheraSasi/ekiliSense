@@ -10,16 +10,16 @@ if(isset($_SESSION['School_uid'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sign in to your ekiliSense Console.">
-  
+
     <meta name="keywords" content="Sign in to ekiliSense, SaaS, online learning, AI,ekili, ekilie,ekiliSense,ekilieconvo management system, education, Tanzania">
-  
+
     <meta name="author" content="EkiliSense - Empowering learning with AI">
-    
+
     <meta property="og:title" content="EkiliSense - Empowering Education with AI">
     <meta property="og:description" content="Explore EkiliSense, an AI-powered SaaS platform revolutionizing online learning management. Join the community for insightful discussions and innovative educational experiences.">
     <meta property="og:image" content="https://www.ekilie.com/assets/img/favicon.jpeg">
     <meta property="og:url" content="https://www.ekilie.com">
-    
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="EkiliSense - Empowering Education with AI">
     <meta name="twitter:description" content="Explore EkiliSense, an AI-powered SaaS platform revolutionizing online learning management. Join the community for insightful discussions and innovative educational experiences.">
@@ -29,24 +29,24 @@ if(isset($_SESSION['School_uid'])){
     <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
 
     <meta name="robots" content="index, follow">
-    
+
     <meta name="googlebot" content="index, follow">
-    
+
     <meta name="application-name" content="EkiliSense">
     <meta name="msapplication-TileColor" content="#201f1f">
     <meta name="msapplication-TileImage" content="https://www.ekilie.com/assets/img/favicon.jpeg">
-    
+
     <meta name="creator" content="Tachera W. Sasi">
     <meta name="ceo" content="Tachera W. Sasi">
-    
+
     <link rel="canonical" href="https://www.ekilie.com">
     <link rel="icon" href="https://www.ekilie.com/assets/img/favicon.jpeg" type="image/png">
     <link rel="apple-touch-icon" href="https://www.ekilie.com/assets/img/favicon.jpeg">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;1,100;1,400;1,600;1,800&display=swap" rel="stylesheet">
-      
+
     <!-- Vendor CSS Files -->
     <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
@@ -81,12 +81,12 @@ if(isset($_SESSION['School_uid'])){
           Uncover Hidden Gems and Revolutionary Insights
           Together, Let's Forge a Brighter Future for Learning!
         </div>
-        
+
       </div>
       <div class="right">
         <h1>Sign in</h1>
         <p class="sub-heading">
-          Unlock the Gates of Insight: 
+          Unlock the Gates of Insight:
           Traverse the Digital Landscapes of Tomorrow's Learning Odyssey
         </p>
         <form  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" class="create-groove-form">
@@ -103,8 +103,8 @@ if(isset($_SESSION['School_uid'])){
           <div class=" field input">
             <input style="width: 100%;" type="password" name="password"  placeholder="password" required>
           </div>
-          
-          
+
+
           <div class="input-container field button">
               <button  id="submit" title="sign in " type="submit">Sign in</button>
           </div>
@@ -112,11 +112,11 @@ if(isset($_SESSION['School_uid'])){
             <a href="../onboarding/" style="color:#33995d;text-decoration:none">
              Join
             </a>
-          </div> 
+          </div>
 
           <div class="link" style="color:lightgrey">Forgot your password?
             <a href="../onboarding/" style="color:#33995d;text-decoration:none">
-             Click here to reset  
+             Click here to reset
             </a>
           </div>
 
