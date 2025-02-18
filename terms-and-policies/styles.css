@@ -1,0 +1,218 @@
+:root {
+    --primary: #65c08b;
+    --secondary: #23492b;
+    --background: #0c0d0e;
+    --surface: #151718;
+    --text: #ffffff;
+    --accent: #a4c7ae;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--background);
+    color: var(--text);
+    font-family:
+        "Inter",
+        system-ui,
+        -apple-system,
+        sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: min(90%, 1100px);
+    margin: 4rem auto;
+    padding: clamp(2rem, 5vw, 4rem);
+    background: var(--surface);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+    backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle,
+        rgba(101, 192, 139, 0.1) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--accent);
+    margin-bottom: 2.5rem;
+    text-align: center;
+    letter-spacing: -0.05em;
+    line-height: 1.2;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--primary),
+        transparent
+    );
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    margin: 2.5rem 0 1.25rem;
+    color: var(--primary);
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+h2::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+p,
+li {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    margin-bottom: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.highlight {
+    color: var(--accent);
+    font-weight: 500;
+    background: rgba(164, 199, 174, 0.1);
+    padding: 0.15em 0.4em;
+    border-radius: 0.25em;
+}
+
+ul {
+    padding-left: 1.5rem;
+    list-style: none;
+}
+
+li {
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+
+li::before {
+    content: "▹";
+    position: absolute;
+    left: -1.25rem;
+    color: var(--primary);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid transparent;
+}
+
+a:hover {
+    color: var(--accent);
+    border-bottom-color: currentColor;
+}
+
+.button-container {
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.75rem;
+    background: linear-gradient(
+        135deg,
+        var(--secondary) 0%,
+        var(--primary) 100%
+    );
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(101, 192, 139, 0.2);
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: auto;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 2rem auto;
+        padding: 1.5rem;
+        border-radius: 1rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        padding-left: 1rem;
+    }
+
+    li::before {
+        left: -1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        line-height: 1.5;
+    }
+
+    .container {
+        width: 100%;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
