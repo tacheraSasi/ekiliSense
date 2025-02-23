@@ -6,6 +6,8 @@
 session_start();
 include_once "../../config.php";
 include_once "../functions/google.php";
+require_once "../../../app/app.php";
+
 $formType = $_POST['form-type'];
 $school_uid = $_SESSION['School_uid']; 
 if(!isset($school_uid)){

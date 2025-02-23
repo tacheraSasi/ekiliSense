@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once "../../../config.php";
+include_once "../../../app/app.php";
 include_once "../../../middlwares/teacher_auth.php";
 ?>
 <!DOCTYPE html>
@@ -91,7 +92,7 @@ include_once "../../../middlwares/teacher_auth.php";
                               ? $row_std["parent_phone"]
                               : "None" ?></td>
                           <td><?= $row_std["parent_email"] ?></td>
-                          <td><?= timeAgo(
+                          <td><?= App::timeAgo(
                               strtotime($row_std["created_at"])
                           ) ?></td>
                           <td>

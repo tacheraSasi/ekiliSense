@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once "../../../config.php";
+require_once "../../../app/app.php";
 include_once "../../../middlwares/teacher_auth.php";
 ?>
 <!DOCTYPE html>
@@ -86,7 +87,7 @@ include_once "../../../middlwares/teacher_auth.php";
                           <td><?= $row_std["subject_id"] ?></td>
                           <td><?= $row_std["subject_name"] ?></td>
                           <td><?= $subj_teacher ?></td>
-                          <td><?= timeAgo(
+                          <td><?= App::timeAgo(
                               strtotime($row_std["created_at"])
                           ) ?></td>
                           <td>
