@@ -1,4 +1,8 @@
 <?php
+// Headers
+
+
+
 session_start();
 include_once "../../config.php";
 include_once "../functions/google.php";
@@ -12,13 +16,13 @@ if(!isset($school_uid)){
 // connected echo ""; #for debugging purposes
 
 #getting google data
-$get_google_data = mysqli_query($conn,"SELECT * FROM teachers_google WHERE email = '$teacher_email'");
-$isConnectedToGoogle = false;
+// $get_google_data = mysqli_query($conn,"SELECT * FROM teachers_google WHERE email = '$teacher_email'");
+// $isConnectedToGoogle = false;
 
-if (mysqli_num_rows($get_google_data)>0){
-  $isConnectedToGoogle = true; #teacher has connected his account to google
-  $google_data = mysqli_fetch_assoc($get_google_data);
-}
+// if (mysqli_num_rows($get_google_data)>0){
+//   $isConnectedToGoogle = true; #teacher has connected his account to google
+//   $google_data = mysqli_fetch_assoc($get_google_data);
+// }
 
 #getting the school details 
 $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
