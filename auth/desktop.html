@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in to your ekiliSense Console">
+    <meta name="keywords" content="Sign in to ekiliSense, SaaS, online learning, AI, ekiliSense">
+    <meta name="author" content="EkiliSense - Empowering learning with AI">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ekilie.com">
+    <meta property="og:title" content="EkiliSense - Empowering Education with AI">
+    <meta property="og:description" content="Explore EkiliSense, an AI-powered SaaS platform revolutionizing online learning management.">
+    <meta property="og:image" content="https://www.ekilie.com/assets/img/favicon.jpeg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.ekilie.com">
+    <meta property="twitter:title" content="EkiliSense - Empowering Education with AI">
+    <meta property="twitter:description" content="Explore EkiliSense, an AI-powered SaaS platform revolutionizing online learning management.">
+    <meta property="twitter:image" content="https://www.ekilie.com/assets/img/favicon.jpeg">
+
     <title>ekiliSense Login</title>
 
     <!-- Favicons -->
@@ -10,13 +28,23 @@
     <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="https://sense.ekilie.com/console/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://sense.ekilie.com/console/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="https://sense.ekilie.com/console/assets/css/style.css" rel="stylesheet">
+
+    <style>
+        /* Custom loading spinner */
+        .spinner-grow {
+            width: 1.2rem;
+            height: 1.2rem;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,16 +57,16 @@
 
                             <div class="d-flex justify-content-center py-4">
                                 <a href="./" class="logo d-flex align-items-center w-auto">
-                                    <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="">
-                                    <span class="d-block">ekiliSense</span>
+                                    <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="Logo" width="40">
+                                    <span class="d-block ms-2">ekiliSense</span>
                                 </a>
                             </div>
 
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Sign in to ekiliSense</h5>
-                                        <p class="text-center small">Enter your credentials to continue</p>
+                                        <h5 class="card-title text-center pb-0 fs-4">Enter the Realms of ekiliSense</h5>
+                                        <p class="text-center small">Sign in to continue your journey</p>
                                     </div>
 
                                     <form class="row g-3 needs-validation login-form" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" novalidate>
@@ -46,7 +74,7 @@
 
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <input type="text" name="email" class="form-control" placeholder="Email" required>
+                                                <input type="email" name="email" class="form-control" placeholder="Email" required>
                                             </div>
                                         </div>
 
@@ -57,15 +85,17 @@
                                         </div>
 
                                         <div class="col-12 input-container field button">
-                                            <button class="btn btn-secondary w-100" id="submit" title="Sign in" type="submit">Sign in</button>
+                                            <button class="btn btn-primary w-100" id="submit" title="Sign in" type="submit">
+                                                Sign in
+                                            </button>
                                         </div>
 
                                         <div class="col-12 text-center">
-                                            <p class="small mb-0">Haven't joined ekiliSense yet? 
-                                                <a href="../onboarding/" style="color: #33995d; text-decoration: none;">Join</a>
+                                            <p class="small mb-0">New to ekiliSense? 
+                                                <a href="../onboarding/" class="text-success text-decoration-none">Create account</a>
                                             </p>
                                             <p class="small mb-0">Forgot password? 
-                                                <a href="../onboarding/" style="color: #33995d; text-decoration: none;">Reset here</a>
+                                                <a href="../onboarding/" class="text-success text-decoration-none">Reset here</a>
                                             </p>
                                         </div>
                                     </form>
@@ -80,26 +110,48 @@
 
     <!-- Vendor JS Files -->
     <script src="https://sense.ekilie.com/console/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Login JS -->
+
+    <!-- Login Functionality -->
     <script>
-        // Updated JS selectors
         const form = document.querySelector(".login-form"),
-              continueBtn = form.querySelector(".button button"),
+              continueBtn = form.querySelector("#submit"),
               errorText = form.querySelector(".error-text");
 
-        // Keep the rest of your existing JS code unchanged
         form.onsubmit = (e) => {
             e.preventDefault();
             loadingState(continueBtn, "Sign in", true);
         };
 
         continueBtn.onclick = () => {
-            // Your existing AJAX code
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "server/login.php", true);
+            xhr.onload = () => {
+                if(xhr.readyState === XMLHttpRequest.DONE) {
+                    if(xhr.status === 200) {
+                        let data = xhr.response;
+                        if(data === "success") {
+                            loadingState(continueBtn, "Sign in", false);
+                            location.href = "../console/";
+                        } else {
+                            errorText.style.display = "block";
+                            errorText.textContent = data;
+                            loadingState(continueBtn, "Sign in", false);
+                        }
+                    }
+                }
+            }
+            let formData = new FormData(form);
+            xhr.send(formData);
         };
 
         function loadingState(button, initialtext, isLoading) {
-            // Your existing loading state code
+            if(isLoading) {
+                button.innerHTML = `<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...`;
+                button.disabled = true;
+            } else {
+                button.innerHTML = initialtext;
+                button.disabled = false;
+            }
         }
     </script>
 </body>
