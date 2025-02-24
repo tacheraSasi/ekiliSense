@@ -2,6 +2,10 @@
 if(isset($_SESSION['School_uid'])){
   header("location:../console");
 }
+
+if (isset($_GET['from'])) {
+  header("location:desktop.html");
+}
 // var_dump($_SESSION);
 ?>
 <!DOCTYPE html>

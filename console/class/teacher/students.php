@@ -34,8 +34,6 @@ include_once "../../../middlwares/teacher_auth.php";
 
   <link href="../../assets/css/style.css" rel="stylesheet">
   <link href="../../assets/css/custom.css" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -147,5 +145,4 @@ include_once "../../../middlwares/teacher_auth.php";
   <script src="../../assets/js/main.js"></script>
 
 </body>
-
 </html>
