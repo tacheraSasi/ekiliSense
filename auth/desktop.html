@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ekiliSense Login</title>
+
+    <!-- Favicons -->
+    <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
+    <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="https://sense.ekilie.com/console/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://sense.ekilie.com/console/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://sense.ekilie.com/console/assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                            <div class="d-flex justify-content-center py-4">
+                                <a href="./" class="logo d-flex align-items-center w-auto">
+                                    <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="">
+                                    <span class="d-block">ekiliSense</span>
+                                </a>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="pt-4 pb-2">
+                                        <h5 class="card-title text-center pb-0 fs-4">Sign in to ekiliSense</h5>
+                                        <p class="text-center small">Enter your credentials to continue</p>
+                                    </div>
+
+                                    <form class="row g-3 needs-validation login-form" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" novalidate>
+                                        <div class="col-12 error-text" style="display: none; background-color: rgba(243, 89, 89, 0.562); border: solid 1px rgba(243, 89, 89, 0.822); color: #fff; padding: 6px; border-radius: 8px; margin-bottom: 1rem;"></div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="text" name="email" class="form-control" placeholder="Email" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 input-container field button">
+                                            <button class="btn btn-secondary w-100" id="submit" title="Sign in" type="submit">Sign in</button>
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <p class="small mb-0">Haven't joined ekiliSense yet? 
+                                                <a href="../onboarding/" style="color: #33995d; text-decoration: none;">Join</a>
+                                            </p>
+                                            <p class="small mb-0">Forgot password? 
+                                                <a href="../onboarding/" style="color: #33995d; text-decoration: none;">Reset here</a>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Vendor JS Files -->
+    <script src="https://sense.ekilie.com/console/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Login JS -->
+    <script>
+        // Updated JS selectors
+        const form = document.querySelector(".login-form"),
+              continueBtn = form.querySelector(".button button"),
+              errorText = form.querySelector(".error-text");
+
+        // Keep the rest of your existing JS code unchanged
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            loadingState(continueBtn, "Sign in", true);
+        };
+
+        continueBtn.onclick = () => {
+            // Your existing AJAX code
+        };
+
+        function loadingState(button, initialtext, isLoading) {
+            // Your existing loading state code
+        }
+    </script>
+</body>
+</html>
