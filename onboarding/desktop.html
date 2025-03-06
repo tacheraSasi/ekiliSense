@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EkiliSense - AI-Powered Education Platform">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ekilie.com">
+    <meta property="og:title" content="EkiliSense - Empowering Education with AI">
+    <meta property="og:description" content="AI-powered learning management system transforming education">
+    <meta property="og:image" content="https://www.ekilie.com/assets/img/favicon.jpeg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.ekilie.com">
+    <meta property="twitter:title" content="EkiliSense - Empowering Education with AI">
+    <meta property="twitter:description" content="AI-powered learning management system transforming education">
+    <meta property="twitter:image" content="https://www.ekilie.com/assets/img/favicon.jpeg">
+
+    <!-- Favicons -->
+    <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
+    <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="https://sense.ekilie.com/console/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://sense.ekilie.com/console/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://sense.ekilie.com/console/assets/css/style.css" rel="stylesheet">
+
+    <style>
+        .spinner-grow { width: 1.2rem; height: 1.2rem; }
+        .auth-card { background: linear-gradient(rgba(51, 153, 93, 0.4), rgba(9, 66, 77, 0.586)); }
+        .card-toggle { cursor: pointer; color: #33995d; }
+        .card-toggle:hover { text-decoration: underline; }
+        #successCard { display: none; }
+        #redirectCountdown { color: #6c757d; font-size: 0.9rem; }
+    </style>
+    <title>EkiliSense - Gateway</title>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                            <!-- Logo Header -->
+                            <div class="d-flex justify-content-center py-4">
+                                <div class="logo d-flex align-items-center w-auto">
+                                    <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="Logo" style="height: 40px;">
+                                    <span class="d-block ms-2 fs-4">ekiliSense</span>
+                                </div>
+                            </div>
+
+                            <!-- Login Card -->
+                            <div class="card mb-3 auth-card" id="loginCard">
+                                <div class="card-body">
+                                    <div class="pt-4 pb-2">
+                                        <h5 class="card-title text-center pb-0 fs-4">Continue Your Journey</h5>
+                                        <p class="text-center small">Sign in to your dashboard</p>
+                                    </div>
+
+                                    <form class="row g-3 needs-validation" id="loginForm">
+                                        <div class="col-12 error-text"></div>
+
+                                        <div class="col-12">
+                                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button class="btn btn-secondary w-100" type="submit">
+                                                <span class="submit-text">Sign in</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <p class="small mb-0">New to ekiliSense? 
+                                                <span class="card-toggle" onclick="showRegister()">Create account</span>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Register Card -->
+                            <div class="card mb-3 auth-card" id="registerCard" style="display: none;">
+                                <div class="card-body">
+                                    <div class="pt-4 pb-2">
+                                        <h5 class="card-title text-center pb-0 fs-4">Begin Your Odyssey</h5>
+                                        <p class="text-center small">Create institutional account</p>
+                                    </div>
+
+                                    <form class="row g-3 needs-validation" id="registerForm">
+                                        <div class="col-12 error-text"></div>
+
+                                        <div class="col-12">
+                                            <input type="text" name="institute-name" class="form-control" placeholder="Institution Name" required>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <input type="password" name="password" class="form-control" placeholder="Create Password" required>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <input type="password" name="confirm-password" class="form-control" placeholder="Confirm Password" required>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button class="btn btn-success w-100" type="submit">
+                                                <span class="submit-text">Create Account</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <p class="small mb-0">Already have an account? 
+                                                <span class="card-toggle" onclick="showLogin()">Sign in here</span>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Success Card -->
+                            <div class="card mb-3 auth-card" id="successCard">
+                                <div class="card-body text-center">
+                                    <div class="pt-4 pb-2">
+                                        <h5 class="card-title pb-0 fs-4">Welcome to ekiliSense!</h5>
+                                        <p class="text-muted">Your account has been successfully created</p>
+                                        <div class="spinner-border text-success mt-3" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <div id="redirectCountdown" class="mt-2">Redirecting to console...</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Vendor JS Files -->
+    <script src="https://sense.ekilie.com/console/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Unified JavaScript -->
+    <script>
+        // DOM Elements
+        const loginCard = document.getElementById('loginCard');
+        const registerCard = document.getElementById('registerCard');
+        const successCard = document.getElementById('successCard');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        // Toggle between forms
+        function showRegister() {
+            loginCard.style.display = 'none';
+            registerCard.style.display = 'block';
+        }
+
+        function showLogin() {
+            registerCard.style.display = 'none';
+            loginCard.style.display = 'block';
+        }
+
+        // Shared loading state
+        function loadingState(button, isLoading) {
+            const spinner = `<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> `;
+            if(isLoading) {
+                button.disabled = true;
+                button.querySelector('.submit-text').innerHTML = spinner + 'Processing...';
+            } else {
+                button.disabled = false;
+                button.querySelector('.submit-text').textContent = button === loginForm.querySelector('button') ? 'Sign in' : 'Create Account';
+            }
+        }
+
+        // Handle login
+        loginForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const button = loginForm.querySelector('button');
+            loadingState(button, true);
+            
+            // Simulate API call
+            setTimeout(() => {
+                loadingState(button, false);
+                window.location.href = '../console/';
+            }, 1500);
+        };
+
+        // Handle registration
+        registerForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const button = registerForm.querySelector('button');
+            loadingState(button, true);
+
+            // Simulate API call
+            setTimeout(() => {
+                loadingState(button, false);
+                registerCard.style.display = 'none';
+                successCard.style.display = 'block';
+                startRedirectCountdown();
+            }, 1500);
+        };
+
+        // Redirect countdown
+        function startRedirectCountdown() {
+            let countdown = 3;
+            const countdownElement = document.getElementById('redirectCountdown');
+            
+            const interval = setInterval(() => {
+                countdownElement.textContent = `Redirecting to console in ${countdown}...`;
+                countdown--;
+                
+                if(countdown < 0) {
+                    clearInterval(interval);
+                    window.location.href = '../console/?u=new';
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
