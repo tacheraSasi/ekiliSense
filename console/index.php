@@ -667,9 +667,9 @@ include_once "../middlwares/school_auth.php";
                     <div class="input-container field button">
                         <button  id="submit" title="add teacher" type="submit">ADD</button>
                     </div>
-                    <div class="link" style="color:lightgrey">Need help?
+                    <div class="link" style="color:lightgrey">Alternative?
                       <a href="../onboarding/" style="color:#33995d;text-decoration:none">
-                       Contact Support
+                       Import Teachers via excel
                       </a>
                     </div> 
           
