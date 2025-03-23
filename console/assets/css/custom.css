@@ -514,37 +514,37 @@ table{
 .import-section {
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
   text-align: center;
   margin-top: 20px;
   width: 100%;
   padding: 20px;
-  border-top: 1px solid #666;
+  border-top: 1px solid #ddd;
 }
 
 .import-heading {
   font-size: 1rem;
   font-weight: 500;
   color: #666;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 /* Upload Field */
 .upload-label {
   display: flex;
-  width: 100%;
   align-items: center;
   justify-content: center;
   background-color: hsl(0, 0%, 96%);
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   border: 2px dashed #bbb;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .upload-label:hover {
-  background-color: #e8e8e8;
+  background-color: #f0f0f0;
   border-color: #33995d;
 }
 
@@ -575,3 +575,4 @@ table{
 .upload-btn:hover {
   background-color: #287a4f;
 }
+
