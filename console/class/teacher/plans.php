@@ -108,7 +108,7 @@ include_once "../../../middlwares/teacher_auth.php";
                             padding:6px;
                             border-radius:8px;">
                           </div>
-                        <!-- TODO: add emojis to the plcaholder -->
+                         
                         <input type="hidden" name="form-type" value="plan" >
                         <input type="hidden" name="owner" value="<?= $teacher_email ?>" >
                         <div class=" field input">

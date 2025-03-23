@@ -257,7 +257,7 @@ include_once "../../middlwares/school_auth.php";
                               padding:6px;
                               border-radius:8px;">
                             </div>
-                          <!-- TODO: add emojis to the plcaholder -->
+                           
                           <input type="hidden" name="form-type" value="class" >
                           <div class=" field input">
                             <input style="width: 100%;"  type="text" name="class-name"  placeholder="Write the class name here " required>

@@ -34,13 +34,16 @@ include_once "../middlwares/school_auth.php";
 
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/custom.css" rel="stylesheet">
-  
+
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-99HVMVD8V2"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
   gtag('js', new Date());
 
   gtag('config', 'G-99HVMVD8V2');
@@ -63,15 +66,15 @@ include_once "../middlwares/school_auth.php";
       <ul class="d-flex align-items-center">
 
         <li class="upgrade-btn-section">
-          
+
         </li>
         <li class="nav-item dropdown">
 
-        <button id="ekilie-ai-btn" class=" nav-link nav-icon d-flex align-items-center justify-content-center" 
+          <button id="ekilie-ai-btn" class=" nav-link nav-icon d-flex align-items-center justify-content-center"
             data-bs-toggle="modal" data-bs-target="#modalAI-ekiliSense"
             style="border:none;outline:none;border-radius:50%">
             <i class="bi bi-robot"></i>
-        </button>
+          </button>
 
         </li><!-- End Messages Nav -->
         <li class="nav-item dropdown">
@@ -128,7 +131,7 @@ include_once "../middlwares/school_auth.php";
               <hr class="dropdown-divider">
             </li>
 
-            
+
 
             <li>
               <hr class="dropdown-divider">
@@ -144,12 +147,12 @@ include_once "../middlwares/school_auth.php";
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/school-1.png" alt="Profile" class="">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$school['School_name']?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $school['School_name'] ?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6 id="school-name-h6"><?=$school['School_name']?></h6>
+              <h6 id="school-name-h6"><?= $school['School_name'] ?></h6>
               <span>ekiliSense</span>
             </li>
             <li>
@@ -167,7 +170,7 @@ include_once "../middlwares/school_auth.php";
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?=$school_uid?>">
+              <a class="dropdown-item d-flex align-items-center" href="logout.php?ref=<?= $school_uid ?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -218,12 +221,12 @@ include_once "../middlwares/school_auth.php";
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="https://convo.ekilie.com">
-        <i class="bi bi-camera-video"></i>
+          <i class="bi bi-camera-video"></i>
           <span>Convo</span>
         </a>
       </li>
 
-      
+
 
       <li class="nav-heading">Pages</li>
 
@@ -235,7 +238,7 @@ include_once "../middlwares/school_auth.php";
       </li><!-- End Profile Page Nav -->
 
 
-      
+
 
     </ul>
 
@@ -245,43 +248,43 @@ include_once "../middlwares/school_auth.php";
 
     <div class="pagetitle">
       <h1><i class="bi bi-grid"> </i> Home</h1>
-      
+
     </div><!-- End Page Title -->
-    
-    
+
+
     <section class="section dashboard">
       <div class="row">
-       
+
         <!-- Left side columns -->
         <div class="col-lg-8">
           <div class="row">
             <div class="manage-btn-container">
               <div class="manage-content">
-                <button 
-                  type="button" 
-                  data-bs-toggle="modal" 
-                  data-bs-target="#add-teacher-modal" 
-                  class="manage-btn" 
+                <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add-teacher-modal"
+                  class="manage-btn"
                   style="background-color: cadetblue;">
                   <i class="bi bi-people"></i>
                   Add teacher
                 </button>
-                
-                <button 
-                  type="button" 
-                  data-bs-toggle="modal" 
-                  data-bs-target="#add-class-modal" 
-                  class="manage-btn" 
+
+                <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add-class-modal"
+                  class="manage-btn"
                   style="background-color: #a0695f;">
                   <i class="bi bi-buildings"></i>
                   Create class
                 </button>
 
-                <button 
-                  type="button"  
-                  data-bs-toggle="modal" 
-                  data-bs-target="#add-class-teacher-modal" 
-                  class="manage-btn" 
+                <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add-class-teacher-modal"
+                  class="manage-btn"
                   style="background-color: #64a05f;">
                   <i class="bi bi-person"></i>
                   Add Class teacher
@@ -301,7 +304,7 @@ include_once "../middlwares/school_auth.php";
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?=$students_count?></h6>
+                      <h6><?= $students_count ?></h6>
                       <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
  -->
                     </div>
@@ -315,7 +318,7 @@ include_once "../middlwares/school_auth.php";
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
 
-                
+
 
                 <div class="card-body">
                   <h5 class="card-title">Teachers <span>| all</span></h5>
@@ -325,7 +328,7 @@ include_once "../middlwares/school_auth.php";
                       <i class="bi bi-person"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?=$teachers_count?></h6>
+                      <h6><?= $teachers_count ?></h6>
                       <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
  -->
                     </div>
@@ -340,8 +343,8 @@ include_once "../middlwares/school_auth.php";
 
               <div class="card info-card customers-card">
 
-                
-                <div class="card-body" >
+
+                <div class="card-body">
                   <h5 class="card-title">Classes <span>| all</span></h5>
 
                   <div class="d-flex align-items-center">
@@ -349,7 +352,7 @@ include_once "../middlwares/school_auth.php";
                       <i class="bi bi-buildings-fill"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?= $classes_count?></h6>
+                      <h6><?= $classes_count ?></h6>
                       <!-- <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span> -->
 
                     </div>
@@ -359,7 +362,7 @@ include_once "../middlwares/school_auth.php";
               </div>
 
             </div><!-- End Customers Card -->
-            
+
 
             <!-- Reports -->
             <div class="col-12">
@@ -367,7 +370,7 @@ include_once "../middlwares/school_auth.php";
                 <div class="card">
                   <div class="card-body">
                     <h5 class="card-title">Registered users</h5>
-      
+
                     <!-- Bar Chart -->
                     <canvas id="barChart" style="max-height: 400px;"></canvas>
                     <script>
@@ -378,7 +381,7 @@ include_once "../middlwares/school_auth.php";
                             labels: ['Teachers', 'Students', 'Parents'],
                             datasets: [{
                               label: 'Users',
-                              data: [<?=$teachers_count?>, <?=$students_count?>, <?=$students_count/2?>],
+                              data: [<?= $teachers_count ?>, <?= $students_count ?>, <?= $students_count / 2 ?>],
                               backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(153, 102, 255, 0.2)',
@@ -403,13 +406,13 @@ include_once "../middlwares/school_auth.php";
                       });
                     </script>
                     <!-- End Bar CHart -->
-      
+
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-12">
-              
+
               <div class="card">
 
                 <div class="card-body">
@@ -486,13 +489,13 @@ include_once "../middlwares/school_auth.php";
         <!-- Right side columns -->
         <div class="col-lg-4">
 
-        <div class="alert alert-dark bg-dark border-0 text-light alert-dismissible fade show" role="alert">
-          <h4 class="alert-heading"><i class="bi bi-lightbulb"></i> ekiliSense </h4>
-          <p>😉 AI-powered education management is here. Seamless integration and real-time analytics.</p>
-          <hr style="background-color: var(--border-color);">
-          <p class="mb-0"><!-- <i class="bi bi-rocket"></i> -->🚀 Transform your school's management with ekiliSense!</p>
-          <button type="button" class="btn-close text-light" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+          <div class="alert alert-dark bg-dark border-0 text-light alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading"><i class="bi bi-lightbulb"></i> ekiliSense </h4>
+            <p>😉 AI-powered education management is here. Seamless integration and real-time analytics.</p>
+            <hr style="background-color: var(--border-color);">
+            <p class="mb-0"><!-- <i class="bi bi-rocket"></i> -->🚀 Transform your school's management with ekiliSense!</p>
+            <button type="button" class="btn-close text-light" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
 
 
           <!-- ekiliSense Updates -->
@@ -632,49 +635,55 @@ include_once "../middlwares/school_auth.php";
                     </div>
                   </div>
                   <div class="bottom-container">
-                    "Enhance teaching with ekiliSense’s advanced tools. 
-                    Easily onboard new teachers and explore features that 
+                    "Enhance teaching with ekiliSense’s advanced tools.
+                    Easily onboard new teachers and explore features that
                     support educational excellence."
                   </div>
-                  
+
                 </div>
                 <div class="right">
                   <h1>Add a teacher</h1>
                   <p class="sub-heading">
                     Bringing Artificial intelligence closer to education
                   </p>
-                  <form class="modal-form" id="teacher"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
-                  <div class="error-text" style="
+                  <form class="modal-form" id="teacher" action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+                    <div class="error-text" style="
                         background-color: rgba(243, 89, 89, 0.562);
                         border:solid 1px rgba(243, 89, 89, 0.822);
                         color:#fff;
                         padding:6px;
                         border-radius:8px;">
-                      </div>
-                    <!-- TODO: add emojis to the plcaholder -->
-                    <input type="hidden" name="form-type" value="teacher" >
+                    </div>
+
+                    <input type="hidden" name="form-type" value="teacher">
                     <div class=" field input">
-                      <input style="width: 100%;"  type="text" name="name"  placeholder="Teacher's full name " required>
+                      <input style="width: 100%;" type="text" name="name" placeholder="Teacher's full name " required>
                     </div>
                     <div class=" field input">
-                      <input style="width: 100%;"  type="text" name="email"  placeholder="Teacher's email " required>
+                      <input style="width: 100%;" type="text" name="email" placeholder="Teacher's email " required>
                     </div>
-                    
-                    <div class=" field input" >
-                      <input style="width: 100%;" type="tel" name="mobile"  placeholder="Teacher's mobile" required>
+
+                    <div class=" field input">
+                      <input style="width: 100%;" type="tel" name="mobile" placeholder="Teacher's mobile" required>
                     </div>
-                    
+
                     <div class="input-container field button">
-                        <button  id="submit" title="add teacher" type="submit">ADD</button>
+                      <button id="submit" title="add teacher" type="submit">ADD</button>
                     </div>
                     <div class="link" style="color:lightgrey">Alternative?
-                      <a href="../onboarding/" style="color:#33995d;text-decoration:none">
-                       Import Teachers via excel
-                      </a>
-                    </div> 
-          
+                      <p style="color:#33995d;text-decoration:none;cursor:pointer">
+                        Import Teachers via excel
+                      </p>
+                    </div>
                   </form>
-                  
+                  <!-- excel details section -->
+                  <form style="display:block" class="modal-form" id="teacher" action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+
+                    <div class=" field input">
+                      <input style="width: 100%;" type="file" name="excel" placeholder="Teacher's full name " required>
+                    </div>
+                  </form>
+
                 </div>
               </div>
             </div>
@@ -704,35 +713,35 @@ include_once "../middlwares/school_auth.php";
                     </div>
                   </div>
                   <div class="bottom-container">
-                    "Assign teachers to classes effortlessly. 
-                    EkiliSense simplifies class management for a 
+                    "Assign teachers to classes effortlessly.
+                    EkiliSense simplifies class management for a
                     more organized educational environment."
                   </div>
-                  
+
                 </div>
                 <div class="right">
                   <h1>Add a class teacher</h1>
                   <p class="sub-heading">
                     Bringing Artificial intelligence closer to education
                   </p>
-                  <form class="modal-form" id="class-teacher"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
-                  <div class="error-text" style="
+                  <form class="modal-form" id="class-teacher" action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+                    <div class="error-text" style="
                         background-color: rgba(243, 89, 89, 0.562);
                         border:solid 1px rgba(243, 89, 89, 0.822);
                         color:#fff;
                         padding:6px;
                         border-radius:8px;">
-                      </div>
-                    <!-- TODO: add emojis to the plcaholder -->
-                    <input type="hidden" name="form-type" value="class-teacher" >
+                    </div>
+
+                    <input type="hidden" name="form-type" value="class-teacher">
                     <div class=" field input">
                       <label for="choose-class">Select a class</label>
                       <select name="choosen-class" id="choose-class" required>
                         <?php
-                          while($row_class = mysqli_fetch_array($get_classes)){
-                            $class_name = $row_class['Class_name'];
-                            echo "<option value='$class_name'>$class_name</option>";
-                          }
+                        while ($row_class = mysqli_fetch_array($get_classes)) {
+                          $class_name = $row_class['Class_name'];
+                          echo "<option value='$class_name'>$class_name</option>";
+                        }
                         ?>
                       </select>
                     </div>
@@ -740,27 +749,27 @@ include_once "../middlwares/school_auth.php";
                       <label for="choose-class-teacher">Choose a teacher</label>
                       <select name="choosen-class-teacher" id="choose-class-teacher">
                         <?php
-                          while($row_teacher = mysqli_fetch_array($get_teachers)){
-                            $teacher_name = $row_teacher['teacher_fullname'];
-                            echo "<option value='$teacher_name'>$teacher_name</option>";
-                          }
+                        while ($row_teacher = mysqli_fetch_array($get_teachers)) {
+                          $teacher_name = $row_teacher['teacher_fullname'];
+                          echo "<option value='$teacher_name'>$teacher_name</option>";
+                        }
                         ?>
                       </select>
                     </div>
-                    
+
                     <div class="input-container field button">
-                        <button  id="submit" title="add teacher" type="submit">ADD</button>
+                      <button id="submit" title="add teacher" type="submit">ADD</button>
                     </div>
                     <div class="link" style="color:lightgrey">Need help?
                       <a href="../onboarding/" style="color:#33995d;text-decoration:none">
-                       Contact Support
+                        Contact Support
                       </a>
-                    </div> 
-          
-                   
-          
+                    </div>
+
+
+
                   </form>
-                  
+
                 </div>
               </div>
             </div>
@@ -790,45 +799,45 @@ include_once "../middlwares/school_auth.php";
                     </div>
                   </div>
                   <div class="bottom-container">
-                    "Create and manage classes with ease. 
-                    ekiliSense’s intuitive interface helps you 
+                    "Create and manage classes with ease.
+                    ekiliSense’s intuitive interface helps you
                     set up and organize classes efficiently."
                   </div>
-                  
+
                 </div>
                 <div class="right">
                   <h1>Create a class</h1>
                   <p class="sub-heading">
                     Bringing Artificial intelligence closer to education
                   </p>
-                  <form class="modal-form" id="class"  action="#" method="POST" enctype="multipart/form-data" autocomplete="off" >
-                  <div class="error-text" style="
+                  <form class="modal-form" id="class" action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+                    <div class="error-text" style="
                         background-color: rgba(243, 89, 89, 0.562);
                         border:solid 1px rgba(243, 89, 89, 0.822);
                         color:#fff;
                         padding:6px;
                         border-radius:8px;">
-                      </div>
-                    <!-- TODO: add emojis to the plcaholder -->
-                    <input type="hidden" name="form-type" value="class" >
-                    <div class=" field input">
-                      <input style="width: 100%;"  type="text" name="class-name"  placeholder="Write the class name here " required>
                     </div>
-                    
-                  
+
+                    <input type="hidden" name="form-type" value="class">
+                    <div class=" field input">
+                      <input style="width: 100%;" type="text" name="class-name" placeholder="Write the class name here " required>
+                    </div>
+
+
                     <div class="input-container field button">
-                        <button  id="submit" title="create class" type="submit">CREATE</button>
+                      <button id="submit" title="create class" type="submit">CREATE</button>
                     </div>
                     <div class="link" style="color:lightgrey">Need help?
                       <a href="../onboarding/" style="color:#33995d;text-decoration:none">
-                       Contact Support
+                        Contact Support
                       </a>
-                    </div> 
-          
-                   
-          
+                    </div>
+
+
+
                   </form>
-                  
+
                 </div>
               </div>
             </div>
@@ -857,26 +866,26 @@ include_once "../middlwares/school_auth.php";
                     </div>
                   </div>
                   <div class="bottom-container">
-                    "Unlock premium features with ekiliSense. 
-                    Gain access to advanced tools and insights to 
+                    "Unlock premium features with ekiliSense.
+                    Gain access to advanced tools and insights to
                     elevate your educational experience."
                   </div>
-                  
+
                 </div>
                 <div class="right">
                   <h1 style="font-size: 30px;">Upgrade to ekiliSense premium</h1>
-                  
+
                   <form class="modal-form" id="upgrade" action="#" method="POST" enctype="multipart/form-data" autocomplete="off" style="max-width: 400px; margin: 0 auto; padding: 20px; background-color: #1c1c1e; border-radius: 10px; color: #fff;text-align:left">
-                    <input type="hidden" name="school" value="<?=$school_uid?>">
+                    <input type="hidden" name="school" value="<?= $school_uid ?>">
                     <h3 style="text-align: center; margin-bottom: 10px; color: #fff;">10000 Tsh/month</h3>
 
                     <!-- Feature List -->
                     <ul class="list-group" style="margin-bottom: 15px; background-color: transparent;">
-                      
+
                       <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
                         <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> 100 emails and 20 sms to all you users monthly
 
-                        
+
                       </li>
                       <li class="list-group-item" style="background-color: transparent; color: #fff; border: none;">
                         <i class="bi bi-check-circle-fill" style="color: var(--btn-light-bg);"></i> Priority Customer Support
@@ -905,14 +914,16 @@ include_once "../middlwares/school_auth.php";
       </div>
 
     </section>
-    
+
   </main><!-- End #main -->
 
 
-  
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  
-  <script>let assetsAt= "assets";</script>
+
+  <script>
+    let assetsAt = "assets";
+  </script>
   <script src="assets/js/modal-form.js"></script>
 
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -928,120 +939,122 @@ include_once "../middlwares/school_auth.php";
 
   <!-- JS Files -->
   <script>
-    
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     let roomId = urlParams.get('u')
     console.log(typeof(roomId))
-    if(roomId=='new'){
+    if (roomId == 'new') {
       window.location.href = 'v1/'
     }
 
-//AI assistant logic
-const form = document.getElementById("talk-to-assistant");
-const input = document.querySelector(".input-field")
-const sendBtn = document.getElementById("send-btn");
-const itagSend = document.getElementById("i-send");
-const chatContainer = document.querySelector('#chat_container');
-const modalBody = document.querySelector('#ekilie-ai-body')
-const BASE_API_URL = 'https://ekilie.onrender.com'
+    //AI assistant logic
+    const form = document.getElementById("talk-to-assistant");
+    const input = document.querySelector(".input-field")
+    const sendBtn = document.getElementById("send-btn");
+    const itagSend = document.getElementById("i-send");
+    const chatContainer = document.querySelector('#chat_container');
+    const modalBody = document.querySelector('#ekilie-ai-body')
+    const BASE_API_URL = 'https://ekilie.onrender.com'
 
-const schoolName = document.getElementById("school-name-h6").innerText
-console.log(form)
-console.log("current school is "+schoolName)
+    const schoolName = document.getElementById("school-name-h6").innerText
+    console.log(form)
+    console.log("current school is " + schoolName)
 
-form.onsubmit = (e)=>{
-    e.preventDefault();
+    form.onsubmit = (e) => {
+      e.preventDefault();
 
-}
+    }
 
 
-let loadInterval
+    let loadInterval
 
-function loader(element) {
-    element.innerHTML = '<div class="loader"></div>'
+    function loader(element) {
+      element.innerHTML = '<div class="loader"></div>'
 
-    // loadInterval = setInterval(() => {
-    //     // Update the text content of the loading indicator
-    //     element.textContent += '.';
+      // loadInterval = setInterval(() => {
+      //     // Update the text content of the loading indicator
+      //     element.textContent += '.';
 
-    //     // If the loading indicator has reached three dots, reset it
-    //     if (element.innerHTML === '<div class="loader"></div>') {
-    //         element.textContent = '';
-    //     }
-    // }, 300);
-}
-function typeText(element, text) {
-    let index = 0
+      //     // If the loading indicator has reached three dots, reset it
+      //     if (element.innerHTML === '<div class="loader"></div>') {
+      //         element.textContent = '';
+      //     }
+      // }, 300);
+    }
 
-    let interval = setInterval(() => {
+    function typeText(element, text) {
+      let index = 0
+
+      let interval = setInterval(() => {
         if (index < text.length) {
-            element.innerHTML += text.charAt(index)
-            index++
+          element.innerHTML += text.charAt(index)
+          index++
         } else {
-            clearInterval(interval)
+          clearInterval(interval)
         }
-    }, 20)
-}
+      }, 20)
+    }
 
-function generateUniqueId() {
-    const timestamp = Date.now();
-    const randomNumber = Math.random();
-    const hexadecimalString = randomNumber.toString(16);
+    function generateUniqueId() {
+      const timestamp = Date.now();
+      const randomNumber = Math.random();
+      const hexadecimalString = randomNumber.toString(16);
 
-    return `id-${timestamp}-${hexadecimalString}`;
-}
+      return `id-${timestamp}-${hexadecimalString}`;
+    }
 
 
-function chatStripe(isAi, value, uniqueId) {
-    return (
+    function chatStripe(isAi, value, uniqueId) {
+      return (
         `
         <div class="ekilie-chat ${isAi ? 'ai' : ''}">
           <div class="role ${isAi ? 'assistant' : 'user'}">${isAi ? 'ekilie' : 'me'}</div>
           <span id=${uniqueId}>${value}</span>
         </div>
     `
-    )
-}
+      )
+    }
 
-const handleSubmit = async (e)=>{
-    e.preventDefault()
-    let prompt = input.value
-    input.value=''
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      let prompt = input.value
+      input.value = ''
 
-    
-    // user's chatstripe
-    chatContainer.innerHTML += chatStripe(false, prompt)
-    // bot's chatstripe
-    const uniqueId = generateUniqueId()
-    chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
 
-    
-    modalBody.scrollTop = modalBody.scrollHeight;
+      // user's chatstripe
+      chatContainer.innerHTML += chatStripe(false, prompt)
+      // bot's chatstripe
+      const uniqueId = generateUniqueId()
+      chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
 
-    // specific message div 
-    const messageDiv = document.getElementById(uniqueId)
 
-    // messageDiv.innerHTML = "..."
-    loader(messageDiv)
+      modalBody.scrollTop = modalBody.scrollHeight;
 
-    const response = await fetch(`../aiHelper.php`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ prompt: `Current School ${schoolName}: ${prompt}` }),
-    })
-    clearInterval(loadInterval)
-    messageDiv.innerHTML = " "
+      // specific message div 
+      const messageDiv = document.getElementById(uniqueId)
 
-    if (response.ok) {//TODO:fix this here 
+      // messageDiv.innerHTML = "..."
+      loader(messageDiv)
+
+      const response = await fetch(`../aiHelper.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: `Current School ${schoolName}: ${prompt}`
+        }),
+      })
+      clearInterval(loadInterval)
+      messageDiv.innerHTML = " "
+
+      if (response.ok) { //TODO:fix this here 
         const data = await response.json();
-        if (data){
+        if (data) {
           console.log(data.text)
           const parsedData = data.text.trim() // trims any trailing spaces/'\n' 
           typeText(messageDiv, parsedData)
-        }else{
+        } else {
           const err = await response.text()
           console.log(err)
 
@@ -1049,41 +1062,41 @@ const handleSubmit = async (e)=>{
 
         }
 
-    } else {
+      } else {
         const err = await response.text()
 
         messageDiv.innerHTML = "Something went wrong  😿 😿"
         alert(err)
+      }
+
     }
 
-}
+    // sendBtn.addEventListener('click',()=>{
+    //     handleSubmit()
+    // })
 
-// sendBtn.addEventListener('click',()=>{
-//     handleSubmit()
-// })
+    // input.onkeyup = ()=>{
+    //     if(input.value != ""){
+    //         sendBtn.classList.add("active");
+    //         itagSend.classList.add("active");
+    //     }else{
+    //         sendBtn.classList.remove("active");
+    //         itagSend.classList.remove("active");
+    //     }
+    // }
 
-// input.onkeyup = ()=>{
-//     if(input.value != ""){
-//         sendBtn.classList.add("active");
-//         itagSend.classList.add("active");
-//     }else{
-//         sendBtn.classList.remove("active");
-//         itagSend.classList.remove("active");
-//     }
-// }
-
-form.addEventListener('submit', handleSubmit)
-input.addEventListener('keyup', (e) => {
-    if(input.value != ""){
+    form.addEventListener('submit', handleSubmit)
+    input.addEventListener('keyup', (e) => {
+      if (input.value != "") {
         sendBtn.classList.add("active");
         itagSend.classList.add("active");
-    }else{
+      } else {
         sendBtn.classList.remove("active");
         itagSend.classList.remove("active");
-    }
-    
-})
-</script>
+      }
+
+    })
+  </script>
 
 </body>
 
