@@ -5,7 +5,6 @@ include_once "../middlwares/school_auth.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -676,13 +675,21 @@ include_once "../middlwares/school_auth.php";
                       </p>
                     </div>
                   </form>
-                  <!-- excel details section -->
-                  <form style="display:block" class="modal-form" id="teacher" action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+                  <!-- Enhanced Import via Excel Section -->
+                  <div class="import-section">
+                    <p class="import-heading">Or Import Teachers via Excel</p>
+                    <form class="modal-form" id="teacher-excel" action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+                      <input type="hidden" name="form-type" value="teacher-excel">
 
-                    <div class=" field input">
-                      <input style="width: 100%;" type="file" name="excel" placeholder="Teacher's full name " required>
-                    </div>
-                  </form>
+                      <label for="excel-upload" class="upload-label">
+                        <span class="upload-text">Upload an Excel File</span>
+                        <input type="file" name="excel" id="excel-upload" required>
+                      </label>
+
+                      <button class="upload-btn" type="submit">Upload & Import</button>
+                    </form>
+                  </div>
+
 
                 </div>
               </div>
