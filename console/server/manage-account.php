@@ -37,7 +37,7 @@ function editSchool($conn,$school_uid){
     #running the query
     if(mysqli_query($conn,$query)){
         return true;
-    }#figure out a logic to handle errors 
+    }#TODO:figure out a logic to handle errors 
 
 
 }

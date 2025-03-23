@@ -519,7 +519,7 @@ table{
   margin-top: 20px;
   width: 100%;
   padding: 20px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #666;
 }
 
 .import-heading {
@@ -555,7 +555,7 @@ table{
 }
 
 #excel-upload {
-  display: none; /* Hide default file input */
+  display: none;
 }
 
 /* Upload Button */

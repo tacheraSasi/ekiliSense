@@ -680,6 +680,13 @@ include_once "../middlwares/school_auth.php";
                   <div class="import-section">
                     <form class="modal-form" id="teacher-excel" action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
                       <p class="import-heading">Or Import Teachers via Excel</p>
+                      <div class="error-text" style="
+                        background-color: rgba(243, 89, 89, 0.562);
+                        border:solid 1px rgba(243, 89, 89, 0.822);
+                        color:#fff;
+                        padding:6px;
+                        border-radius:8px;">
+                    </div>
                       <input type="hidden" name="form-type" value="teacher-excel">
 
                       <label for="excel-upload" class="upload-label">
@@ -687,7 +694,9 @@ include_once "../middlwares/school_auth.php";
                         <input type="file" name="excel" id="excel-upload" required onchange="updateFileName()">
                       </label>
 
-                      <button class="upload-btn" type="submit">Upload & Import</button>
+                      <div class="input-container field button">
+                        <button class="upload-btn" title="add teachers" type="submit">Upload & Import</button>
+                      </div>
                     </form>
                   </div>
 
