@@ -512,10 +512,14 @@ table{
 
 /* Import Excel Section */
 .import-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   margin-top: 20px;
+  width: 100%;
   padding: 20px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #666;
 }
 
 .import-heading {
@@ -528,9 +532,10 @@ table{
 /* Upload Field */
 .upload-label {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
+  background-color: hsl(0, 0%, 96%);
   padding: 10px;
   border-radius: 8px;
   border: 2px dashed #bbb;

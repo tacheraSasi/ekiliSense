@@ -5,6 +5,7 @@ include_once "../middlwares/school_auth.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -669,26 +670,42 @@ include_once "../middlwares/school_auth.php";
                     <div class="input-container field button">
                       <button id="submit" title="add teacher" type="submit">ADD</button>
                     </div>
-                    <div class="link" style="color:lightgrey">Alternative?
+                    <!-- <div class="link" style="color:lightgrey">Alternative?
                       <p style="color:#33995d;text-decoration:none;cursor:pointer">
                         Import Teachers via excel
                       </p>
-                    </div>
+                    </div> -->
                   </form>
                   <!-- Enhanced Import via Excel Section -->
                   <div class="import-section">
-                    <p class="import-heading">Or Import Teachers via Excel</p>
                     <form class="modal-form" id="teacher-excel" action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+                      <p class="import-heading">Or Import Teachers via Excel</p>
                       <input type="hidden" name="form-type" value="teacher-excel">
 
                       <label for="excel-upload" class="upload-label">
-                        <span class="upload-text">Upload an Excel File</span>
-                        <input type="file" name="excel" id="excel-upload" required>
+                        <span id="file-name" class="upload-text">Upload an Excel File</span>
+                        <input type="file" name="excel" id="excel-upload" required onchange="updateFileName()">
                       </label>
 
                       <button class="upload-btn" type="submit">Upload & Import</button>
                     </form>
                   </div>
+
+                  <script>
+                    function updateFileName() {
+                      const input = document.getElementById('excel-upload');
+                      const fileName = document.getElementById('file-name');
+
+                      if (input.files.length > 0) {
+                        fileName.textContent = input.files[0].name;
+                        fileName.style.color = "#33995d";
+                      } else {
+                        fileName.textContent = "Upload an Excel File";
+                        fileName.style.color = "#444";
+                      }
+                    }
+                  </script>
+
 
 
                 </div>
