@@ -1,8 +1,5 @@
 <?php
 // Headers
-
-
-
 session_start();
 include_once "../../config.php";
 include_once "../functions/google.php";
@@ -52,6 +49,9 @@ switch($formType) {
         break;
     case 'stuff-attendance':
         addStuffAttendance($conn,$school_uid);
+        break;
+    case "teacher-excel":
+        addTeacherViaExcel($conn,$school_uid);
         break;
     default:
         echo "Invalid form type!";
@@ -341,4 +341,9 @@ function sendMail($email, $name, $otp,$school_name) {
     } else {
         echo "Teacher added but failed to send email";
     }
+}
+
+
+function addTeacherViaExcel($conn,$school_uid){
+    echo "Something is happening";
 }

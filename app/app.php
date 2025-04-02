@@ -1,6 +1,19 @@
 <?php
 
 class App{
+    public static function Protect(){
+        // Prevents direct access
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            die("Access denied");
+        }
+        
+        // Validates referer (optional additional protection)
+        $allowedDomains = ['sense.ekilie.com', 'localhost']; 
+        $referer = parse_url($_SERVER['HTTP_REFERER'] ?? '', PHP_URL_HOST);
+        if (!in_array($referer, $allowedDomains)) {
+            die("Unauthorized request source");
+        }
+    } 
     public static function timeAgo(string $timestamp){
         $current_time = time();
         $time_difference = $current_time - $timestamp;
