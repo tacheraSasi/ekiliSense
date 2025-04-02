@@ -147,12 +147,14 @@ include_once "../middlwares/school_auth.php";
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/school-1.png" alt="Profile" class="">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $school['School_name'] ?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $school[
+                "School_name"
+            ] ?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6 id="school-name-h6"><?= $school['School_name'] ?></h6>
+              <h6 id="school-name-h6"><?= $school["School_name"] ?></h6>
               <span>ekiliSense</span>
             </li>
             <li>
@@ -381,7 +383,8 @@ include_once "../middlwares/school_auth.php";
                             labels: ['Teachers', 'Students', 'Parents'],
                             datasets: [{
                               label: 'Users',
-                              data: [<?= $teachers_count ?>, <?= $students_count ?>, <?= $students_count / 2 ?>],
+                              data: [<?= $teachers_count ?>, <?= $students_count ?>, <?= $students_count /
+    2 ?>],
                               backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(153, 102, 255, 0.2)',
@@ -701,22 +704,64 @@ include_once "../middlwares/school_auth.php";
                   </div>
 
                   <script>
-                    function updateFileName() {
-                      const input = document.getElementById('excel-upload');
+                  document.getElementById('excel-upload').addEventListener('change', function(e) {
+                      const file = e.target.files[0];
+                      const allowedMimeTypes = [
+                          'application/vnd.ms-excel',
+                          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                          'application/octet-stream' 
+                      ];
+                      const allowedExtensions = ['.xls', '.xlsx'];
                       const fileName = document.getElementById('file-name');
 
-                      if (input.files.length > 0) {
-                        fileName.textContent = input.files[0].name;
-                        fileName.style.color = "#33995d";
-                      } else {
-                        fileName.textContent = "Upload an Excel File";
-                        fileName.style.color = "#444";
+                      // Clear previous state
+                      fileName.style.color = "#444";
+
+                      if (!file) {
+                          updateFileName();
+                          return;
                       }
-                    }
+
+                      const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+
+                      const isValidType = allowedMimeTypes.includes(file.type) || allowedExtensions.includes(fileExtension);
+
+                      if (!isValidType) {
+                          alert('Error: Only Excel files (.xls, .xlsx) are allowed!');
+                          e.target.value = '';
+                          updateFileName();
+                          fileName.style.color = "#ff4444";
+                          fileName.textContent = "Invalid file type!";
+                          return;
+                      }
+
+                      const maxSize = 5 * 1024 * 1024; // 5MB
+                      if (file.size > maxSize) {
+                          alert('Error: File size exceeds 5MB limit!');
+                          e.target.value = '';
+                          updateFileName();
+                          fileName.style.color = "#ff4444";
+                          fileName.textContent = "File too large!";
+                          return;
+                      }
+
+                      updateFileName();
+                  });
+
+                  function updateFileName() {
+                      const input = document.getElementById('excel-upload');
+                      const fileName = document.getElementById('file-name');
+                      const file = input.files[0];
+
+                      if (file) {
+                          fileName.textContent = file.name;
+                          fileName.style.color = "#33995d";
+                      } else {
+                          fileName.textContent = "Upload an Excel File";
+                          fileName.style.color = "#444";
+                      }
+                  }
                   </script>
-
-
-
                 </div>
               </div>
             </div>
@@ -770,23 +815,23 @@ include_once "../middlwares/school_auth.php";
                     <div class=" field input">
                       <label for="choose-class">Select a class</label>
                       <select name="choosen-class" id="choose-class" required>
-                        <?php
-                        while ($row_class = mysqli_fetch_array($get_classes)) {
-                          $class_name = $row_class['Class_name'];
-                          echo "<option value='$class_name'>$class_name</option>";
-                        }
-                        ?>
+                        <?php while (
+                            $row_class = mysqli_fetch_array($get_classes)
+                        ) {
+                            $class_name = $row_class["Class_name"];
+                            echo "<option value='$class_name'>$class_name</option>";
+                        } ?>
                       </select>
                     </div>
                     <div class=" field input">
                       <label for="choose-class-teacher">Choose a teacher</label>
                       <select name="choosen-class-teacher" id="choose-class-teacher">
-                        <?php
-                        while ($row_teacher = mysqli_fetch_array($get_teachers)) {
-                          $teacher_name = $row_teacher['teacher_fullname'];
-                          echo "<option value='$teacher_name'>$teacher_name</option>";
-                        }
-                        ?>
+                        <?php while (
+                            $row_teacher = mysqli_fetch_array($get_teachers)
+                        ) {
+                            $teacher_name = $row_teacher["teacher_fullname"];
+                            echo "<option value='$teacher_name'>$teacher_name</option>";
+                        } ?>
                       </select>
                     </div>
 
@@ -1063,7 +1108,7 @@ include_once "../middlwares/school_auth.php";
 
       modalBody.scrollTop = modalBody.scrollHeight;
 
-      // specific message div 
+      // specific message div
       const messageDiv = document.getElementById(uniqueId)
 
       // messageDiv.innerHTML = "..."
@@ -1081,11 +1126,11 @@ include_once "../middlwares/school_auth.php";
       clearInterval(loadInterval)
       messageDiv.innerHTML = " "
 
-      if (response.ok) { //TODO:fix this here 
+      if (response.ok) { //TODO:fix this here
         const data = await response.json();
         if (data) {
           console.log(data.text)
-          const parsedData = data.text.trim() // trims any trailing spaces/'\n' 
+          const parsedData = data.text.trim() // trims any trailing spaces/'\n'
           typeText(messageDiv, parsedData)
         } else {
           const err = await response.text()
