@@ -544,6 +544,10 @@ class Storage extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'projection' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
                 'userProject' => [
                   'location' => 'query',
                   'type' => 'string',
@@ -1645,6 +1649,62 @@ class Storage extends \Google\Service
                   'type' => 'boolean',
                 ],
               ],
+            ],'move' => [
+              'path' => 'b/{bucket}/o/{sourceObject}/moveTo/o/{destinationObject}',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'sourceObject' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'destinationObject' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'ifGenerationMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifGenerationNotMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifMetagenerationMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifMetagenerationNotMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifSourceGenerationMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifSourceGenerationNotMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifSourceMetagenerationMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'ifSourceMetagenerationNotMatch' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+                'userProject' => [
+                  'location' => 'query',
+                  'type' => 'string',
+                ],
+              ],
             ],'patch' => [
               'path' => 'b/{bucket}/o/{object}',
               'httpMethod' => 'PATCH',
@@ -1996,7 +2056,22 @@ class Storage extends \Google\Service
         'operations',
         [
           'methods' => [
-            'cancel' => [
+            'advanceRelocateBucket' => [
+              'path' => 'b/{bucket}/operations/{operationId}/advanceRelocateBucket',
+              'httpMethod' => 'POST',
+              'parameters' => [
+                'bucket' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+                'operationId' => [
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ],
+              ],
+            ],'cancel' => [
               'path' => 'b/{bucket}/operations/{operationId}/cancel',
               'httpMethod' => 'POST',
               'parameters' => [

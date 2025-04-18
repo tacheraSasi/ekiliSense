@@ -41,6 +41,8 @@ class GoogleCloudAiplatformV1FeatureView extends \Google\Model
    * @var string
    */
   public $name;
+  protected $optimizedConfigType = GoogleCloudAiplatformV1FeatureViewOptimizedConfig::class;
+  protected $optimizedConfigDataType = '';
   /**
    * @var bool
    */
@@ -49,6 +51,14 @@ class GoogleCloudAiplatformV1FeatureView extends \Google\Model
    * @var bool
    */
   public $satisfiesPzs;
+  /**
+   * @var string
+   */
+  public $serviceAccountEmail;
+  /**
+   * @var string
+   */
+  public $serviceAgentType;
   protected $syncConfigType = GoogleCloudAiplatformV1FeatureViewSyncConfig::class;
   protected $syncConfigDataType = '';
   /**
@@ -157,6 +167,20 @@ class GoogleCloudAiplatformV1FeatureView extends \Google\Model
     return $this->name;
   }
   /**
+   * @param GoogleCloudAiplatformV1FeatureViewOptimizedConfig
+   */
+  public function setOptimizedConfig(GoogleCloudAiplatformV1FeatureViewOptimizedConfig $optimizedConfig)
+  {
+    $this->optimizedConfig = $optimizedConfig;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1FeatureViewOptimizedConfig
+   */
+  public function getOptimizedConfig()
+  {
+    return $this->optimizedConfig;
+  }
+  /**
    * @param bool
    */
   public function setSatisfiesPzi($satisfiesPzi)
@@ -183,6 +207,34 @@ class GoogleCloudAiplatformV1FeatureView extends \Google\Model
   public function getSatisfiesPzs()
   {
     return $this->satisfiesPzs;
+  }
+  /**
+   * @param string
+   */
+  public function setServiceAccountEmail($serviceAccountEmail)
+  {
+    $this->serviceAccountEmail = $serviceAccountEmail;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceAccountEmail()
+  {
+    return $this->serviceAccountEmail;
+  }
+  /**
+   * @param string
+   */
+  public function setServiceAgentType($serviceAgentType)
+  {
+    $this->serviceAgentType = $serviceAgentType;
+  }
+  /**
+   * @return string
+   */
+  public function getServiceAgentType()
+  {
+    return $this->serviceAgentType;
   }
   /**
    * @param GoogleCloudAiplatformV1FeatureViewSyncConfig

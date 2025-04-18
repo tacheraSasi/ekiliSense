@@ -23,6 +23,8 @@ class GoogleCloudAiplatformV1NotebookExecutionJob extends \Google\Model
    * @var string
    */
   public $createTime;
+  protected $customEnvironmentSpecType = GoogleCloudAiplatformV1NotebookExecutionJobCustomEnvironmentSpec::class;
+  protected $customEnvironmentSpecDataType = '';
   protected $dataformRepositorySourceType = GoogleCloudAiplatformV1NotebookExecutionJobDataformRepositorySource::class;
   protected $dataformRepositorySourceDataType = '';
   protected $directNotebookSourceType = GoogleCloudAiplatformV1NotebookExecutionJobDirectNotebookSource::class;
@@ -52,6 +54,10 @@ class GoogleCloudAiplatformV1NotebookExecutionJob extends \Google\Model
    */
   public $jobState;
   /**
+   * @var string
+   */
+  public $kernelName;
+  /**
    * @var string[]
    */
   public $labels;
@@ -77,6 +83,8 @@ class GoogleCloudAiplatformV1NotebookExecutionJob extends \Google\Model
    * @var string
    */
   public $updateTime;
+  protected $workbenchRuntimeType = GoogleCloudAiplatformV1NotebookExecutionJobWorkbenchRuntime::class;
+  protected $workbenchRuntimeDataType = '';
 
   /**
    * @param string
@@ -91,6 +99,20 @@ class GoogleCloudAiplatformV1NotebookExecutionJob extends \Google\Model
   public function getCreateTime()
   {
     return $this->createTime;
+  }
+  /**
+   * @param GoogleCloudAiplatformV1NotebookExecutionJobCustomEnvironmentSpec
+   */
+  public function setCustomEnvironmentSpec(GoogleCloudAiplatformV1NotebookExecutionJobCustomEnvironmentSpec $customEnvironmentSpec)
+  {
+    $this->customEnvironmentSpec = $customEnvironmentSpec;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1NotebookExecutionJobCustomEnvironmentSpec
+   */
+  public function getCustomEnvironmentSpec()
+  {
+    return $this->customEnvironmentSpec;
   }
   /**
    * @param GoogleCloudAiplatformV1NotebookExecutionJobDataformRepositorySource
@@ -219,6 +241,20 @@ class GoogleCloudAiplatformV1NotebookExecutionJob extends \Google\Model
     return $this->jobState;
   }
   /**
+   * @param string
+   */
+  public function setKernelName($kernelName)
+  {
+    $this->kernelName = $kernelName;
+  }
+  /**
+   * @return string
+   */
+  public function getKernelName()
+  {
+    return $this->kernelName;
+  }
+  /**
    * @param string[]
    */
   public function setLabels($labels)
@@ -315,6 +351,20 @@ class GoogleCloudAiplatformV1NotebookExecutionJob extends \Google\Model
   public function getUpdateTime()
   {
     return $this->updateTime;
+  }
+  /**
+   * @param GoogleCloudAiplatformV1NotebookExecutionJobWorkbenchRuntime
+   */
+  public function setWorkbenchRuntime(GoogleCloudAiplatformV1NotebookExecutionJobWorkbenchRuntime $workbenchRuntime)
+  {
+    $this->workbenchRuntime = $workbenchRuntime;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1NotebookExecutionJobWorkbenchRuntime
+   */
+  public function getWorkbenchRuntime()
+  {
+    return $this->workbenchRuntime;
   }
 }
 

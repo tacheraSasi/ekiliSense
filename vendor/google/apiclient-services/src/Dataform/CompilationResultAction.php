@@ -23,14 +23,16 @@ class CompilationResultAction extends \Google\Model
   protected $assertionDataType = '';
   protected $canonicalTargetType = Target::class;
   protected $canonicalTargetDataType = '';
-  protected $dataPreparationType = DataPreparation::class;
-  protected $dataPreparationDataType = '';
   protected $declarationType = Declaration::class;
   protected $declarationDataType = '';
   /**
    * @var string
    */
   public $filePath;
+  /**
+   * @var string
+   */
+  public $internalMetadata;
   protected $notebookType = Notebook::class;
   protected $notebookDataType = '';
   protected $operationsType = Operations::class;
@@ -69,20 +71,6 @@ class CompilationResultAction extends \Google\Model
     return $this->canonicalTarget;
   }
   /**
-   * @param DataPreparation
-   */
-  public function setDataPreparation(DataPreparation $dataPreparation)
-  {
-    $this->dataPreparation = $dataPreparation;
-  }
-  /**
-   * @return DataPreparation
-   */
-  public function getDataPreparation()
-  {
-    return $this->dataPreparation;
-  }
-  /**
    * @param Declaration
    */
   public function setDeclaration(Declaration $declaration)
@@ -109,6 +97,20 @@ class CompilationResultAction extends \Google\Model
   public function getFilePath()
   {
     return $this->filePath;
+  }
+  /**
+   * @param string
+   */
+  public function setInternalMetadata($internalMetadata)
+  {
+    $this->internalMetadata = $internalMetadata;
+  }
+  /**
+   * @return string
+   */
+  public function getInternalMetadata()
+  {
+    return $this->internalMetadata;
   }
   /**
    * @param Notebook

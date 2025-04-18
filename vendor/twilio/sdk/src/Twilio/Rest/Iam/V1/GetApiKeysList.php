@@ -110,12 +110,15 @@ class GetApiKeysList extends ListResource
         $options = new Values($options);
 
         $params = Values::of([
+            'AccountSid' =>
+                $options['accountSid'],
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
             'PageSize' => $pageSize,
         ]);
 
-        $response = $this->version->page('GET', $this->uri, $params);
+        $headers = Values::of(['Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json']);
+        $response = $this->version->page('GET', $this->uri, $params, [], $headers);
 
         return new GetApiKeysPage($this->version, $response, $this->solution);
     }

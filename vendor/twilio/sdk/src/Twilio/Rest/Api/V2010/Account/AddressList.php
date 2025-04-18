@@ -91,7 +91,7 @@ class AddressList extends ListResource
                 $options['streetSecondary'],
         ]);
 
-        $headers = Values::of(['Content-Type' => 'application/x-www-form-urlencoded' ]);
+        $headers = Values::of(['Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json' ]);
         $payload = $this->version->create('POST', $this->uri, [], $data, $headers);
 
         return new AddressInstance(
@@ -174,6 +174,8 @@ class AddressList extends ListResource
                 $options['customerName'],
             'FriendlyName' =>
                 $options['friendlyName'],
+            'EmergencyEnabled' =>
+                Serialize::booleanToString($options['emergencyEnabled']),
             'IsoCountry' =>
                 $options['isoCountry'],
             'PageToken' => $pageToken,
@@ -181,7 +183,8 @@ class AddressList extends ListResource
             'PageSize' => $pageSize,
         ]);
 
-        $response = $this->version->page('GET', $this->uri, $params);
+        $headers = Values::of(['Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json']);
+        $response = $this->version->page('GET', $this->uri, $params, [], $headers);
 
         return new AddressPage($this->version, $response, $this->solution);
     }

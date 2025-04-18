@@ -52,7 +52,8 @@ class Instances extends \Google\Service\Resource
    * for the specified instance. There can be up to three sets of certs listed:
    * the certificate that is currently in use, a future that has been added but
    * not yet used to sign a certificate, and a certificate that has been rotated
-   * out. (instances.ListServerCertificates)
+   * out. For instances not using Certificate Authority Service (CAS) server CA,
+   * use ListServerCas instead. (instances.ListServerCertificates)
    *
    * @param string $project Required. Project ID of the project that contains the
    * instance.
@@ -71,7 +72,7 @@ class Instances extends \Google\Service\Resource
   /**
    * Rotates the server certificate version to one previously added with the
    * addServerCertificate method. For instances not using Certificate Authority
-   * Service (CAS) server CA, please use RotateServerCa instead.
+   * Service (CAS) server CA, use RotateServerCa instead.
    * (instances.RotateServerCertificate)
    *
    * @param string $project Required. Project ID of the project that contains the
@@ -116,7 +117,7 @@ class Instances extends \Google\Service\Resource
    * previously added but never used in a certificate rotation, this operation
    * replaces that version. There cannot be more than one CA version waiting to be
    * rotated in. For instances that have enabled Certificate Authority Service
-   * (CAS) based server CA, please use AddServerCertificate to add a new server
+   * (CAS) based server CA, use AddServerCertificate to add a new server
    * certificate. (instances.addServerCa)
    *
    * @param string $project Project ID of the project that contains the instance.
@@ -138,8 +139,8 @@ class Instances extends \Google\Service\Resource
    * certificate rotation. If a server certificate version was previously added
    * but never used in a certificate rotation, this operation replaces that
    * version. There cannot be more than one certificate version waiting to be
-   * rotated in. For instances not using CAS server CA, please use AddServerCa
-   * instead. (instances.addServerCertificate)
+   * rotated in. For instances not using CAS server CA, use AddServerCa instead.
+   * (instances.addServerCertificate)
    *
    * @param string $project Project ID of the project that contains the instance.
    * @param string $instance Cloud SQL instance ID. This does not include the
@@ -404,12 +405,12 @@ class Instances extends \Google\Service\Resource
    * @param string $instance Cloud SQL read replica instance name.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param bool failover Set to true to invoke a replica failover to the
-   * designated DR replica. As part of replica failover, the promote operation
-   * attempts to add the original primary instance as a replica of the promoted DR
-   * replica when the original primary instance comes back online. If set to false
-   * or not specified, then the original primary instance becomes an independent
-   * Cloud SQL primary instance. Only applicable to MySQL.
+   * @opt_param bool failover Set to true to invoke a replica failover to the DR
+   * replica. As part of replica failover, the promote operation attempts to add
+   * the original primary instance as a replica of the promoted DR replica when
+   * the original primary instance comes back online. If set to false or not
+   * specified, then the original primary instance becomes an independent Cloud
+   * SQL primary instance.
    * @return Operation
    * @throws \Google\Service\Exception
    */
@@ -510,7 +511,7 @@ class Instances extends \Google\Service\Resource
   /**
    * Rotates the server certificate to one signed by the Certificate Authority
    * (CA) version previously added with the addServerCA method. For instances that
-   * have enabled Certificate Authority Service (CAS) based server CA, please use
+   * have enabled Certificate Authority Service (CAS) based server CA, use
    * RotateServerCertificate to rotate the server certificate.
    * (instances.rotateServerCa)
    *
@@ -559,16 +560,17 @@ class Instances extends \Google\Service\Resource
     return $this->call('stopReplica', [$params], Operation::class);
   }
   /**
-   * Switches over from the primary instance to the designated DR replica
-   * instance. (instances.switchover)
+   * Switches over from the primary instance to the DR replica instance.
+   * (instances.switchover)
    *
    * @param string $project ID of the project that contains the replica.
    * @param string $instance Cloud SQL read replica instance name.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string dbTimeout Optional. (MySQL only) Cloud SQL instance
-   * operations timeout, which is a sum of all database operations. Default value
-   * is 10 minutes and can be modified to a maximum value of 24 hours.
+   * @opt_param string dbTimeout Optional. (MySQL and PostgreSQL only) Cloud SQL
+   * instance operations timeout, which is a sum of all database operations.
+   * Default value is 10 minutes and can be modified to a maximum value of 24
+   * hours.
    * @return Operation
    * @throws \Google\Service\Exception
    */

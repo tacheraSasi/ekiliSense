@@ -20,6 +20,8 @@ namespace Google\Service\Aiplatform;
 class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
 {
   protected $collection_key = 'deployedModels';
+  protected $clientConnectionConfigType = GoogleCloudAiplatformV1ClientConnectionConfig::class;
+  protected $clientConnectionConfigDataType = '';
   /**
    * @var string
    */
@@ -52,6 +54,8 @@ class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
    * @var string
    */
   public $etag;
+  protected $genAiAdvancedFeaturesConfigType = GoogleCloudAiplatformV1GenAiAdvancedFeaturesConfig::class;
+  protected $genAiAdvancedFeaturesConfigDataType = '';
   /**
    * @var string[]
    */
@@ -89,6 +93,20 @@ class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
    */
   public $updateTime;
 
+  /**
+   * @param GoogleCloudAiplatformV1ClientConnectionConfig
+   */
+  public function setClientConnectionConfig(GoogleCloudAiplatformV1ClientConnectionConfig $clientConnectionConfig)
+  {
+    $this->clientConnectionConfig = $clientConnectionConfig;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1ClientConnectionConfig
+   */
+  public function getClientConnectionConfig()
+  {
+    return $this->clientConnectionConfig;
+  }
   /**
    * @param string
    */
@@ -214,6 +232,20 @@ class GoogleCloudAiplatformV1Endpoint extends \Google\Collection
   public function getEtag()
   {
     return $this->etag;
+  }
+  /**
+   * @param GoogleCloudAiplatformV1GenAiAdvancedFeaturesConfig
+   */
+  public function setGenAiAdvancedFeaturesConfig(GoogleCloudAiplatformV1GenAiAdvancedFeaturesConfig $genAiAdvancedFeaturesConfig)
+  {
+    $this->genAiAdvancedFeaturesConfig = $genAiAdvancedFeaturesConfig;
+  }
+  /**
+   * @return GoogleCloudAiplatformV1GenAiAdvancedFeaturesConfig
+   */
+  public function getGenAiAdvancedFeaturesConfig()
+  {
+    return $this->genAiAdvancedFeaturesConfig;
   }
   /**
    * @param string[]

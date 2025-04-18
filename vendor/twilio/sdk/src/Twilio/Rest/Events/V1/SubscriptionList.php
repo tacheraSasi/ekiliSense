@@ -49,12 +49,15 @@ class SubscriptionList extends ListResource
      *
      * @param string $description A human readable description for the Subscription **This value should not contain PII.**
      * @param string $sinkSid The SID of the sink that events selected by this subscription should be sent to. Sink must be active for the subscription to be created.
-     * @param array[] $types An array of objects containing the subscribed Event Types
+     * @param object[] $types An array of objects containing the subscribed Event Types
+     * @param array|Options $options Optional Arguments
      * @return SubscriptionInstance Created SubscriptionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create(string $description, string $sinkSid, array $types): SubscriptionInstance
+    public function create(string $description, string $sinkSid, array $types, array $options = []): SubscriptionInstance
     {
+
+        $options = new Values($options);
 
         $data = Values::of([
             'Description' =>
@@ -63,9 +66,11 @@ class SubscriptionList extends ListResource
                 $sinkSid,
             'Types' =>
                 Serialize::map($types,function ($e) { return Serialize::jsonObject($e); }),
+            'ReceiveEventsFromSubaccounts' =>
+                Serialize::booleanToString($options['receiveEventsFromSubaccounts']),
         ]);
 
-        $headers = Values::of(['Content-Type' => 'application/x-www-form-urlencoded' ]);
+        $headers = Values::of(['Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json' ]);
         $payload = $this->version->create('POST', $this->uri, [], $data, $headers);
 
         return new SubscriptionInstance(
@@ -150,7 +155,8 @@ class SubscriptionList extends ListResource
             'PageSize' => $pageSize,
         ]);
 
-        $response = $this->version->page('GET', $this->uri, $params);
+        $headers = Values::of(['Content-Type' => 'application/x-www-form-urlencoded', 'Accept' => 'application/json']);
+        $response = $this->version->page('GET', $this->uri, $params, [], $headers);
 
         return new SubscriptionPage($this->version, $response, $this->solution);
     }

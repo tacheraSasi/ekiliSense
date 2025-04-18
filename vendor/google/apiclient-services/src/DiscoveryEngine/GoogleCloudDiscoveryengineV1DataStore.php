@@ -20,8 +20,12 @@ namespace Google\Service\DiscoveryEngine;
 class GoogleCloudDiscoveryengineV1DataStore extends \Google\Collection
 {
   protected $collection_key = 'solutionTypes';
+  protected $advancedSiteSearchConfigType = GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig::class;
+  protected $advancedSiteSearchConfigDataType = '';
   protected $billingEstimationType = GoogleCloudDiscoveryengineV1DataStoreBillingEstimation::class;
   protected $billingEstimationDataType = '';
+  protected $cmekConfigType = GoogleCloudDiscoveryengineV1CmekConfig::class;
+  protected $cmekConfigDataType = '';
   /**
    * @var string
    */
@@ -40,15 +44,29 @@ class GoogleCloudDiscoveryengineV1DataStore extends \Google\Collection
   public $displayName;
   protected $documentProcessingConfigType = GoogleCloudDiscoveryengineV1DocumentProcessingConfig::class;
   protected $documentProcessingConfigDataType = '';
+  protected $healthcareFhirConfigType = GoogleCloudDiscoveryengineV1HealthcareFhirConfig::class;
+  protected $healthcareFhirConfigDataType = '';
+  /**
+   * @var string
+   */
+  public $identityMappingStore;
   /**
    * @var string
    */
   public $industryVertical;
   /**
+   * @var bool
+   */
+  public $isInfobotFaqDataStore;
+  /**
+   * @var string
+   */
+  public $kmsKeyName;
+  /**
    * @var string
    */
   public $name;
-  protected $servingConfigDataStoreType = GoogleCloudDiscoveryengineV1ServingConfigDataStore::class;
+  protected $servingConfigDataStoreType = GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore::class;
   protected $servingConfigDataStoreDataType = '';
   /**
    * @var string[]
@@ -59,6 +77,20 @@ class GoogleCloudDiscoveryengineV1DataStore extends \Google\Collection
   protected $workspaceConfigType = GoogleCloudDiscoveryengineV1WorkspaceConfig::class;
   protected $workspaceConfigDataType = '';
 
+  /**
+   * @param GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig
+   */
+  public function setAdvancedSiteSearchConfig(GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig $advancedSiteSearchConfig)
+  {
+    $this->advancedSiteSearchConfig = $advancedSiteSearchConfig;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig
+   */
+  public function getAdvancedSiteSearchConfig()
+  {
+    return $this->advancedSiteSearchConfig;
+  }
   /**
    * @param GoogleCloudDiscoveryengineV1DataStoreBillingEstimation
    */
@@ -72,6 +104,20 @@ class GoogleCloudDiscoveryengineV1DataStore extends \Google\Collection
   public function getBillingEstimation()
   {
     return $this->billingEstimation;
+  }
+  /**
+   * @param GoogleCloudDiscoveryengineV1CmekConfig
+   */
+  public function setCmekConfig(GoogleCloudDiscoveryengineV1CmekConfig $cmekConfig)
+  {
+    $this->cmekConfig = $cmekConfig;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1CmekConfig
+   */
+  public function getCmekConfig()
+  {
+    return $this->cmekConfig;
   }
   /**
    * @param string
@@ -144,6 +190,34 @@ class GoogleCloudDiscoveryengineV1DataStore extends \Google\Collection
     return $this->documentProcessingConfig;
   }
   /**
+   * @param GoogleCloudDiscoveryengineV1HealthcareFhirConfig
+   */
+  public function setHealthcareFhirConfig(GoogleCloudDiscoveryengineV1HealthcareFhirConfig $healthcareFhirConfig)
+  {
+    $this->healthcareFhirConfig = $healthcareFhirConfig;
+  }
+  /**
+   * @return GoogleCloudDiscoveryengineV1HealthcareFhirConfig
+   */
+  public function getHealthcareFhirConfig()
+  {
+    return $this->healthcareFhirConfig;
+  }
+  /**
+   * @param string
+   */
+  public function setIdentityMappingStore($identityMappingStore)
+  {
+    $this->identityMappingStore = $identityMappingStore;
+  }
+  /**
+   * @return string
+   */
+  public function getIdentityMappingStore()
+  {
+    return $this->identityMappingStore;
+  }
+  /**
    * @param string
    */
   public function setIndustryVertical($industryVertical)
@@ -156,6 +230,34 @@ class GoogleCloudDiscoveryengineV1DataStore extends \Google\Collection
   public function getIndustryVertical()
   {
     return $this->industryVertical;
+  }
+  /**
+   * @param bool
+   */
+  public function setIsInfobotFaqDataStore($isInfobotFaqDataStore)
+  {
+    $this->isInfobotFaqDataStore = $isInfobotFaqDataStore;
+  }
+  /**
+   * @return bool
+   */
+  public function getIsInfobotFaqDataStore()
+  {
+    return $this->isInfobotFaqDataStore;
+  }
+  /**
+   * @param string
+   */
+  public function setKmsKeyName($kmsKeyName)
+  {
+    $this->kmsKeyName = $kmsKeyName;
+  }
+  /**
+   * @return string
+   */
+  public function getKmsKeyName()
+  {
+    return $this->kmsKeyName;
   }
   /**
    * @param string
@@ -172,14 +274,14 @@ class GoogleCloudDiscoveryengineV1DataStore extends \Google\Collection
     return $this->name;
   }
   /**
-   * @param GoogleCloudDiscoveryengineV1ServingConfigDataStore
+   * @param GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore
    */
-  public function setServingConfigDataStore(GoogleCloudDiscoveryengineV1ServingConfigDataStore $servingConfigDataStore)
+  public function setServingConfigDataStore(GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore $servingConfigDataStore)
   {
     $this->servingConfigDataStore = $servingConfigDataStore;
   }
   /**
-   * @return GoogleCloudDiscoveryengineV1ServingConfigDataStore
+   * @return GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore
    */
   public function getServingConfigDataStore()
   {

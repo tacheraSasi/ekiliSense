@@ -589,6 +589,10 @@ class CloudDataplex extends \Google\Service
                   'type' => 'string',
                   'required' => true,
                 ],
+                'force' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
+                ],
               ],
             ],'generateDataQualityRules' => [
               'path' => 'v1/{+name}:generateDataQualityRules',
@@ -2847,6 +2851,10 @@ class CloudDataplex extends \Google\Service
                 'metadataJobId' => [
                   'location' => 'query',
                   'type' => 'string',
+                ],
+                'validateOnly' => [
+                  'location' => 'query',
+                  'type' => 'boolean',
                 ],
               ],
             ],'get' => [

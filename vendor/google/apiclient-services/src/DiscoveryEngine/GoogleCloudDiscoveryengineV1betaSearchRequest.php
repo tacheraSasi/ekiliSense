@@ -55,6 +55,10 @@ class GoogleCloudDiscoveryengineV1betaSearchRequest extends \Google\Collection
    */
   public $offset;
   /**
+   * @var int
+   */
+  public $oneBoxPageSize;
+  /**
    * @var string
    */
   public $orderBy;
@@ -82,6 +86,10 @@ class GoogleCloudDiscoveryengineV1betaSearchRequest extends \Google\Collection
    * @var string
    */
   public $rankingExpression;
+  /**
+   * @var string
+   */
+  public $rankingExpressionBackend;
   /**
    * @var string
    */
@@ -288,6 +296,20 @@ class GoogleCloudDiscoveryengineV1betaSearchRequest extends \Google\Collection
     return $this->offset;
   }
   /**
+   * @param int
+   */
+  public function setOneBoxPageSize($oneBoxPageSize)
+  {
+    $this->oneBoxPageSize = $oneBoxPageSize;
+  }
+  /**
+   * @return int
+   */
+  public function getOneBoxPageSize()
+  {
+    return $this->oneBoxPageSize;
+  }
+  /**
    * @param string
    */
   public function setOrderBy($orderBy)
@@ -398,6 +420,20 @@ class GoogleCloudDiscoveryengineV1betaSearchRequest extends \Google\Collection
   public function getRankingExpression()
   {
     return $this->rankingExpression;
+  }
+  /**
+   * @param string
+   */
+  public function setRankingExpressionBackend($rankingExpressionBackend)
+  {
+    $this->rankingExpressionBackend = $rankingExpressionBackend;
+  }
+  /**
+   * @return string
+   */
+  public function getRankingExpressionBackend()
+  {
+    return $this->rankingExpressionBackend;
   }
   /**
    * @param string

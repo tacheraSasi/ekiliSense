@@ -19,11 +19,23 @@ namespace Google\Service\CloudRedis;
 
 class Cluster extends \Google\Collection
 {
-  protected $collection_key = 'pscConnections';
+  protected $collection_key = 'pscServiceAttachments';
+  /**
+   * @var bool
+   */
+  public $asyncClusterEndpointsDeletionEnabled;
   /**
    * @var string
    */
   public $authorizationMode;
+  protected $automatedBackupConfigType = AutomatedBackupConfig::class;
+  protected $automatedBackupConfigDataType = '';
+  /**
+   * @var string
+   */
+  public $backupCollection;
+  protected $clusterEndpointsType = ClusterEndpoint::class;
+  protected $clusterEndpointsDataType = 'array';
   /**
    * @var string
    */
@@ -36,10 +48,20 @@ class Cluster extends \Google\Collection
   public $deletionProtectionEnabled;
   protected $discoveryEndpointsType = DiscoveryEndpoint::class;
   protected $discoveryEndpointsDataType = 'array';
+  protected $encryptionInfoType = EncryptionInfo::class;
+  protected $encryptionInfoDataType = '';
+  protected $gcsSourceType = GcsBackupSource::class;
+  protected $gcsSourceDataType = '';
+  /**
+   * @var string
+   */
+  public $kmsKey;
   protected $maintenancePolicyType = ClusterMaintenancePolicy::class;
   protected $maintenancePolicyDataType = '';
   protected $maintenanceScheduleType = ClusterMaintenanceSchedule::class;
   protected $maintenanceScheduleDataType = '';
+  protected $managedBackupSourceType = ManagedBackupSource::class;
+  protected $managedBackupSourceDataType = '';
   /**
    * @var string
    */
@@ -55,6 +77,8 @@ class Cluster extends \Google\Collection
   protected $pscConfigsDataType = 'array';
   protected $pscConnectionsType = PscConnection::class;
   protected $pscConnectionsDataType = 'array';
+  protected $pscServiceAttachmentsType = PscServiceAttachment::class;
+  protected $pscServiceAttachmentsDataType = 'array';
   /**
    * @var string[]
    */
@@ -89,6 +113,20 @@ class Cluster extends \Google\Collection
   protected $zoneDistributionConfigDataType = '';
 
   /**
+   * @param bool
+   */
+  public function setAsyncClusterEndpointsDeletionEnabled($asyncClusterEndpointsDeletionEnabled)
+  {
+    $this->asyncClusterEndpointsDeletionEnabled = $asyncClusterEndpointsDeletionEnabled;
+  }
+  /**
+   * @return bool
+   */
+  public function getAsyncClusterEndpointsDeletionEnabled()
+  {
+    return $this->asyncClusterEndpointsDeletionEnabled;
+  }
+  /**
    * @param string
    */
   public function setAuthorizationMode($authorizationMode)
@@ -101,6 +139,48 @@ class Cluster extends \Google\Collection
   public function getAuthorizationMode()
   {
     return $this->authorizationMode;
+  }
+  /**
+   * @param AutomatedBackupConfig
+   */
+  public function setAutomatedBackupConfig(AutomatedBackupConfig $automatedBackupConfig)
+  {
+    $this->automatedBackupConfig = $automatedBackupConfig;
+  }
+  /**
+   * @return AutomatedBackupConfig
+   */
+  public function getAutomatedBackupConfig()
+  {
+    return $this->automatedBackupConfig;
+  }
+  /**
+   * @param string
+   */
+  public function setBackupCollection($backupCollection)
+  {
+    $this->backupCollection = $backupCollection;
+  }
+  /**
+   * @return string
+   */
+  public function getBackupCollection()
+  {
+    return $this->backupCollection;
+  }
+  /**
+   * @param ClusterEndpoint[]
+   */
+  public function setClusterEndpoints($clusterEndpoints)
+  {
+    $this->clusterEndpoints = $clusterEndpoints;
+  }
+  /**
+   * @return ClusterEndpoint[]
+   */
+  public function getClusterEndpoints()
+  {
+    return $this->clusterEndpoints;
   }
   /**
    * @param string
@@ -159,6 +239,48 @@ class Cluster extends \Google\Collection
     return $this->discoveryEndpoints;
   }
   /**
+   * @param EncryptionInfo
+   */
+  public function setEncryptionInfo(EncryptionInfo $encryptionInfo)
+  {
+    $this->encryptionInfo = $encryptionInfo;
+  }
+  /**
+   * @return EncryptionInfo
+   */
+  public function getEncryptionInfo()
+  {
+    return $this->encryptionInfo;
+  }
+  /**
+   * @param GcsBackupSource
+   */
+  public function setGcsSource(GcsBackupSource $gcsSource)
+  {
+    $this->gcsSource = $gcsSource;
+  }
+  /**
+   * @return GcsBackupSource
+   */
+  public function getGcsSource()
+  {
+    return $this->gcsSource;
+  }
+  /**
+   * @param string
+   */
+  public function setKmsKey($kmsKey)
+  {
+    $this->kmsKey = $kmsKey;
+  }
+  /**
+   * @return string
+   */
+  public function getKmsKey()
+  {
+    return $this->kmsKey;
+  }
+  /**
    * @param ClusterMaintenancePolicy
    */
   public function setMaintenancePolicy(ClusterMaintenancePolicy $maintenancePolicy)
@@ -185,6 +307,20 @@ class Cluster extends \Google\Collection
   public function getMaintenanceSchedule()
   {
     return $this->maintenanceSchedule;
+  }
+  /**
+   * @param ManagedBackupSource
+   */
+  public function setManagedBackupSource(ManagedBackupSource $managedBackupSource)
+  {
+    $this->managedBackupSource = $managedBackupSource;
+  }
+  /**
+   * @return ManagedBackupSource
+   */
+  public function getManagedBackupSource()
+  {
+    return $this->managedBackupSource;
   }
   /**
    * @param string
@@ -263,6 +399,20 @@ class Cluster extends \Google\Collection
   public function getPscConnections()
   {
     return $this->pscConnections;
+  }
+  /**
+   * @param PscServiceAttachment[]
+   */
+  public function setPscServiceAttachments($pscServiceAttachments)
+  {
+    $this->pscServiceAttachments = $pscServiceAttachments;
+  }
+  /**
+   * @return PscServiceAttachment[]
+   */
+  public function getPscServiceAttachments()
+  {
+    return $this->pscServiceAttachments;
   }
   /**
    * @param string[]

@@ -22,21 +22,21 @@ class IOPSPerTB extends \Google\Model
   /**
    * @var string
    */
-  public $maxReadIopsPerTb;
+  public $maxIopsPerTb;
 
   /**
    * @param string
    */
-  public function setMaxReadIopsPerTb($maxReadIopsPerTb)
+  public function setMaxIopsPerTb($maxIopsPerTb)
   {
-    $this->maxReadIopsPerTb = $maxReadIopsPerTb;
+    $this->maxIopsPerTb = $maxIopsPerTb;
   }
   /**
    * @return string
    */
-  public function getMaxReadIopsPerTb()
+  public function getMaxIopsPerTb()
   {
-    return $this->maxReadIopsPerTb;
+    return $this->maxIopsPerTb;
   }
 }
 
