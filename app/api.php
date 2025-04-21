@@ -135,4 +135,9 @@ class Api
     public static function getClassByName(int $id): array{
         return self::request("GET", "/classes/{$id}");
     }
+
+    ##class teacher
+    public static function isClassTeacher($school_uid, $teacher_id): array {
+        return self::request("GET", "/schools/{$school_uid}/class-teacher/{$teacher_id}");
+    }
 }

@@ -8,11 +8,11 @@ if(!isset($_SESSION['school_uid'])){
 #if the user is a teacher 
 if(isset($_SESSION['teacher_email'])){
   $t_email = $_SESSION['teacher_email'];
-  $suid = $_SESSION['School_uid'];
+  $suid = $_SESSION['school_uid'];
+
   #getting the teacher's id using the teacher's name
-  $get_teacher_id = mysqli_fetch_assoc(mysqli_query($conn, 
-  "SELECT * FROM teachers WHERE teacher_email = '$t_email' AND School_unique_id = '$suid'"));
-  $t_id = $get_teacher_id['teacher_id'];
+  $teacher = Api::getTeacherByEmail($t_email);
+  $t_id = $teacher['id'];
 
   $check_is_class_teacher = mysqli_query($conn,
   "SELECT * FROM class_teacher WHERE school_unique_id = '$suid' AND teacher_id = '$t_id'");
