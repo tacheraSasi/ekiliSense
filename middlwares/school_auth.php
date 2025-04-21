@@ -1,4 +1,5 @@
 <?php
+include_once "../app/api.php";
 if(!isset($_SESSION['School_uid'])){
   header("location:../auth");
 }
@@ -25,8 +26,7 @@ if(isset($_SESSION['teacher_email'])){
 $school_uid = $_SESSION['school_uid'];
 
 #getting the school details 
-$get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
-$school = mysqli_fetch_array($get_info);
+$school = Api::getSchoolByUniqueId($school_uid);
 
 #getting the list of classes
 $get_classes = mysqli_query($conn, "SELECT * FROM classes WHERE school_unique_id = '$school_uid'");

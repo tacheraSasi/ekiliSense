@@ -102,6 +102,8 @@ class Api
         return self::request('DELETE', "/schools/{$id}");
     }
 
+    ##Teachers
+
     public static function getTeacherById(int $id): array{
         return self::request("GET", "/teachers/{$id}");
     }
