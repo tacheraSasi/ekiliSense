@@ -40,7 +40,9 @@ class Api
                 $options['json'] = $data;
             }
 
-            $response = $client->request($method, $path, $options);
+            $url = self::$baseUrl . $path;
+
+            $response = $client->request($method, $url, $options);
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
             $response = $e->getResponse();
@@ -56,8 +58,8 @@ class Api
             'password' => $password,
         ]);
 
-        if (!empty($response['access_token'])) {
-            $_SESSION['token'] = $response['access_token'];
+        if (!empty($response['token'])) {
+            $_SESSION['token'] = $response['token'];
         }
 
         return $response;
