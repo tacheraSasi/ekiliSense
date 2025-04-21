@@ -79,6 +79,11 @@ class Api
     {
         return self::request('GET', "/schools/{$id}");
     }
+    
+    public static function getSchoolByUniqueId(string $uniqueId): array
+    {
+        return self::request('GET', "/schools/unique/{$uniqueId}");
+    }
 
     public static function getSchools(int $page = 1, int $limit = 10, string $search = ''): array
     {
