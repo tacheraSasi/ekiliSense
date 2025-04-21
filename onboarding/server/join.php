@@ -28,7 +28,15 @@ $response = Api::createSchool([
 ]);
 
 if (isset($response['schoolUniqueId'])) {
-    $_SESSION['School_uid'] = $response['schoolUniqueId'];
+    $response = Api::login($email, $password);
+    if (isset($response['token'])) {
+        $_SESSION['token'] = $response['token'];
+        $_SESSION['user'] = $response['user'];
+        $_SESSION['school_uid'] = $_SESSION['user']['schoolUniqueId'];
+    } else {
+        echo 'Login failed!';
+        exit;
+    }
     echo 'success';
 } else {
     echo $response['message'] ?? 'Something went wrong. Please try again.';
