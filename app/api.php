@@ -108,10 +108,31 @@ class Api
         return self::request("GET", "/teachers/{$id}");
     }
 
-    public static function getTeachers(): array {
-        return self::request("GET", "/teachers");
+    public static function getTeachers($school_uid): array {
+        return self::request("GET", "/scghools/{$school_uid}/teachers");
     }
+
     public static function getTeacherByEmail(int $email): array{
         return self::request("GET", "/teachers/{$email}");
+    }
+    ##Students
+    public static function getStudentById(int $id): array{
+        return self::request("GET", "/students/{$id}");
+    }
+    public static function getStudents($school_uid): array {
+        return self::request("GET", "/scghools/{$school_uid}/students");
+    }
+    public static function getStudentByEmail(int $email): array{
+        return self::request("GET", "/students/{$email}");
+    }
+    ##Classes
+    public static function getClassById(int $id): array{
+        return self::request("GET", "/classes/{$id}");
+    }
+    public static function getClasses($school_uid): array {
+        return self::request("GET", "/scghools/{$school_uid}/classes");
+    }
+    public static function getClassByName(int $id): array{
+        return self::request("GET", "/classes/{$id}");
     }
 }

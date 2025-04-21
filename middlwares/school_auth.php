@@ -1,6 +1,6 @@
 <?php
 include_once "../app/api.php";
-if(!isset($_SESSION['School_uid'])){
+if(!isset($_SESSION['school_uid'])){
   header("location:../auth");
 }
 
