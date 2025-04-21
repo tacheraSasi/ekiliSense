@@ -17,16 +17,20 @@ if ($newPhone === '') {
 }
 
 // 1) Lookup school by uniqueId
-$school = Api::request('GET', "/schools/unique/{$uniqueId}");
+$school = Api::getSchoolByUniqueId($uniqueId);
 if (empty($school['id'])) {
     echo $school['message'] ?? 'School not found.';
     exit;
 }
 
 // 2) Update its phone
-$update = Api::request('PUT', "/schools/{$school['id']}", [
+$update = Api::updateSchool($school['id'], [
     'phoneNumber' => $newPhone,
 ]);
+if (isset($update['status']) && $update['status'] === 'error') {
+    echo $update['message'] ?? 'Update failed.';
+    exit;
+}
 
 if (! empty($update['id'])) {
     echo 'success';
