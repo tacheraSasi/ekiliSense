@@ -1,14 +1,13 @@
 <?php
-session_start();
 require_once "../../config.php";
 require_once "../../../app/api.php";
 
-if (empty($_SESSION['School_uid'])) {
+if (empty($_SESSION['school_uid'])) {
     echo 'No school in session.';
     exit;
 }
 
-$uniqueId  = $_SESSION['School_uid'];
+$uniqueId  = $_SESSION['school_uid'];
 $newPhone  = trim($_POST['phone'] ?? '');
 
 if ($newPhone === '') {
@@ -16,14 +15,12 @@ if ($newPhone === '') {
     exit;
 }
 
-// 1) Lookup school by uniqueId
 $school = Api::getSchoolByUniqueId($uniqueId);
 if (empty($school['id'])) {
     echo $school['message'] ?? 'School not found.';
     exit;
 }
 
-// 2) Update its phone
 $update = Api::updateSchool($school['id'], [
     'phoneNumber' => $newPhone,
 ]);
