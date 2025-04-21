@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 include("app/api.php");
 
 // Login
@@ -14,6 +12,12 @@ $newSchool = Api::createSchool([
     'phone_number'      => '+2348012345678',
     'adminPassword'     => 'adminpass123',
 ]);
+var_dump($newSchool);
+
+if (!isset($newSchool['id'])) {
+    die("School creation failed: " . json_encode($school));
+}
+
 
 // Update the school
 Api::updateSchool($newSchool['id'], [
@@ -22,6 +26,7 @@ Api::updateSchool($newSchool['id'], [
 
 // Get schools with search and pagination
 $schools = Api::getSchools(1, 10, 'Flownet');
+var_dump($schools);
 
 // Delete a school
 // Api::deleteSchool($newSchool['id']);

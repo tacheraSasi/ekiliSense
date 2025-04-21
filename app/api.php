@@ -1,13 +1,16 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+session_start();
+
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-session_start();
-
 class Api
 {
     private static string $baseUrl = 'http://localhost:3000/api/v1';
+
 
     private static function getClient(): Client
     {
