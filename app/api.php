@@ -47,8 +47,7 @@ class Api
         if (isset($response['access_token'])) {
             $_SESSION['token'] = $response['token'];
             $_SESSION['user'] = $response['user'];
-        }
-
+        }var_dump($response);
         return $response;
     }
 
