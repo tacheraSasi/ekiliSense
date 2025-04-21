@@ -1,73 +1,94 @@
 <?php
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
+session_start();
+
 class Api
 {
-    private static string $baseUrl = 'http:localhost:3000/api/v1';
-    
+    private static string $baseUrl = 'http://localhost:3000/api/v1';
+
+    private static function getClient(): Client
+    {
+        return new Client([
+            'base_uri' => self::$baseUrl,
+            'headers'  => self::getHeaders(),
+        ]);
+    }
+
     private static function getHeaders(): array
     {
-        $headers = [
-            'Content-Type: application/json',
-        ];
-        if (isset($_SESSION['token'])) {
-            $headers[] = 'Authorization: Bearer ' . $_SESSION['token'];
+        $headers = ['Content-Type' => 'application/json'];
+        if (!empty($_SESSION['token'])) {
+            $headers['Authorization'] = 'Bearer ' . $_SESSION['token'];
         }
         return $headers;
     }
 
     private static function request(string $method, string $path, array $data = []): array
     {
-        $url = self::$baseUrl . $path;
-        $options = [
-            'http' => [
-                'method'  => $method,
-                'header'  => implode("\r\n", self::getHeaders()),
-                'ignore_errors' => true,
-            ]
-        ];
+        $client = self::getClient();
+        try {
+            $options = [];
+            if ($method === 'GET') {
+                $options['query'] = $data;
+            } else {
+                $options['json'] = $data;
+            }
 
-        if ($method === 'GET' && !empty($data)) {
-            $url .= '?' . http_build_query($data);
-        } elseif ($method !== 'GET') {
-            $options['http']['content'] = json_encode($data);
+            $response = $client->request($method, $path, $options);
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            $message = $response ? $response->getBody()->getContents() : $e->getMessage();
+            return ['status' => 'error', 'message' => $message];
         }
-
-        $context  = stream_context_create($options);
-        $response = file_get_contents($url, false, $context);
-        return json_decode($response ?: '{}', true);
     }
 
     public static function login(string $email, string $password): array
     {
         $response = self::request('POST', '/auth/login', [
             'email' => $email,
-            'password' => $password
+            'password' => $password,
         ]);
 
-        if (isset($response['access_token'])) {
-            $_SESSION['token'] = $response['token'];
-            $_SESSION['user'] = $response['user'];
-        }var_dump($response);
+        if (!empty($response['access_token'])) {
+            $_SESSION['token'] = $response['access_token'];
+        }
+
         return $response;
     }
 
-    public static function createSchool(array $schoolData): array
+    public static function createSchool(array $data): array
     {
-        return self::request('POST', '/schools', $schoolData);
+        return self::request('POST', '/schools', $data);
     }
 
-    public static function updateSchool(string $schoolId, array $data): array
+    public static function updateSchool(int $id, array $data): array
     {
-        return self::request('PATCH', "/schools/{$schoolId}", $data);
+        return self::request('PUT', "/schools/{$id}", $data);
     }
 
-    public static function getSchools(array $query = []): array
+    public static function getSchoolById(int $id): array
     {
+        return self::request('GET', "/schools/{$id}");
+    }
+
+    public static function getSchools(int $page = 1, int $limit = 10, string $search = ''): array
+    {
+        $query = [
+            'page' => $page,
+            'limit' => $limit,
+        ];
+        if (!empty($search)) {
+            $query['search'] = $search;
+        }
         return self::request('GET', '/schools', $query);
     }
 
-    public static function getSchoolById(string $id): array
+    public static function deleteSchool(int $id): array
     {
-        return self::request('GET', "/schools/{$id}");
+        return self::request('DELETE', "/schools/{$id}");
     }
 }

@@ -4,15 +4,24 @@ session_start();
 include("app/api.php");
 
 // Login
-$response = Api::login('admin@ekili.com', 'securepassword');
+$response = Api::login('admin@flownet.com', 'password123');
 
-// Create School
+// Create a new school
 $newSchool = Api::createSchool([
-    'name' => 'Flownet Academy',
-    'email' => 'admin@flownet.edu',
-    'phone' => '+1234567890',
-    'address' => 'Virtual City',
+    'school_name'       => 'Flownet High',
+    'address'           => '123 Virtual Road',
+    'school_unique_id'  => 'FLOW123',
+    'phone_number'      => '+2348012345678',
+    'adminPassword'     => 'adminpass123',
 ]);
 
-// Update School
-Api::updateSchool($newSchool['id'], ['name' => 'Flownet Advanced School']);
+// Update the school
+Api::updateSchool($newSchool['id'], [
+    'school_name' => 'Flownet International',
+]);
+
+// Get schools with search and pagination
+$schools = Api::getSchools(1, 10, 'Flownet');
+
+// Delete a school
+// Api::deleteSchool($newSchool['id']);
