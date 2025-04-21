@@ -22,7 +22,7 @@ if(isset($_SESSION['teacher_email'])){
     header("location:./teacher/");
   }
 }
-$school_uid = $_SESSION['School_uid'];
+$school_uid = $_SESSION['school_uid'];
 
 #getting the school details 
 $get_info = mysqli_query($conn, "SELECT * FROM schools WHERE unique_id = '$school_uid'");
