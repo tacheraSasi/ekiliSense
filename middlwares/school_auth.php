@@ -29,13 +29,13 @@ $school_uid = $_SESSION['school_uid'];
 $school = Api::getSchoolByUniqueId($school_uid);
 
 #getting the list of classes
-$get_classes = mysqli_query($conn, "SELECT * FROM classes WHERE school_unique_id = '$school_uid'");
-$classes_count = mysqli_num_rows($get_classes);
+$classes = Api::getClasses( $school_uid);
+$classes_count = count($classes);
 
 #getting the list of teachers
-$get_teachers = mysqli_query($conn, "SELECT * FROM teachers WHERE School_unique_id = '$school_uid'");
-$teachers_count = mysqli_num_rows($get_teachers);
+$teachers = Api::getTeachers($school_uid);
+$teachers_count = count($teachers);
 
 #getting the list of students
-$get_students = mysqli_query($conn, "SELECT * FROM students WHERE school_uid = '$school_uid'");
-$students_count = mysqli_num_rows($get_students);
+$students = Api::getStudents($school_uid);
+$students_count = count($students);
