@@ -36,5 +36,7 @@ if (isset($response['schoolUniqueId'])) {
     }
     echo 'success';
 } else {
-    echo $response['message'] ?? 'Something went wrong. Please try again.';
+    // echo $response['message'] ?? 'Something went wrong. Please try again.';
+    echo 'Something went wrong. Please try again.';
+    exit;
 }
