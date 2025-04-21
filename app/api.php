@@ -101,4 +101,15 @@ class Api
     {
         return self::request('DELETE', "/schools/{$id}");
     }
+
+    public static function getTeacherById(int $id): array{
+        return self::request("GET", "/teachers/{$id}");
+    }
+
+    public static function getTeachers(): array {
+        return self::request("GET", "/teachers");
+    }
+    public static function getTeacherByEmail(int $email): array{
+        return self::request("GET", "/teachers/{$email}");
+    }
 }
