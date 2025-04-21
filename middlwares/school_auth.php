@@ -15,7 +15,7 @@ if(isset($_SESSION['teacher_email'])){
 
   $check_is_class_teacher = mysqli_query($conn,
   "SELECT * FROM class_teacher WHERE school_unique_id = '$suid' AND teacher_id = '$t_id'");
-  
+
   if(mysqli_num_rows($check_is_class_teacher) > 0){
     header("location:./class/teacher/");
   }else{
