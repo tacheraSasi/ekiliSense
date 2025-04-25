@@ -129,7 +129,7 @@ class Api
         return self::request("GET", "/classes/{$id}");
     }
     public static function getClasses($school_uid): array {
-        return self::request("GET", "/scghools/{$school_uid}/classes");
+        return self::request("GET", "/schools/{$school_uid}/classes");
     }
     public static function getClassByName(int $id): array{
         return self::request("GET", "/classes/{$id}");

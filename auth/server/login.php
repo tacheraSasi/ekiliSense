@@ -20,14 +20,14 @@ if ($email === '' || $password === '') {
 }
 
 $response = Api::login($email, $password);
-var_dump($response);
+// var_dump($response['school']);
 
 if (!empty($response['token'])) {
     // successful login
     $_SESSION['login_attempts'] = 0;
     $_SESSION['token']          = $response['token'];
     $_SESSION['user']           = $response['user'];
-    $_SESSION['school_uid']     = $response['user']['school']['uniqueId'] ?? null;//Will fix this later
+    $_SESSION['school_uid']     = $response['school']['uniqueId'];//Will fix this later
     echo 'success';
     exit;
 }

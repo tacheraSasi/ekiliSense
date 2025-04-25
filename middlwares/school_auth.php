@@ -30,6 +30,7 @@ $school = Api::getSchoolByUniqueId($school_uid);
 
 #getting the list of classes
 $classes = Api::getClasses( $school_uid);
+// var_dump($classes);
 $classes_count = count($classes);
 
 #getting the list of teachers

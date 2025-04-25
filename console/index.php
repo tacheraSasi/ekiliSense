@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once "../config.php";
 include_once "../middlwares/school_auth.php";
 ?>
@@ -144,12 +143,12 @@ include_once "../middlwares/school_auth.php";
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/school-1.png" alt="Profile" class="">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$school['School_name']?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$school['schoolName']?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6 id="school-name-h6"><?=$school['School_name']?></h6>
+              <h6 id="school-name-h6"><?=$school['schoolName']?></h6>
               <span>ekiliSense</span>
             </li>
             <li>
@@ -723,27 +722,35 @@ include_once "../middlwares/school_auth.php";
                         padding:6px;
                         border-radius:8px;">
                       </div>
-                    <!-- TODO: add emojis to the plcaholder -->
+                    <!-- TODO: add emojis to the placaholder -->
                     <input type="hidden" name="form-type" value="class-teacher" >
                     <div class=" field input">
                       <label for="choose-class">Select a class</label>
                       <select name="choosen-class" id="choose-class" required>
                         <?php
-                          while($row_class = mysqli_fetch_array($get_classes)){
-                            $class_name = $row_class['Class_name'];
+                        if (count($classes) > 0) {
+                          foreach ($classes as $class) {
+                            $class_name = $class['Class_name'];
                             echo "<option value='$class_name'>$class_name</option>";
                           }
+                        } else {
+                          echo "<option value='' disabled selected>No classes available</option>";
+                        }
                         ?>
                       </select>
                     </div>
                     <div class=" field input">
                       <label for="choose-class-teacher">Choose a teacher</label>
-                      <select name="choosen-class-teacher" id="choose-class-teacher">
+                      <select name="choosen-class-teacher" id="choose-class-teacher" required>
                         <?php
-                          while($row_teacher = mysqli_fetch_array($get_teachers)){
-                            $teacher_name = $row_teacher['teacher_fullname'];
+                        if (count($teachers) > 0) {
+                          foreach ($teachers as $teacher) {
+                            $teacher_name = $teacher['teacher_fullname'];
                             echo "<option value='$teacher_name'>$teacher_name</option>";
                           }
+                        } else {
+                          echo "<option value='' disabled selected>No teachers available</option>";
+                        }
                         ?>
                       </select>
                     </div>
