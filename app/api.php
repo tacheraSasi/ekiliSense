@@ -103,7 +103,6 @@ class Api
     }
 
     ##Teachers
-
     public static function getTeacherById(int $id): array{
         return self::request("GET", "/teachers/{$id}");
     }

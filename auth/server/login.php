@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "../../app/api.php";
 
 // Initialize login attempts counter
@@ -21,13 +20,14 @@ if ($email === '' || $password === '') {
 }
 
 $response = Api::login($email, $password);
+var_dump($response);
 
 if (!empty($response['token'])) {
     // successful login
     $_SESSION['login_attempts'] = 0;
     $_SESSION['token']          = $response['token'];
     $_SESSION['user']           = $response['user'];
-    $_SESSION['school_uid']     = $response['user']['school']['uniqueId'];
+    $_SESSION['school_uid']     = $response['user']['school']['uniqueId'] ?? null;//Will fix this later
     echo 'success';
     exit;
 }
