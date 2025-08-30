@@ -2,3 +2,8 @@
 .gitignore
 test.php
 .VSCodeCounter
+vendor/composer/tmp-*.zip~
+vendor/composer/tmp-*
+*.tmp
+*.temp
+.DS_Store
