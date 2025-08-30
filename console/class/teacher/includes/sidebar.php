@@ -28,6 +28,18 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link  <?=$page=="homework"?"":"collapsed"?>" href="homework.php">
+          <i class="bi bi-journal-text"></i>
+          <span>Homework</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link  <?=$page=="exams"?"":"collapsed"?>" href="exams.php">
+          <i class="bi bi-clipboard-check"></i>
+          <span>Exams</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link <?=$page=="plans"?"":"collapsed"?>" href="./plans.php">
           <i class="bi bi-pen"></i>
           <span>Teaching plans</span>
