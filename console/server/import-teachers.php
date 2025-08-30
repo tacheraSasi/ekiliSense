@@ -108,9 +108,191 @@ function parseCSV($filePath) {
  * Parse Excel file (basic implementation)
  */
 function parseExcel($filePath) {
-    // For now, return an error asking users to convert to CSV
-    // This can be enhanced later with proper Excel parsing library
-    throw new Exception('Excel files are not yet supported. Please convert your file to CSV format and try again.');
+    // Try to read Excel as XML-based format (modern .xlsx files)
+    if (isXlsxFile($filePath)) {
+        return parseXlsxFile($filePath);
+    } else {
+        // For older .xls files, suggest CSV conversion
+        throw new Exception('Legacy Excel files (.xls) are not supported. Please save your file as .xlsx or convert to CSV format and try again.');
+    }
+}
+
+/**
+ * Check if file is a modern XLSX file
+ */
+function isXlsxFile($filePath) {
+    $fileSignature = file_get_contents($filePath, false, null, 0, 4);
+    return substr($fileSignature, 0, 2) === 'PK'; // ZIP file signature (XLSX is a ZIP archive)
+}
+
+/**
+ * Parse XLSX file by extracting the shared strings and worksheet data
+ */
+function parseXlsxFile($filePath) {
+    $teachers = [];
+    
+    try {
+        // Create temporary directory for extraction
+        $tempDir = sys_get_temp_dir() . '/xlsx_' . uniqid();
+        mkdir($tempDir);
+        
+        // Extract the XLSX file (which is actually a ZIP archive)
+        $zip = new ZipArchive();
+        if ($zip->open($filePath) === TRUE) {
+            $zip->extractTo($tempDir);
+            $zip->close();
+            
+            // Read shared strings
+            $sharedStrings = [];
+            $sharedStringsPath = $tempDir . '/xl/sharedStrings.xml';
+            if (file_exists($sharedStringsPath)) {
+                $sharedStrings = parseSharedStrings($sharedStringsPath);
+            }
+            
+            // Read worksheet data
+            $worksheetPath = $tempDir . '/xl/worksheets/sheet1.xml';
+            if (file_exists($worksheetPath)) {
+                $teachers = parseWorksheet($worksheetPath, $sharedStrings);
+            } else {
+                throw new Exception('Could not find worksheet data in Excel file.');
+            }
+            
+            // Clean up temporary directory
+            deleteDirectory($tempDir);
+        } else {
+            throw new Exception('Could not open Excel file. Please ensure it is a valid .xlsx file.');
+        }
+    } catch (Exception $e) {
+        throw new Exception('Error reading Excel file: ' . $e->getMessage() . '. Please convert to CSV format and try again.');
+    }
+    
+    return $teachers;
+}
+
+/**
+ * Parse shared strings XML file
+ */
+function parseSharedStrings($filePath) {
+    $strings = [];
+    
+    if (file_exists($filePath)) {
+        $xml = simplexml_load_file($filePath);
+        if ($xml !== false) {
+            foreach ($xml->si as $si) {
+                $strings[] = (string)$si->t;
+            }
+        }
+    }
+    
+    return $strings;
+}
+
+/**
+ * Parse worksheet XML file
+ */
+function parseWorksheet($filePath, $sharedStrings) {
+    $teachers = [];
+    $rows = [];
+    
+    if (!file_exists($filePath)) {
+        return $teachers;
+    }
+    
+    $xml = simplexml_load_file($filePath);
+    if ($xml === false) {
+        return $teachers;
+    }
+    
+    // Extract rows and cells
+    foreach ($xml->sheetData->row as $row) {
+        $rowData = [];
+        $rowNum = (int)$row['r'];
+        
+        foreach ($row->c as $cell) {
+            $cellRef = (string)$cell['r'];
+            $cellValue = '';
+            
+            // Get cell column (A, B, C, etc.)
+            preg_match('/([A-Z]+)/', $cellRef, $matches);
+            $column = $matches[1];
+            $columnIndex = columnLetterToNumber($column) - 1;
+            
+            // Get cell value
+            if (isset($cell->v)) {
+                if (isset($cell['t']) && $cell['t'] == 's') {
+                    // Shared string
+                    $sharedStringIndex = (int)$cell->v;
+                    if (isset($sharedStrings[$sharedStringIndex])) {
+                        $cellValue = $sharedStrings[$sharedStringIndex];
+                    }
+                } else {
+                    // Direct value
+                    $cellValue = (string)$cell->v;
+                }
+            }
+            
+            $rowData[$columnIndex] = trim($cellValue);
+        }
+        
+        if (!empty($rowData)) {
+            $rows[$rowNum] = $rowData;
+        }
+    }
+    
+    // Convert to teacher format
+    if (!empty($rows)) {
+        ksort($rows); // Sort by row number
+        $firstRow = reset($rows);
+        $header = array_map('trim', array_map('strtolower', $firstRow));
+        
+        foreach ($rows as $rowNum => $rowData) {
+            if ($rowNum == key($rows)) continue; // Skip header row
+            
+            $teacher = [];
+            foreach ($header as $colIndex => $column) {
+                if (isset($rowData[$colIndex])) {
+                    $teacher[$column] = $rowData[$colIndex];
+                }
+            }
+            
+            // Map common column names
+            $teacher = mapTeacherColumns($teacher);
+            
+            if (!empty($teacher['name']) && !empty($teacher['email'])) {
+                $teachers[] = $teacher;
+            }
+        }
+    }
+    
+    return $teachers;
+}
+
+/**
+ * Convert column letter to number (A=1, B=2, etc.)
+ */
+function columnLetterToNumber($column) {
+    $number = 0;
+    $length = strlen($column);
+    
+    for ($i = 0; $i < $length; $i++) {
+        $number = $number * 26 + (ord($column[$i]) - ord('A') + 1);
+    }
+    
+    return $number;
+}
+
+/**
+ * Delete directory recursively
+ */
+function deleteDirectory($dir) {
+    if (!is_dir($dir)) return;
+    
+    $files = array_diff(scandir($dir), array('.', '..'));
+    foreach ($files as $file) {
+        $path = $dir . '/' . $file;
+        is_dir($path) ? deleteDirectory($path) : unlink($path);
+    }
+    rmdir($dir);
 }
 
 /**
