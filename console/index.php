@@ -270,6 +270,16 @@ include_once "../middlwares/school_auth.php";
                 <button 
                   type="button" 
                   data-bs-toggle="modal" 
+                  data-bs-target="#import-teachers-modal" 
+                  class="manage-btn" 
+                  style="background-color: #4A90E2;">
+                  <i class="bi bi-file-earmark-spreadsheet"></i>
+                  Import Teachers
+                </button>
+                
+                <button 
+                  type="button" 
+                  data-bs-toggle="modal" 
                   data-bs-target="#add-class-modal" 
                   class="manage-btn" 
                   style="background-color: #a0695f;">
@@ -681,6 +691,111 @@ include_once "../middlwares/school_auth.php";
           </div>
         </div>
       </div>
+      
+      <!-- import-teachers -->
+      <div class="modal fade " id="import-teachers-modal" tabindex="-1">
+        <div class="modal-dialog modal-xl ">
+          <div class="modal-content card">
+            <div class="add">
+              <div class="add-card">
+                <div class="left">
+                  <div class="top-container">
+                    <div style="
+                    display: flex;
+                    justify-content: flex-start;">
+                      <div class="logo-container">
+                        <img src="https://www.ekilie.com/assets/img/favicon.jpeg" alt="" class="logo">
+                        <div class="logo-text">ekilie.</div>
+                      </div>
+                    </div>
+                    <div class="middle-content">
+                      <h1>ekiliSense</h1>
+                      <h2 id="typingText" style="display: inline;"></h2>
+                      <span class="cursor"></span>
+                    </div>
+                  </div>
+                  <div class="bottom-container">
+                    "Bulk import teachers efficiently with CSV or Excel files. 
+                    Upload your teacher data and ekiliSense will handle the rest, 
+                    ensuring seamless onboarding for your educational team."
+                  </div>
+                  
+                </div>
+                <div class="right">
+                  <h1>Import Teachers</h1>
+                  <p class="sub-heading">
+                    Upload CSV or Excel file with teacher information
+                  </p>
+                  <form class="modal-form" id="import-teachers-form" action="server/import-teachers.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+                    <div class="error-text" style="
+                          background-color: rgba(243, 89, 89, 0.562);
+                          border:solid 1px rgba(243, 89, 89, 0.822);
+                          color:#fff;
+                          padding:6px;
+                          border-radius:8px;
+                          display:none;">
+                    </div>
+                    <div class="success-text" style="
+                          background-color: rgba(89, 243, 123, 0.562);
+                          border:solid 1px rgba(89, 243, 123, 0.822);
+                          color:#fff;
+                          padding:6px;
+                          border-radius:8px;
+                          display:none;">
+                    </div>
+                    
+                    <div class="field input">
+                      <label for="teacher-file" style="color: #fff; margin-bottom: 8px; display: block;">
+                        Select CSV or Excel file (.csv, .xls, .xlsx)
+                      </label>
+                      <input style="width: 100%; background-color: #444; border: 1px solid #666; color: #fff; padding: 10px; border-radius: 4px;" 
+                             type="file" 
+                             name="teacher_file" 
+                             id="teacher-file" 
+                             accept=".csv,.xls,.xlsx" 
+                             required>
+                      <small style="color: #ccc; display: block; margin-top: 4px;">
+                        File should contain columns: Name, Email, Phone (optional)
+                      </small>
+                    </div>
+                    
+                    <div class="field" style="margin-top: 15px;">
+                      <label style="color: #fff; margin-bottom: 8px; display: block;">
+                        <input type="checkbox" id="validate-emails" name="validate_emails" value="1" checked style="margin-right: 8px;">
+                        Validate email addresses
+                      </label>
+                      <label style="color: #fff; margin-bottom: 8px; display: block;">
+                        <input type="checkbox" id="skip-duplicates" name="skip_duplicates" value="1" checked style="margin-right: 8px;">
+                        Skip duplicate email addresses
+                      </label>
+                      <label style="color: #fff; margin-bottom: 8px; display: block;">
+                        <input type="checkbox" id="send-invites" name="send_invites" value="1" checked style="margin-right: 8px;">
+                        Send invitation emails to new teachers
+                      </label>
+                    </div>
+                    
+                    <div class="input-container field button">
+                        <button id="import-submit" title="import teachers" type="submit">IMPORT</button>
+                    </div>
+                    
+                    <div class="link" style="color:lightgrey">
+                      <a href="#" onclick="downloadTemplate()" style="color:#33995d;text-decoration:none">
+                        Download CSV template
+                      </a> | 
+                      <a href="../onboarding/" style="color:#33995d;text-decoration:none">
+                        Contact Support
+                      </a>
+                    </div>
+          
+                  </form>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <!-- add class teacher -->
       <div class="modal fade " id="add-class-teacher-modal" tabindex="-1">
         <div class="modal-dialog modal-xl ">
@@ -1083,6 +1198,73 @@ input.addEventListener('keyup', (e) => {
     }
     
 })
+
+// CSV Template download and import functionality
+function downloadTemplate() {
+  const csvContent = "Name,Email,Phone\nJohn Doe,john.doe@example.com,+1234567890\nJane Smith,jane.smith@example.com,+0987654321";
+  const blob = new Blob([csvContent], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'teachers_template.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
+}
+
+// Handle import form submission
+document.addEventListener('DOMContentLoaded', function() {
+  const importForm = document.getElementById('import-teachers-form');
+  if (importForm) {
+    importForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const errorDiv = this.querySelector('.error-text');
+      const successDiv = this.querySelector('.success-text');
+      const submitBtn = this.querySelector('#import-submit');
+      
+      // Reset messages
+      errorDiv.style.display = 'none';
+      successDiv.style.display = 'none';
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'IMPORTING...';
+      
+      fetch('server/import-teachers.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          successDiv.innerHTML = data.message;
+          successDiv.style.display = 'block';
+          this.reset();
+          
+          // Reload page after 3 seconds to show new teachers
+          setTimeout(() => {
+            location.reload();
+          }, 3000);
+        } else {
+          errorDiv.innerHTML = data.message;
+          errorDiv.style.display = 'block';
+        }
+      })
+      .catch(error => {
+        errorDiv.innerHTML = 'An error occurred while importing teachers. Please try again.';
+        errorDiv.style.display = 'block';
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'IMPORT';
+      });
+    });
+  }
+});
 </script>
 
 </body>
