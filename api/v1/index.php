@@ -73,6 +73,24 @@ class APIGateway {
         // Notification routes
         $this->addRoute('GET', '/notifications', 'NotificationController', 'list', ['auth']);
         $this->addRoute('POST', '/notifications/mark-read', 'NotificationController', 'markRead', ['auth']);
+        
+        // Analytics routes (NEW)
+        $this->addRoute('GET', '/analytics/dashboard', 'AnalyticsController', 'getDashboard', ['auth']);
+        $this->addRoute('GET', '/analytics/student-performance', 'AnalyticsController', 'getStudentPerformance', ['auth']);
+        $this->addRoute('GET', '/analytics/teacher-performance', 'AnalyticsController', 'getTeacherPerformance', ['auth']);
+        $this->addRoute('GET', '/analytics/class-comparison', 'AnalyticsController', 'getClassComparison', ['auth']);
+        
+        // Webhook routes (NEW)
+        $this->addRoute('GET', '/webhooks', 'WebhookController', 'list', ['auth']);
+        $this->addRoute('POST', '/webhooks', 'WebhookController', 'create', ['auth']);
+        $this->addRoute('DELETE', '/webhooks/{id}', 'WebhookController', 'delete', ['auth']);
+        
+        // Subscription routes (NEW)
+        $this->addRoute('GET', '/subscription/current', 'SubscriptionController', 'getCurrent', ['auth']);
+        $this->addRoute('GET', '/subscription/plans', 'SubscriptionController', 'getPlans', ['auth']);
+        $this->addRoute('POST', '/subscription/subscribe', 'SubscriptionController', 'subscribe', ['auth']);
+        $this->addRoute('POST', '/subscription/cancel', 'SubscriptionController', 'cancel', ['auth']);
+        $this->addRoute('GET', '/subscription/billing-history', 'SubscriptionController', 'getBillingHistory', ['auth']);
     }
     
     private function addRoute($method, $path, $controller, $action, $middleware = []) {
