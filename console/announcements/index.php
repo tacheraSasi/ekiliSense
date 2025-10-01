@@ -223,15 +223,15 @@ function getClassTeacher($conn,$class_id){
                         Email
                       </label>
                     </div>
-                    <div class="form-check disabled">
-                      <input class="form-check-input" disabled type="radio" name="notificationType" id="smsOption" value="sms">
-                      <label class="form-check-label" disabled for="smsOption">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="notificationType" id="smsOption" value="sms">
+                      <label class="form-check-label" for="smsOption">
                         SMS (Premium)
                       </label>
                     </div>
-                    <div class="form-check disabled">
-                      <input class="form-check-input" disabled type="radio" name="notificationType" id="bothOption" value="both">
-                      <label class="form-check-label" disabled for="bothOption">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="notificationType" id="bothOption" value="both">
+                      <label class="form-check-label" for="bothOption">
                         BOTH (Premium)
                       </label>
                     </div>

@@ -13,18 +13,20 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && isset($school_uid)){
         $recipients = $_POST['recipients'];
         $title = $_POST['title'];
         $message = $_POST['message'];
+        $notificationType = isset($_POST['notificationType']) ? $_POST['notificationType'] : 'email';
+        
         foreach ($recipients as $recipient) {
             if($recipient == "teachers"){
                 #sending to Teachers
-                sendToTeachers($school_uid,$school_name,$conn,$title,$message);
+                sendToTeachers($school_uid,$school_name,$conn,$title,$message,$notificationType);
 
             }else if($recipient == "parents"){
                 #sending to Parents
-                sendToParents($school_uid,$school_name,$conn,$title,$message);
+                sendToParents($school_uid,$school_name,$conn,$title,$message,$notificationType);
 
             }else if($recipient == "classTeachers"){
                 #sending to ClassTeachers
-                sendToClassTeachers($school_uid,$school_name,$conn,$title,$message);
+                sendToClassTeachers($school_uid,$school_name,$conn,$title,$message,$notificationType);
                 
             }
         }
@@ -35,31 +37,44 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && isset($school_uid)){
     }
 
 }
-function sendToTeachers($school_uid,$school_name,$conn,$title,$message){
+function sendToTeachers($school_uid,$school_name,$conn,$title,$message,$notificationType = 'email'){
     $get_teachers = mysqli_query($conn,"SELECT * FROM teachers WHERE School_unique_id = '$school_uid'");
     while($teachers = mysqli_fetch_array($get_teachers)){
         $email = $teachers['teacher_email'];
+        $phone = $teachers['teacher_active_phone'];
         $name = $teachers['teacher_fullname'];
-        if(isset($email)){
-            sendMail($email,$name,$school_name,$title,$message);
-
-        }else{
-            continue;
+        
+        if($notificationType == 'email' || $notificationType == 'both'){
+            if(isset($email)){
+                sendMail($email,$name,$school_name,$title,$message);
+            }
+        }
+        
+        if($notificationType == 'sms' || $notificationType == 'both'){
+            if(isset($phone) && !empty($phone)){
+                sendSMS($phone,$name,$school_name,$title,$message);
+            }
         }
     }
 
-
 }
 
-function sendToParents($school_uid,$school_name,$conn,$title,$message){
+function sendToParents($school_uid,$school_name,$conn,$title,$message,$notificationType = 'email'){
     $get_students = mysqli_query($conn,"SELECT * FROM students WHERE school_uid = '$school_uid'");
     while($students = mysqli_fetch_array($get_students)){
         $email = $students["parent_email"];
-        if(isset($email)){
-            sendMail($email,"Parent/Gaurdian",$school_name,$title,$message);
-
-        }else{
-            continue;
+        $phone = $students["parent_phone"];
+        
+        if($notificationType == 'email' || $notificationType == 'both'){
+            if(isset($email) && !empty($email)){
+                sendMail($email,"Parent/Guardian",$school_name,$title,$message);
+            }
+        }
+        
+        if($notificationType == 'sms' || $notificationType == 'both'){
+            if(isset($phone) && !empty($phone)){
+                sendSMS($phone,"Parent/Guardian",$school_name,$title,$message);
+            }
         }
     }
     
@@ -67,7 +82,7 @@ function sendToParents($school_uid,$school_name,$conn,$title,$message){
 
 }
 
-function sendToClassTeachers($school_uid,$school_name,$conn,$title,$message){
+function sendToClassTeachers($school_uid,$school_name,$conn,$title,$message,$notificationType = 'email'){
     $get_class_teachers = mysqli_query($conn,"SELECT * FROM class_teacher WHERE school_unique_id = '$school_uid'");
     while($class_teachers = mysqli_fetch_array($get_class_teachers)){
         $teacher_uid = $class_teachers['teacher_id'];
@@ -75,11 +90,19 @@ function sendToClassTeachers($school_uid,$school_name,$conn,$title,$message){
         $teacher = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM teachers WHERE teacher_id = '$teacher_uid'"));
         
         $email = $teacher['teacher_email'];
+        $phone = $teacher['teacher_active_phone'];
         $name = $teacher['teacher_fullname'];
-        if(isset($email)){
-            sendMail($email,$name,$school_name,$title,$message);
-        }else{
-            continue;
+        
+        if($notificationType == 'email' || $notificationType == 'both'){
+            if(isset($email) && !empty($email)){
+                sendMail($email,$name,$school_name,$title,$message);
+            }
+        }
+        
+        if($notificationType == 'sms' || $notificationType == 'both'){
+            if(isset($phone) && !empty($phone)){
+                sendSMS($phone,$name,$school_name,$title,$message);
+            }
         }
     }
 }
@@ -124,4 +147,85 @@ function sendMail($email, $name,$school_name,$title,$message) {
     # Sending the email
     mail($email, $subject, $content, $headers);
     
+}
+
+#function that handles the sending of SMS
+function sendSMS($phone, $name, $school_name, $title, $message) {
+    # Load environment variables
+    include_once "../../parseEnv.php";
+    
+    # Get SMS API configuration from environment
+    $baseUrl = getenv('NOTIFY_AFRICA_API_URL') ?: 'https://example.com/v2';
+    $apiToken = getenv('NOTIFY_AFRICA_API_TOKEN') ?: '';
+    $senderId = getenv('NOTIFY_AFRICA_SENDER_ID') ?: 1;
+    
+    # Skip if no API token is configured
+    if(empty($apiToken) || $apiToken == 'your_api_token_here'){
+        error_log("SMS API token not configured. Skipping SMS for: " . $phone);
+        return false;
+    }
+    
+    # Format the phone number (remove non-numeric characters)
+    $formattedPhone = preg_replace('/[^0-9]/', '', $phone);
+    
+    # Skip if phone number is empty or invalid
+    if(empty($formattedPhone)){
+        error_log("Invalid phone number format: " . $phone);
+        return false;
+    }
+    
+    # Prepare SMS content
+    $smsText = "$title\n\nDear $name,\n\n$message\n\nBest regards,\n$school_name @ekiliSense";
+    
+    # Truncate message if too long (most SMS APIs have a limit)
+    if(strlen($smsText) > 160){
+        $smsText = substr($smsText, 0, 157) . '...';
+    }
+    
+    # API endpoint
+    $url = "$baseUrl/send-sms";
+    
+    # Prepare payload
+    $payload = array(
+        'sender_id' => $senderId,
+        'schedule' => 'none',
+        'sms' => $smsText,
+        'recipients' => array(
+            array('number' => $formattedPhone)
+        )
+    );
+    
+    # Set the headers and request options
+    $options = array(
+        'http' => array(
+            'header' => "Content-Type: application/json\r\n" .
+                        "Accept: application/json\r\n" .
+                        "Authorization: Bearer $apiToken\r\n",
+            'method' => 'POST',
+            'content' => json_encode($payload),
+            'ignore_errors' => true
+        )
+    );
+    
+    # Create stream context
+    $context = stream_context_create($options);
+    
+    # Send the SMS
+    try {
+        $result = @file_get_contents($url, false, $context);
+        
+        # Log the response for debugging
+        if ($result === false) {
+            error_log("Failed to send SMS to: " . $phone);
+            return false;
+        }
+        
+        $response = json_decode($result, true);
+        error_log("SMS sent to " . $phone . ": " . json_encode($response));
+        return true;
+        
+    } catch (Exception $e) {
+        error_log("SMS sending error: " . $e->getMessage());
+        return false;
+    }
 }

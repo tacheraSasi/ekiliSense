@@ -18,8 +18,19 @@ function submitSendForm(form){
           if(xhr.status === 200){
               let data = xhr.response;
               if(data === "success"){
-                //TODO:some logic
-                toastAlert("Success sent email notification")
+                // Get the notification type
+                const notificationType = form.querySelector('input[name="notificationType"]:checked').value;
+                let successMessage = "Successfully sent ";
+                
+                if(notificationType === "email"){
+                  successMessage += "email notification";
+                } else if(notificationType === "sms"){
+                  successMessage += "SMS notification";
+                } else if(notificationType === "both"){
+                  successMessage += "email and SMS notifications";
+                }
+                
+                toastAlert(successMessage)
               }else{
                 console.error("Something went wrong")
                 console.error(data)
