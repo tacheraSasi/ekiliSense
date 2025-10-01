@@ -241,7 +241,20 @@ include_once "../middlwares/school_auth.php";
         </a>
       </li>
 
-      
+      <li class="nav-heading">Management</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./bulk-operations/">
+          <i class="bi bi-arrow-repeat"></i>
+          <span>Bulk Operations</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./settings/">
+          <i class="bi bi-gear"></i>
+          <span>System Settings</span>
+        </a>
+      </li>
 
       <li class="nav-heading">Pages</li>
 
