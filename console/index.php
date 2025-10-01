@@ -217,13 +217,44 @@ include_once "../middlwares/school_auth.php";
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link collapsed" href="./reports/">
+          <i class="bi bi-bar-chart"></i>
+          <span>Reports & Analytics</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./attendance/">
+          <i class="bi bi-calendar-check"></i>
+          <span>Attendance</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./events/">
+          <i class="bi bi-calendar-event"></i>
+          <span>Events & Calendar</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="https://convo.ekilie.com">
         <i class="bi bi-camera-video"></i>
           <span>Convo</span>
         </a>
       </li>
 
-      
+      <li class="nav-heading">Management</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./bulk-operations/">
+          <i class="bi bi-arrow-repeat"></i>
+          <span>Bulk Operations</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./settings/">
+          <i class="bi bi-gear"></i>
+          <span>System Settings</span>
+        </a>
+      </li>
 
       <li class="nav-heading">Pages</li>
 
