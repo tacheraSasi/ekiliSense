@@ -18,7 +18,42 @@ $school = mysqli_fetch_array($get_info);
 #getting the teachers information
 $get_teacher = mysqli_query($conn, "SELECT * FROM teachers WHERE school_unique_id = '$school_uid' AND teacher_email = '$teacher_email'");
 $teacher = mysqli_fetch_array($get_teacher);
+$teacher_id = $teacher['teacher_id'];
 
+#getting teacher statistics
+$subjects_query = mysqli_query($conn, "SELECT * FROM subjects WHERE teacher_id = '$teacher_id'");
+$subject_count = mysqli_num_rows($subjects_query);
+
+#getting classes taught by this teacher
+$classes_query = mysqli_query($conn, "SELECT DISTINCT c.* FROM classes c 
+                                      JOIN subjects s ON c.Class_id = s.class_id 
+                                      WHERE s.teacher_id = '$teacher_id'");
+$class_count = mysqli_num_rows($classes_query);
+
+#getting students taught by this teacher
+$students_query = mysqli_query($conn, "SELECT DISTINCT st.* FROM students st 
+                                       JOIN subjects s ON st.class_id = s.class_id 
+                                       WHERE s.teacher_id = '$teacher_id'");
+$student_count = mysqli_num_rows($students_query);
+
+#getting homework/assignments count
+$assignments_query = mysqli_query($conn, "SELECT COUNT(*) as count FROM homework_assignments 
+                                          WHERE teacher_id = '$teacher_id'");
+$assignment_count = mysqli_fetch_array($assignments_query)['count'];
+
+#getting pending assignments
+$pending_assignments_query = mysqli_query($conn, "SELECT COUNT(*) as count FROM homework_assignments 
+                                                  WHERE teacher_id = '$teacher_id' 
+                                                  AND deadline >= CURDATE()");
+$pending_count = mysqli_fetch_array($pending_assignments_query)['count'];
+
+#checking if teacher is a class teacher
+$is_class_teacher = false;
+$class_teacher_query = mysqli_query($conn, "SELECT * FROM class_teacher WHERE teacher_id = '$teacher_id'");
+if(mysqli_num_rows($class_teacher_query) > 0){
+  $is_class_teacher = true;
+  $class_teacher_data = mysqli_fetch_array($class_teacher_query);
+}
 
 ?>
 <!DOCTYPE html>
@@ -115,18 +150,79 @@ $teacher = mysqli_fetch_array($get_teacher);
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="#">
-          <i class="bi bi-grid"></i>
-          <span>Home</span>
+        <a class="nav-link " href="./">
+          <i class="bi bi-speedometer2"></i>
+          <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="subjects.php">
+          <i class="bi bi-book"></i>
+          <span>My Subjects</span>
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="assignments.php">
+          <i class="bi bi-journal-text"></i>
+          <span>Assignments</span>
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="grades.php">
+          <i class="bi bi-clipboard-check"></i>
+          <span>Grades & Results</span>
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="attendance.php">
+          <i class="bi bi-clock"></i>
+          <span>Attendance</span>
+        </a>
+      </li>
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="./plans.php">
           <i class="bi bi-pen"></i>
-          <span>Teaching plans</span>
+          <span>Teaching Plans</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="messages.php">
+          <i class="bi bi-chat-dots"></i>
+          <span>Messages</span>
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="performance.php">
+          <i class="bi bi-graph-up"></i>
+          <span>Performance</span>
+        </a>
+      </li>
 
+      <?php if($is_class_teacher): ?>
+      <li class="nav-heading">Class Teacher</li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="../class/teacher/">
+          <i class="bi bi-people"></i>
+          <span>My Class Dashboard</span>
+        </a>
+      </li>
+      <?php endif; ?>
+
+      <li class="nav-heading">Pages</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="profile.php">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li>
 
     </ul>
 
@@ -136,139 +232,254 @@ $teacher = mysqli_fetch_array($get_teacher);
 
     <div class="pagetitle">
       <h1>
-        <img 
-        src="../../assets/img/user.png" 
-        alt="Profile" 
-        class="rounded-circle"
-        style="width: 25px;height:25px">
-        Me
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
       </h1>
-      
+      <p>Welcome back, <?=$teacher['teacher_fullname']?>!</p>
     </div><!-- End Page Title -->
 
-    <section class="section profile">
+    <section class="section dashboard">
       <div class="row">
-        <div class="col-xl-4">
+        
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+            
+            <!-- Classes Card -->
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title">Classes</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-buildings"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?= $class_count ?></h6>
+                      <span class="text-muted small pt-2 ps-1">Teaching</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Classes Card -->
 
+            <!-- Students Card -->
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card revenue-card">
+                <div class="card-body">
+                  <h5 class="card-title">Students</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?= $student_count ?></h6>
+                      <span class="text-muted small pt-2 ps-1">Total</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Students Card -->
+
+            <!-- Subjects Card -->
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h5 class="card-title">Subjects</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-book"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?= $subject_count ?></h6>
+                      <span class="text-muted small pt-2 ps-1">Teaching</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Subjects Card -->
+
+            <!-- Assignments Card -->
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title">Assignments</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-journal-text"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><?= $pending_count ?></h6>
+                      <span class="text-muted small pt-2 ps-1">Pending</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Assignments Card -->
+
+            <!-- Classes List -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+                <div class="card-body">
+                  <h5 class="card-title">My Classes</h5>
+                  
+                  <?php if($class_count > 0): ?>
+                  <table class="table table-borderless">
+                    <thead>
+                      <tr>
+                        <th scope="col">Class</th>
+                        <th scope="col">Subjects</th>
+                        <th scope="col">Students</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php 
+                      mysqli_data_seek($classes_query, 0);
+                      while($class = mysqli_fetch_array($classes_query)): 
+                        $class_id = $class['Class_id'];
+                        $class_subjects = mysqli_query($conn, "SELECT * FROM subjects WHERE class_id = '$class_id' AND teacher_id = '$teacher_id'");
+                        $class_students = mysqli_query($conn, "SELECT COUNT(*) as count FROM students WHERE class_id = '$class_id'");
+                        $student_num = mysqli_fetch_array($class_students)['count'];
+                      ?>
+                      <tr>
+                        <td><?= $class['Class_name'] ?></td>
+                        <td><?= mysqli_num_rows($class_subjects) ?> subjects</td>
+                        <td><?= $student_num ?> students</td>
+                        <td>
+                          <a href="../view/class.php?cid=<?= $class_id ?>&suid=<?= $school_uid ?>" class="btn btn-sm btn-primary">
+                            <i class="bi bi-eye"></i> View
+                          </a>
+                        </td>
+                      </tr>
+                      <?php endwhile; ?>
+                    </tbody>
+                  </table>
+                  <?php else: ?>
+                  <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> You are not assigned to any classes yet.
+                  </div>
+                  <?php endif; ?>
+                  
+                </div>
+              </div>
+            </div><!-- End Classes List -->
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+          
+          <!-- Profile Card -->
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
               <img src="../../assets/img/user.png" alt="Profile" class="rounded-circle">
               <h2><?=$teacher['teacher_fullname']?></h2>
               <h3><?=$school['School_name']?></h3>
-              <!-- <div class="social-links mt-2">
-                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div> -->
+              <?php if($is_class_teacher): ?>
+                <span class="badge bg-success mt-2">Class Teacher</span>
+              <?php endif; ?>
+              <div class="mt-3">
+                <a href="profile.php" class="btn btn-primary btn-sm">
+                  <i class="bi bi-person"></i> View Profile
+                </a>
+              </div>
             </div>
-          </div>
+          </div><!-- End Profile Card -->
 
-        </div>
-
-        <div class="col-xl-8">
-
+          <!-- Quick Actions -->
           <div class="card">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered">
-
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                </li>
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#work-attendance">Work Attendance</button>
-                </li>
-
-              </ul>
-              <div class="tab-content pt-2">
-
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">I LOVE EKILISENSE</p>
-
-                  <h5 class="card-title">My informations</h5>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_fullname']?></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_email'];?></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_active_phone'];?></div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8"><?=$teacher['teacher_home_address']?$teacher['teacher_active_phone']:"Not added yet."?></div>
-                  </div>
-
-                </div>
-
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                  <!-- Profile Edit Form -->
-                  <form>
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input  name="fullName" type="text" class="form-control" id="fullName" placeholder="Enter Name" value="<?=$teacher['teacher_fullname'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input  name="phone" type="text" class="form-control" id="Phone"placeholder="Enter Phone"  value="<?=$teacher['teacher_active_phone'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input  name="email" type="email" class="form-control" id="Email" placeholder="Enter Email"  value="<?=$teacher['teacher_email'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input  name="address" type="text" class="form-control" id="Address"placeholder="Enter Address"  value="<?=$teacher['teacher_home_address'];?>" style="background-color:#444;outline:none;border:none;color:#b8eeab">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
-
-                </div>
-                <div class="tab-pane fade profile-edit pt-3" id="work-attendance">
-                  <div class="alert alert-dark bg-dark text-light border-0 alert-dismissible fade show" role="alert">
-                      To sign/mark your work attendance today you need to be within 100m of your workspace
-                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-
-                </div>
-
-
-              </div><!-- End Bordered Tabs -->
-
+            <div class="card-body">
+              <h5 class="card-title">Quick Actions</h5>
+              <div class="d-grid gap-2">
+                <a href="subjects.php" class="btn btn-outline-primary">
+                  <i class="bi bi-book"></i> View My Subjects
+                </a>
+                <a href="assignments.php" class="btn btn-outline-success">
+                  <i class="bi bi-journal-text"></i> Manage Assignments
+                </a>
+                <a href="attendance.php" class="btn btn-outline-warning">
+                  <i class="bi bi-clock"></i> Mark Attendance
+                </a>
+                <a href="grades.php" class="btn btn-outline-info">
+                  <i class="bi bi-clipboard-check"></i> Enter Grades
+                </a>
+                <?php if($is_class_teacher): ?>
+                <a href="../class/teacher/" class="btn btn-outline-danger">
+                  <i class="bi bi-people"></i> Class Dashboard
+                </a>
+                <?php endif; ?>
+              </div>
             </div>
-          </div>
+          </div><!-- End Quick Actions -->
 
-        </div>
+          <!-- Recent Assignments -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Recent Assignments</h5>
+              <?php 
+              $recent_assignments = mysqli_query($conn, "SELECT ha.*, s.subject_name, c.Class_name 
+                                                         FROM homework_assignments ha
+                                                         JOIN subjects s ON ha.subject_id = s.subject_id
+                                                         JOIN classes c ON s.class_id = c.Class_id
+                                                         WHERE ha.teacher_id = '$teacher_id'
+                                                         ORDER BY ha.created_at DESC
+                                                         LIMIT 5");
+              if(mysqli_num_rows($recent_assignments) > 0):
+              ?>
+              <ul class="list-group list-group-flush">
+                <?php while($assignment = mysqli_fetch_array($recent_assignments)): ?>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold"><?= $assignment['assignment_title'] ?></div>
+                    <small class="text-muted"><?= $assignment['Class_name'] ?> - <?= $assignment['subject_name'] ?></small>
+                    <br>
+                    <small class="text-muted">Due: <?= date('M d, Y', strtotime($assignment['deadline'])) ?></small>
+                  </div>
+                </li>
+                <?php endwhile; ?>
+              </ul>
+              <?php else: ?>
+              <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> No assignments yet.
+              </div>
+              <?php endif; ?>
+            </div>
+          </div><!-- End Recent Assignments -->
+
+          <!-- Upcoming Tasks -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">ekiliSense Updates</h5>
+              <div class="activity">
+                <div class="activity-item d-flex">
+                  <div class="activite-label">1 hr</div>
+                  <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                  <div class="activity-content">
+                    New <a href="#" class="fw-bold">Teacher Dashboard</a> with enhanced features
+                  </div>
+                </div>
+                <div class="activity-item d-flex">
+                  <div class="activite-label">3 hrs</div>
+                  <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+                  <div class="activity-content">
+                    Updated <a href="#" class="fw-bold">API</a> for mobile app integration
+                  </div>
+                </div>
+                <div class="activity-item d-flex">
+                  <div class="activite-label">1 day</div>
+                  <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+                  <div class="activity-content">
+                    New <a href="#" class="fw-bold">Analytics</a> for performance tracking
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Upcoming Tasks -->
+
+        </div><!-- End Right side columns -->
+
       </div>
     </section>
 

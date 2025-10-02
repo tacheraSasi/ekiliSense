@@ -54,6 +54,14 @@ class APIGateway {
         $this->addRoute('GET', '/teachers/{id}', 'TeacherController', 'get', ['auth']);
         $this->addRoute('PUT', '/teachers/{id}', 'TeacherController', 'update', ['auth']);
         
+        // Teacher-specific routes (NEW)
+        $this->addRoute('GET', '/teachers/{id}/classes', 'TeacherController', 'getClasses', ['auth']);
+        $this->addRoute('GET', '/teachers/{id}/students', 'TeacherController', 'getStudents', ['auth']);
+        $this->addRoute('GET', '/teachers/{id}/subjects', 'TeacherController', 'getSubjects', ['auth']);
+        $this->addRoute('GET', '/teachers/{id}/assignments', 'TeacherController', 'getAssignments', ['auth']);
+        $this->addRoute('POST', '/teachers/{id}/assignments', 'TeacherController', 'createAssignment', ['auth']);
+        $this->addRoute('GET', '/teachers/{id}/performance', 'TeacherController', 'getPerformance', ['auth']);
+        
         // Class management routes
         $this->addRoute('GET', '/classes', 'ClassController', 'list', ['auth', 'rate_limit']);
         $this->addRoute('POST', '/classes', 'ClassController', 'create', ['auth']);
