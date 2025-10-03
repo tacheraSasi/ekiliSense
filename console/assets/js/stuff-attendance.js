@@ -1,8 +1,8 @@
-const stuffAttendance = (sumbitTo)=>{
+const stuffAttendance = (sumbitTo, schoolLat = -6.832128, schoolLng = 39.23968, allowedRadius = 100)=>{
     console.log("connected")
-    const officeLatitude = -6.832128;
-    const officeLongitude = 39.23968;
-    const radius = 100; // in meters
+    const officeLatitude = schoolLat;
+    const officeLongitude = schoolLng;
+    const radius = allowedRadius; // in meters
     const modalForm = document.querySelectorAll('.modal-form');
     const signBtn = document.getElementById('sign')
     console.log(signBtn.textContent)
@@ -50,7 +50,8 @@ const stuffAttendance = (sumbitTo)=>{
                 // Show error message
                 errorText.style.display = 'block';
                 signBtn.style.display = 'none';
-                errorText.innerHTML = `You are <b>${distanceInKm}km</b> from the office. <br>You need to be within 100m of the office to sign in.`;
+                const distanceDisplay = distanceInKm > 0 ? `${distanceInKm}km` : `${Math.floor(distance)}m`;
+                errorText.innerHTML = `You are <b>${distanceDisplay}</b> from the office. <br>You need to be within ${radius}m of the office to sign in.`;
             }
         }, function(error) {
             loadingState(signBtn,"PROCEED",false)
