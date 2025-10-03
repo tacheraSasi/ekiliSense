@@ -102,45 +102,130 @@ $due_datetime = $assignment['due_date'] . ' ' . ($assignment['due_time'] ?? '23:
 $is_late = date('Y-m-d H:i:s') > $due_datetime;
 $submission_status = $is_late ? 'late' : 'submitted';
 
-// Auto-grade quiz if applicable
-$auto_grade = null;
-if ($assignment_type === 'quiz') {
-    // For quiz type assignments, we would implement auto-grading logic here
-    // This is a placeholder for the auto-grading feature
-    // In a real implementation, this would parse quiz answers and calculate grade
-    $auto_grade = calculateQuizGrade($submission_text, $assignment);
-}
-
-// Insert submission
+// Insert submission first to get submission_id
 $query = "INSERT INTO homework_submissions 
-          (assignment_uid, student_id, school_uid, submission_text, file_name, file_path, status, grade) 
+          (assignment_uid, student_id, school_uid, submission_text, file_name, file_path, status) 
           VALUES 
           ('$assignment_uid', '$student_id', '$school_uid', '$submission_text', " . 
           ($file_name ? "'$file_name'" : "NULL") . ", " . 
           ($file_path ? "'$file_path'" : "NULL") . ", " . 
-          ($auto_grade !== null ? "'graded'" : "'$submission_status'") . ", " . 
-          ($auto_grade !== null ? "$auto_grade" : "NULL") . ")";
+          "'$submission_status')";
 
 $result = mysqli_query($conn, $query);
 
-if ($result) {
-    echo "success";
-} else {
+if (!$result) {
     echo "Something went wrong. Please try again. " . mysqli_error($conn);
+    exit();
 }
 
-// Function to calculate quiz grade (placeholder for auto-grading)
-function calculateQuizGrade($submission_text, $assignment) {
-    // This is a basic implementation for auto-grading
-    // In a real implementation, this would be more sophisticated
+$submission_id = mysqli_insert_id($conn);
+
+// Auto-grade quiz if applicable
+if ($assignment_type === 'quiz') {
+    $auto_grade = autoGradeQuiz($conn, $submission_id, $assignment_uid, $submission_text, $assignment);
     
-    // For now, we'll return null to indicate manual grading is needed
-    // A full implementation would:
-    // 1. Parse quiz questions and correct answers from assignment description
-    // 2. Parse student answers from submission_text
-    // 3. Compare answers and calculate grade
-    // 4. Return the calculated grade
+    if ($auto_grade !== null) {
+        // Update submission with auto-grade
+        $update_query = "UPDATE homework_submissions 
+                        SET grade = $auto_grade, status = 'graded', graded_at = NOW() 
+                        WHERE submission_id = $submission_id";
+        mysqli_query($conn, $update_query);
+    }
+}
+
+echo "success";
+
+// Function to auto-grade quiz submissions
+function autoGradeQuiz($conn, $submission_id, $assignment_uid, $submission_text, $assignment) {
+    // Check if quiz questions exist for this assignment
+    $questions_query = mysqli_query($conn, "SELECT * FROM quiz_questions 
+        WHERE assignment_uid = '$assignment_uid' 
+        ORDER BY question_order ASC");
     
-    return null; // Return null for now - manual grading will be used
+    if (mysqli_num_rows($questions_query) == 0) {
+        // No quiz questions defined, cannot auto-grade
+        return null;
+    }
+    
+    // Parse student answers from submission text
+    // Expected format: "1:A|2:B|3:C" or as JSON
+    $student_answers = parseQuizAnswers($submission_text);
+    
+    if (empty($student_answers)) {
+        // Cannot parse answers, manual grading needed
+        return null;
+    }
+    
+    $total_points = 0;
+    $earned_points = 0;
+    
+    while ($question = mysqli_fetch_array($questions_query)) {
+        $question_id = $question['question_id'];
+        $correct_answer = strtolower(trim($question['correct_answer']));
+        $points = $question['points'];
+        $total_points += $points;
+        
+        // Get student answer for this question
+        $student_answer = isset($student_answers[$question_id]) 
+            ? strtolower(trim($student_answers[$question_id])) 
+            : '';
+        
+        $is_correct = false;
+        $points_earned = 0;
+        
+        // Check if answer is correct
+        if ($question['question_type'] == 'multiple_choice' || $question['question_type'] == 'true_false') {
+            // Exact match for multiple choice and true/false
+            $is_correct = ($student_answer === $correct_answer);
+        } else {
+            // Partial match for short answers (case-insensitive)
+            $is_correct = (strpos($student_answer, $correct_answer) !== false || 
+                          strpos($correct_answer, $student_answer) !== false);
+        }
+        
+        if ($is_correct) {
+            $points_earned = $points;
+            $earned_points += $points;
+        }
+        
+        // Store individual answer
+        $answer_query = "INSERT INTO quiz_answers 
+                        (submission_id, question_id, student_answer, is_correct, points_earned) 
+                        VALUES 
+                        ($submission_id, $question_id, '$student_answer', " . 
+                        ($is_correct ? '1' : '0') . ", $points_earned)";
+        mysqli_query($conn, $answer_query);
+    }
+    
+    // Calculate final grade based on max_points from assignment
+    if ($total_points > 0) {
+        $max_points = $assignment['max_points'];
+        $grade = round(($earned_points / $total_points) * $max_points);
+        return $grade;
+    }
+    
+    return null;
+}
+
+// Function to parse quiz answers from submission text
+function parseQuizAnswers($submission_text) {
+    $answers = [];
+    
+    // Try to parse as JSON first
+    $json_data = json_decode($submission_text, true);
+    if (json_last_error() === JSON_ERROR_NONE && is_array($json_data)) {
+        return $json_data;
+    }
+    
+    // Try to parse as "question_id:answer|question_id:answer" format
+    $parts = explode('|', $submission_text);
+    foreach ($parts as $part) {
+        if (strpos($part, ':') !== false) {
+            list($question_id, $answer) = explode(':', $part, 2);
+            $answers[trim($question_id)] = trim($answer);
+        }
+    }
+    
+    return $answers;
 }
 ?>

@@ -298,10 +298,18 @@ $homework_query = mysqli_query($conn, "SELECT ha.*, s.subject_name,
               <h6 id="homeworkTitle"></h6>
             </div>
             
-            <div class="mb-3">
-              <label for="submission_text" class="form-label">Your Answer/Response *</label>
-              <textarea class="form-control" name="submission_text" id="submission_text" rows="6" required></textarea>
-              <small class="text-muted">Provide your answer or explanation here</small>
+            <div id="regularSubmission">
+              <div class="mb-3">
+                <label for="submission_text" class="form-label">Your Answer/Response *</label>
+                <textarea class="form-control" name="submission_text" id="submission_text" rows="6" required></textarea>
+                <small class="text-muted">Provide your answer or explanation here</small>
+              </div>
+            </div>
+            
+            <div id="quizSubmission" style="display:none;">
+              <div id="quizQuestionsContainer">
+                <!-- Quiz questions will be loaded here dynamically -->
+              </div>
             </div>
             
             <div class="mb-3">

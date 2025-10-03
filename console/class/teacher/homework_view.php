@@ -204,6 +204,11 @@ $graded_count = mysqli_fetch_array($graded_count_query)['count'];
                 <a href="homework_submissions.php?id=<?= $assignment_uid ?>" class="btn btn-outline-success">
                   <i class="bi bi-clipboard-check"></i> View Submissions
                 </a>
+                <?php if ($assignment['assignment_type'] == 'quiz'): ?>
+                <a href="homework_quiz_questions.php?id=<?= $assignment_uid ?>" class="btn btn-outline-warning">
+                  <i class="bi bi-question-circle"></i> Manage Quiz Questions
+                </a>
+                <?php endif; ?>
                 <button class="btn btn-outline-primary" onclick="toggleStatus('<?= $assignment_uid ?>', '<?= $assignment['status'] ?>')">
                   <i class="bi bi-toggle-on"></i> 
                   <?= $assignment['status'] == 'active' ? 'Close Assignment' : 'Reopen Assignment' ?>
