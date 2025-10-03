@@ -8,3 +8,5 @@ vendor/composer/tmp-*
 *.tmp
 *.temp
 .DS_Store
+uploads/homework_submissions/*
+!uploads/homework_submissions/.gitkeep
