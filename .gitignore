@@ -2,6 +2,7 @@
 .gitignore
 test.php
 .VSCodeCounter
+/vendor
 vendor/composer/tmp-*.zip~
 vendor/composer/tmp-*
 *.tmp
