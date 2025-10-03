@@ -69,6 +69,8 @@ modalForm.forEach(form =>{
         if(e.target.id === "sign-attendance"){
           let sumbitTo = "../../server/add.php"
           console.log("signed")
+          // Optional: Customize geolocation parameters
+          // stuffAttendance(sumbitTo, schoolLat, schoolLng, radiusInMeters)
           stuffAttendance(sumbitTo)
           return
         }
