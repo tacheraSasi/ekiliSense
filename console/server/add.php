@@ -85,9 +85,53 @@ function addPlan($conn,$school_uid,$isConnectedToGoogle){
 }
 
 function addStuffAttendance($conn,$school_uid){
-    echo "signed successfull";
-
+    $latitude = mysqli_real_escape_string($conn, $_POST['latitude']);
+    $longitude = mysqli_real_escape_string($conn, $_POST['longitude']);
+    $owner = mysqli_real_escape_string($conn, $_POST['owner']);
+    
+    // Validate geolocation data
+    if (empty($latitude) || empty($longitude)) {
+        echo "Geolocation data is required";
+        return;
+    }
+    
+    // Get teacher ID
+    $teacher_query = mysqli_query($conn, "SELECT teacher_id FROM teachers 
+                                          WHERE teacher_email = '$owner' 
+                                          AND School_unique_id = '$school_uid'");
+    
+    if (mysqli_num_rows($teacher_query) == 0) {
+        echo "Teacher not found";
+        return;
+    }
+    
+    $teacher = mysqli_fetch_array($teacher_query);
+    $teacher_id = $teacher['teacher_id'];
+    $now = date("Y-m-d");
+    
+    // Check if attendance already marked today
+    $check_query = mysqli_query($conn, "SELECT * FROM staff_attendance 
+                                        WHERE teacher_id = '$teacher_id' 
+                                        AND attendance_date = '$now' 
+                                        AND school_uid = '$school_uid'");
+    
+    if (mysqli_num_rows($check_query) > 0) {
+        echo "Attendance already marked for today";
+        return;
+    }
+    
+    // Insert attendance record
+    $insert_query = mysqli_query($conn, "INSERT INTO staff_attendance 
+                                         (school_uid, teacher_id, attendance_date, status, latitude, longitude) 
+                                         VALUES ('$school_uid', '$teacher_id', '$now', 1, '$latitude', '$longitude')");
+    
+    if ($insert_query) {
+        echo "success";
+    } else {
+        echo "Failed to mark attendance. Please try again.";
+    }
 }
+
 function planUID() {
     # Generating 8 random characters (letters and numbers)
     $randomString = bin2hex(random_bytes(4)); # 4 bytes = 8 characters in hex
