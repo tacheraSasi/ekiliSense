@@ -1,4 +1,7 @@
--- Create staff_attendance table for tracking teacher attendance
+-- Migration: Add staff attendance tracking
+-- Description: Create staff_attendance table for tracking teacher attendance with geolocation
+-- Date: 2025-01-15
+
 CREATE TABLE IF NOT EXISTS staff_attendance (
     id INT AUTO_INCREMENT PRIMARY KEY,
     school_uid VARCHAR(255) NOT NULL,
@@ -13,3 +16,6 @@ CREATE TABLE IF NOT EXISTS staff_attendance (
     INDEX idx_teacher_id (teacher_id),
     INDEX idx_attendance_date (attendance_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Rollback:
+-- DROP TABLE IF EXISTS staff_attendance;
