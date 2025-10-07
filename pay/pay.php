@@ -133,9 +133,9 @@ function handleIPN($ipnData) {
                 VALUES ('$school_subscription_id', 'payment', '" . json_encode($ipnData) . "')";
 
     if (mysqli_query($conn, $ipn_sql)) {
-        // Update the payment status in the Payments table
-        $payment_sql = "INSERT INTO Payments (school_subscription_id, amount, payment_status, transaction_id)
-                        VALUES ('$school_subscription_id', {$ipnData['amount']}, '$payment_status', '$transaction_id')";
+        // Update the payment status in the payments table
+        $payment_sql = "INSERT INTO payments (student_id, amount, payment_date)
+                        VALUES ('$school_subscription_id', {$ipnData['amount']}, NOW())";
         mysqli_query($conn, $payment_sql);
     } else {
         echo "Error saving IPN notification: " . mysqli_error($conn);

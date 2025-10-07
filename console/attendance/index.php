@@ -12,12 +12,12 @@ $filter_date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
 $attendance_by_class = mysqli_query($conn, "
   SELECT c.Class_name, c.class_id,
          COUNT(DISTINCT sa.student_id) as total_students,
-         SUM(CASE WHEN sa.status = 'present' THEN 1 ELSE 0 END) as present,
-         SUM(CASE WHEN sa.status = 'absent' THEN 1 ELSE 0 END) as absent,
-         SUM(CASE WHEN sa.status = 'late' THEN 1 ELSE 0 END) as late
+         SUM(CASE WHEN sa.status = 1 THEN 1 ELSE 0 END) as present,
+         SUM(CASE WHEN sa.status = 0 THEN 1 ELSE 0 END) as absent,
+         0 as late
   FROM classes c
   LEFT JOIN student_attendance sa ON c.class_id = sa.class_id 
-    AND DATE(sa.date) = '$filter_date'
+    AND DATE(sa.attendance_date) = '$filter_date'
   WHERE c.school_unique_id = '$school_uid'
   GROUP BY c.class_id, c.Class_name
   ORDER BY c.Class_name
@@ -28,12 +28,13 @@ $student_attendance = null;
 if($filter_class != 'all') {
   $student_attendance = mysqli_query($conn, "
     SELECT s.student_name, s.student_id,
-           COALESCE(sa.status, 'not_marked') as status,
-           sa.marked_by, sa.notes,
-           TIME(sa.date) as marked_time
+           CASE WHEN sa.status IS NULL THEN 'not_marked'
+                WHEN sa.status = 1 THEN 'present'
+                ELSE 'absent' END as status,
+           TIME(sa.attendance_date) as marked_time
     FROM students s
     LEFT JOIN student_attendance sa ON s.student_id = sa.student_id 
-      AND DATE(sa.date) = '$filter_date'
+      AND DATE(sa.attendance_date) = '$filter_date'
     WHERE s.school_uid = '$school_uid' 
       AND s.class_id = '$filter_class'
     ORDER BY s.student_name
@@ -42,28 +43,28 @@ if($filter_class != 'all') {
 
 // Get attendance trends (last 7 days)
 $attendance_trends = mysqli_query($conn, "
-  SELECT DATE(date) as attendance_date,
+  SELECT DATE(attendance_date) as attendance_date,
          COUNT(*) as total_records,
-         SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) as present,
-         SUM(CASE WHEN status = 'absent' THEN 1 ELSE 0 END) as absent,
-         SUM(CASE WHEN status = 'late' THEN 1 ELSE 0 END) as late
+         SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) as present,
+         SUM(CASE WHEN status = 0 THEN 1 ELSE 0 END) as absent,
+         0 as late
   FROM student_attendance
   WHERE school_uid = '$school_uid'
-    AND date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-  GROUP BY DATE(date)
-  ORDER BY date ASC
+    AND attendance_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+  GROUP BY DATE(attendance_date)
+  ORDER BY attendance_date ASC
 ");
 
 // Calculate overall attendance rate
 $overall_stats = mysqli_query($conn, "
   SELECT 
     COUNT(*) as total_records,
-    SUM(CASE WHEN status = 'present' THEN 1 ELSE 0 END) as present,
-    SUM(CASE WHEN status = 'absent' THEN 1 ELSE 0 END) as absent,
-    SUM(CASE WHEN status = 'late' THEN 1 ELSE 0 END) as late
+    SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) as present,
+    SUM(CASE WHEN status = 0 THEN 1 ELSE 0 END) as absent,
+    0 as late
   FROM student_attendance
   WHERE school_uid = '$school_uid'
-    AND DATE(date) = '$filter_date'
+    AND DATE(attendance_date) = '$filter_date'
 ");
 $stats = mysqli_fetch_assoc($overall_stats);
 $attendance_rate = $stats['total_records'] > 0 
