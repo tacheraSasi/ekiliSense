@@ -23,7 +23,7 @@ Security::configureSecureSession();
 
 // Database connection
 $conn = new mysqli(
-    "localhost", 
+    "srv915.hstgr.io", 
     getenv("DB_USERNAME"), 
     getenv("DB_PASSWORD"), 
     getenv("DB_NAME")
