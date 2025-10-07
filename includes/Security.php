@@ -150,11 +150,13 @@ class Security {
      * Configure secure session settings
      */
     public static function configureSecureSession() {
-        // Set secure session parameters
-        ini_set('session.cookie_httponly', 1);
-        ini_set('session.use_only_cookies', 1);
-        ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 1 : 0);
-        ini_set('session.cookie_samesite', 'Strict');
+        // Only set session parameters if no session is active
+        if (session_status() == PHP_SESSION_NONE) {
+            ini_set('session.cookie_httponly', 1);
+            ini_set('session.use_only_cookies', 1);
+            ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 1 : 0);
+            ini_set('session.cookie_samesite', 'Strict');
+        }
         
         // Regenerate session ID periodically
         if (session_status() == PHP_SESSION_ACTIVE) {
