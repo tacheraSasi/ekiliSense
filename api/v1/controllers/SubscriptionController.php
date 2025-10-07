@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Subscription Controller
  * Manages SaaS subscription plans and billing - NEW SAAS FEATURE
@@ -7,21 +8,24 @@
 require_once __DIR__ . '/../utils/Response.php';
 require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 
-class SubscriptionController {
-    
+class SubscriptionController
+{
+
     private $conn;
-    
-    public function __construct($conn) {
+
+    public function __construct($conn)
+    {
         $this->conn = $conn;
     }
-    
+
     /**
      * Get current subscription
      * GET /api/v1/subscription/current
      */
-    public function getCurrent() {
+    public function getCurrent()
+    {
         $schoolUid = AuthMiddleware::getSchoolUid();
-        
+
         $stmt = $this->conn->prepare("
             SELECT 
                 s.*,
@@ -39,7 +43,7 @@ class SubscriptionController {
         $stmt->bind_param("s", $schoolUid);
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         if ($result->num_rows === 0) {
             Response::success([
                 'status' => 'no_subscription',
@@ -47,12 +51,12 @@ class SubscriptionController {
                 'message' => 'No active subscription found'
             ]);
         }
-        
+
         $subscription = $result->fetch_assoc();
-        
+
         // Calculate usage
         $usage = $this->getUsage($schoolUid);
-        
+
         Response::success([
             'subscription_id' => $subscription['subscription_id'],
             'plan' => [
@@ -69,12 +73,13 @@ class SubscriptionController {
             'usage' => $usage
         ]);
     }
-    
+
     /**
      * Get available subscription plans
      * GET /api/v1/subscription/plans
      */
-    public function getPlans() {
+    public function getPlans()
+    {
         $stmt = $this->conn->prepare("
             SELECT * FROM subscription_plans 
             WHERE is_active = 1 
@@ -82,7 +87,7 @@ class SubscriptionController {
         ");
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         $plans = [];
         while ($row = $result->fetch_assoc()) {
             $plans[] = [
@@ -98,22 +103,23 @@ class SubscriptionController {
                 'max_classes' => $row['max_classes']
             ];
         }
-        
+
         Response::success($plans);
     }
-    
+
     /**
      * Subscribe to a plan
      * POST /api/v1/subscription/subscribe
      */
-    public function subscribe() {
+    public function subscribe()
+    {
         $schoolUid = AuthMiddleware::getSchoolUid();
         $input = json_decode(file_get_contents('php://input'), true);
-        
+
         Response::validateRequired($input, ['plan_id']);
-        
+
         $planId = Response::sanitize($input['plan_id']);
-        
+
         // Get plan details
         $planStmt = $this->conn->prepare("SELECT * FROM subscription_plans WHERE id = ?");
         $planStmt->bind_param("i", $planId);
@@ -130,11 +136,11 @@ class SubscriptionController {
         ");
         $deactivateStmt->bind_param("s", $schoolUid);
         $deactivateStmt->execute();
-        
+
         // Create new subscription
         $subscriptionId = uniqid('sub_', true);
         $startDate = date('Y-m-d');
-        
+
         // Calculate end date based on billing cycle
         switch ($plan['billing_cycle']) {
             case 'monthly':
@@ -146,7 +152,7 @@ class SubscriptionController {
             default:
                 $endDate = date('Y-m-d', strtotime('+1 month'));
         }
-        
+
         $stmt = $this->conn->prepare("
             INSERT INTO school_subscriptions 
             (school_uid, plan_id, status, start_date, end_date)
@@ -168,35 +174,37 @@ class SubscriptionController {
             Response::error('Failed to create subscription', 500);
         }
     }
-    
+
     /**
      * Cancel subscription
      * POST /api/v1/subscription/cancel
      */
-    public function cancel() {
+    public function cancel()
+    {
         $schoolUid = AuthMiddleware::getSchoolUid();
-        
+
         $stmt = $this->conn->prepare("
             UPDATE subscriptions 
             SET status = 'cancelled', auto_renew = 0 
             WHERE school_uid = ? AND status = 'active'
         ");
         $stmt->bind_param("s", $schoolUid);
-        
+
         if ($stmt->execute() && $stmt->affected_rows > 0) {
             Response::success([], 'Subscription cancelled successfully');
         } else {
             Response::error('No active subscription found', 404);
         }
     }
-    
+
     /**
      * Get billing history
      * GET /api/v1/subscription/billing-history
      */
-    public function getBillingHistory() {
+    public function getBillingHistory()
+    {
         $schoolUid = AuthMiddleware::getSchoolUid();
-        
+
         $stmt = $this->conn->prepare("
             SELECT 
                 invoice_id,
@@ -214,34 +222,35 @@ class SubscriptionController {
         $stmt->bind_param("s", $schoolUid);
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         $history = [];
         while ($row = $result->fetch_assoc()) {
             $history[] = $row;
         }
-        
+
         Response::success($history);
     }
-    
+
     /**
      * Get usage statistics
      */
-    private function getUsage($schoolUid) {
+    private function getUsage($schoolUid)
+    {
         // Get student count
         $studentsStmt = $this->conn->prepare("SELECT COUNT(*) as count FROM students WHERE school_uid = ?");
         $studentsStmt->bind_param("s", $schoolUid);
         $studentsStmt->execute();
         $studentCount = $studentsStmt->get_result()->fetch_assoc()['count'];
-        
+
         // Get teacher count
         $teachersStmt = $this->conn->prepare("SELECT COUNT(*) as count FROM teachers WHERE School_unique_id = ?");
         $teachersStmt->bind_param("s", $schoolUid);
         $teachersStmt->execute();
         $teacherCount = $teachersStmt->get_result()->fetch_assoc()['count'];
-        
+
         // Calculate storage (simplified - would need actual file storage calculation)
         $storageUsed = 0; // GB
-        
+
         return [
             'students' => (int)$studentCount,
             'teachers' => (int)$teacherCount,
