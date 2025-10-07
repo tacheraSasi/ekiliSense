@@ -1,5 +1,6 @@
 <?php
-function parseEnv($file) {
+function parseEnv($file)
+{
     if (!file_exists($file)) {
         throw new Exception("The .env file does not exist.");
     }
@@ -39,10 +40,12 @@ function parseEnv($file) {
             $value = null;
         }
 
-        # Handling nested variables
-        $value = preg_replace_callback('/\$\{(\w+)\}/', function ($matches) use ($env) {
-            return isset($env[$matches[1]]) ? $env[$matches[1]] : $matches[0];
-        }, $value);
+        # Handling nested variables (only if value is not null)
+        if ($value !== null) {
+            $value = preg_replace_callback('/\$\{(\w+)\}/', function ($matches) use ($env) {
+                return isset($env[$matches[1]]) ? $env[$matches[1]] : $matches[0];
+            }, $value);
+        }
 
         # Storing in the environment and in the array for nested variables
         putenv("$key=$value");
@@ -50,4 +53,3 @@ function parseEnv($file) {
         $env[$key] = $value;
     }
 }
-
