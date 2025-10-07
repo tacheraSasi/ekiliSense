@@ -149,6 +149,11 @@ class Security
      */
     public static function resetRateLimit($identifier)
     {
+        // Skip session operations in CLI mode
+        if (php_sapi_name() === 'cli') {
+            return;
+        }
+
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
@@ -162,8 +167,13 @@ class Security
      */
     public static function configureSecureSession()
     {
-        // Only set session parameters if no session is active
-        if (session_status() == PHP_SESSION_NONE) {
+        // Skip session configuration in CLI mode
+        if (php_sapi_name() === 'cli') {
+            return;
+        }
+
+        // Only set session parameters if no session is active and headers not sent
+        if (session_status() == PHP_SESSION_NONE && !headers_sent()) {
             ini_set('session.cookie_httponly', 1);
             ini_set('session.use_only_cookies', 1);
             ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 1 : 0);

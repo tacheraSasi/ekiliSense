@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Initialization file
  * Loads all required classes and sets up the application
@@ -8,24 +9,25 @@
 require_once __DIR__ . '/../parseEnv.php';
 parseEnv(__DIR__ . '/../.env');
 
-// Start session with secure configuration
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 // Load helper classes
 require_once __DIR__ . '/Security.php';
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/Subscription.php';
 
-// Configure secure session
-Security::configureSecureSession();
+// Start session with secure configuration (skip in CLI mode)
+if (php_sapi_name() !== 'cli') {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    // Configure secure session
+    Security::configureSecureSession();
+}
 
 // Database connection
 $conn = new mysqli(
-    "srv915.hstgr.io", 
-    getenv("DB_USERNAME"), 
-    getenv("DB_PASSWORD"), 
+    "srv915.hstgr.io",
+    getenv("DB_USERNAME"),
+    getenv("DB_PASSWORD"),
     getenv("DB_NAME")
 );
 
@@ -60,7 +62,8 @@ if ($environment === 'development') {
  * Helper function to get current user school UID
  * @return string|null
  */
-function getCurrentSchoolUid() {
+function getCurrentSchoolUid()
+{
     return $_SESSION['School_uid'] ?? null;
 }
 
@@ -68,7 +71,8 @@ function getCurrentSchoolUid() {
  * Helper function to check if user is authenticated
  * @return bool
  */
-function isAuthenticated() {
+function isAuthenticated()
+{
     return isset($_SESSION['School_uid']);
 }
 
@@ -77,7 +81,8 @@ function isAuthenticated() {
  * @param string $url Redirect URL
  * @param string $message Optional message
  */
-function redirect($url, $message = '') {
+function redirect($url, $message = '')
+{
     if ($message) {
         $_SESSION['flash_message'] = $message;
     }
@@ -89,7 +94,8 @@ function redirect($url, $message = '') {
  * Helper function to get and clear flash message
  * @return string|null
  */
-function getFlashMessage() {
+function getFlashMessage()
+{
     $message = $_SESSION['flash_message'] ?? null;
     unset($_SESSION['flash_message']);
     return $message;
@@ -100,7 +106,8 @@ function getFlashMessage() {
  * @param mixed $data Data to return
  * @param int $statusCode HTTP status code
  */
-function jsonResponse($data, $statusCode = 200) {
+function jsonResponse($data, $statusCode = 200)
+{
     http_response_code($statusCode);
     header('Content-Type: application/json');
     echo json_encode($data);
@@ -112,7 +119,8 @@ function jsonResponse($data, $statusCode = 200) {
  * @param array $fields Fields to check in $_POST
  * @return bool True if all fields present and not empty
  */
-function validateRequiredFields($fields) {
+function validateRequiredFields($fields)
+{
     foreach ($fields as $field) {
         if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
             return false;
