@@ -24,55 +24,78 @@ function markPresent(
     $class_id,
     $is_all = false
 ) {
-    #getting the students info
-    $get_std_info = mysqli_query(
-        $conn,
-        "select * from students where student_id = '$student_id' and school_uid = '$school_uid'"
-    );
-    $now = date("Y-m-d"); # for later usage, by dafault attendace_date takes the current timestamp
-    $check = mysqli_query(
-        $conn,
-        "select * from student_attendance where
-    student_id = '$student_id' and attendance_date = '$now'"
-    );
+    // Validate student exists in the school
+    $stmt = $conn->prepare("SELECT student_id FROM students WHERE student_id = ? AND school_uid = ?");
+    $stmt->bind_param("ss", $student_id, $school_uid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows == 0) {
+        if (!$is_all) {
+            echo "Student not found";
+        }
+        $stmt->close();
+        return;
+    }
+    $stmt->close();
+    
+    $now = date("Y-m-d");
+    
+    // Check if attendance already marked today
+    $stmt = $conn->prepare("SELECT id FROM student_attendance WHERE student_id = ? AND attendance_date = ?");
+    $stmt->bind_param("ss", $student_id, $now);
+    $stmt->execute();
+    $check_result = $stmt->get_result();
+    $stmt->close();
 
-    if (mysqli_num_rows($check) == 0) {
-        $query = mysqli_query(
-            $conn,
-            "INSERT INTO student_attendance (student_id,school_uid,class_id,attendance_date,status)
-        VALUES ('$student_id','$school_uid','$class_id','$now',1) ON DUPLICATE KEY UPDATE status= 1"
-        );
-
-        if ($query) {
+    if ($check_result->num_rows == 0) {
+        // Insert new attendance record
+        $stmt = $conn->prepare("INSERT INTO student_attendance (student_id, school_uid, class_id, attendance_date, status) 
+                                VALUES (?, ?, ?, ?, 1) 
+                                ON DUPLICATE KEY UPDATE status = 1");
+        $stmt->bind_param("ssss", $student_id, $school_uid, $class_id, $now);
+        
+        if ($stmt->execute()) {
             if (!$is_all) {
                 echo "success";
             }
         } else {
-            echo "Something went wrong";
-            echo mysqli_error($conn);
+            if (!$is_all) {
+                echo "Something went wrong";
+            }
         }
+        $stmt->close();
     } else {
         if (!$is_all) {
             echo "success";
-        } #duplicate data issues resolved, i will work on the logic
+        }
     }
 }
 
 function markAll($conn)
 {
-    $class_id = $_POST["class"];
+    $class_id = mysqli_real_escape_string($conn, $_POST["class"]);
     $school_uid = $_SESSION["School_uid"];
 
-    $get_students = mysqli_query(
-        $conn,
-        "SELECT * FROM students
-    WHERE school_uid = '$school_uid' AND class_id = '$class_id'"
-    );
+    // Use prepared statement for security
+    $stmt = $conn->prepare("SELECT student_id FROM students WHERE school_uid = ? AND class_id = ?");
+    $stmt->bind_param("ss", $school_uid, $class_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    while ($student = mysqli_fetch_array($get_students)) {
+    if ($result->num_rows == 0) {
+        echo "No students found in this class";
+        $stmt->close();
+        return;
+    }
+
+    $marked_count = 0;
+    while ($student = $result->fetch_assoc()) {
         $std = $student["student_id"];
         markPresent($conn, $std, $school_uid, $class_id, true);
+        $marked_count++;
     }
-    #then
+    $stmt->close();
+    
     echo "success";
 }

@@ -91,17 +91,62 @@ function sendAttendanceAlert($conn, $school_uid, $teacher_id, $student_id, $star
 }
 
 function sendEmailNotification($email_to, $subject, $message_body, $school_uid) {
-    // Get school details
-    $school_query = mysqli_query($GLOBALS['conn'], "SELECT School_name FROM schools WHERE unique_id = '$school_uid'");
-    $school = mysqli_fetch_array($school_query);
-    $school_name = $school['School_name'];
+    global $conn;
     
-    $email_subject = "Attendance Alert from " . $school_name;
-    $email_headers = "From: noreply@ekilie.com\r\n";
+    // Get school details
+    $school_query = mysqli_query($conn, "SELECT School_name FROM schools WHERE unique_id = '$school_uid'");
+    $school = mysqli_fetch_array($school_query);
+    $school_name = $school['School_name'] ?? 'School';
+    
+    // Format email subject
+    $email_subject = "Attendance Alert from " . $school_name . " - ekiliSense";
+    
+    // Create HTML email body
+    $html_body = '
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; }
+            .header { background-color: #34495e; color: white; padding: 20px; text-align: center; }
+            .content { background-color: white; padding: 20px; margin-top: 20px; border-radius: 5px; }
+            .alert { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 15px 0; }
+            .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #666; }
+            .stats { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>' . htmlspecialchars($school_name) . '</h1>
+                <p>Student Attendance Alert</p>
+            </div>
+            <div class="content">
+                ' . nl2br(htmlspecialchars($message_body)) . '
+            </div>
+            <div class="footer">
+                <p>This is an automated message from ekiliSense School Management System</p>
+                <p>Please do not reply to this email</p>
+            </div>
+        </div>
+    </body>
+    </html>';
+    
+    // Set email headers
+    $email_headers = "MIME-Version: 1.0\r\n";
+    $email_headers .= "Content-type: text/html; charset=UTF-8\r\n";
+    $email_headers .= "From: " . $school_name . " <noreply@ekilie.com>\r\n";
     $email_headers .= "Reply-To: noreply@ekilie.com\r\n";
     $email_headers .= "X-Mailer: PHP/" . phpversion();
     
-    // Note: In production, you'd want to use a proper email service
-    // mail($email_to, $email_subject, $message_body, $email_headers);
+    // Send email using PHP mail() function
+    try {
+        return mail($email_to, $email_subject, $html_body, $email_headers);
+    } catch (Exception $e) {
+        error_log("Failed to send attendance alert email: " . $e->getMessage());
+        return false;
+    }
 }
 ?>
