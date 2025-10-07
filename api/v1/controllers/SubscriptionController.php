@@ -25,13 +25,13 @@ class SubscriptionController {
         $stmt = $this->conn->prepare("
             SELECT 
                 s.*,
-                p.plan_name,
+                p.display_name as plan_name,
                 p.price,
                 p.features,
                 p.max_students,
                 p.max_teachers
-            FROM subscriptions s
-            LEFT JOIN subscription_plans p ON s.plan_id = p.plan_id
+            FROM school_subscriptions s
+            LEFT JOIN subscription_plans p ON s.plan_id = p.id
             WHERE s.school_uid = ? AND s.status = 'active'
             ORDER BY s.created_at DESC
             LIMIT 1
@@ -86,16 +86,16 @@ class SubscriptionController {
         $plans = [];
         while ($row = $result->fetch_assoc()) {
             $plans[] = [
-                'plan_id' => $row['plan_id'],
-                'name' => $row['plan_name'],
+                'plan_id' => $row['id'],
+                'name' => $row['display_name'],
                 'description' => $row['description'],
                 'price' => $row['price'],
                 'currency' => $row['currency'],
-                'billing_cycle' => $row['billing_cycle'],
+                'billing_period' => $row['billing_period'],
                 'features' => json_decode($row['features'], true),
                 'max_students' => $row['max_students'],
                 'max_teachers' => $row['max_teachers'],
-                'max_storage_gb' => $row['max_storage_gb']
+                'max_classes' => $row['max_classes']
             ];
         }
         
@@ -115,16 +115,14 @@ class SubscriptionController {
         $planId = Response::sanitize($input['plan_id']);
         
         // Get plan details
-        $planStmt = $this->conn->prepare("SELECT * FROM subscription_plans WHERE plan_id = ?");
-        $planStmt->bind_param("s", $planId);
+        $planStmt = $this->conn->prepare("SELECT * FROM subscription_plans WHERE id = ?");
+        $planStmt->bind_param("i", $planId);
         $planStmt->execute();
         $plan = $planStmt->get_result()->fetch_assoc();
-        
+
         if (!$plan) {
             Response::error('Plan not found', 404);
-        }
-        
-        // Deactivate current subscription
+        }        // Deactivate current subscription
         $deactivateStmt = $this->conn->prepare("
             UPDATE subscriptions 
             SET status = 'cancelled' 
@@ -150,21 +148,21 @@ class SubscriptionController {
         }
         
         $stmt = $this->conn->prepare("
-            INSERT INTO subscriptions 
-            (subscription_id, school_uid, plan_id, status, start_date, end_date, auto_renew)
-            VALUES (?, ?, ?, 'pending_payment', ?, ?, 1)
+            INSERT INTO school_subscriptions 
+            (school_uid, plan_id, status, start_date, end_date)
+            VALUES (?, ?, 'trial', ?, ?)
         ");
-        $stmt->bind_param("sssss", $subscriptionId, $schoolUid, $planId, $startDate, $endDate);
-        
+        $stmt->bind_param("siss", $schoolUid, $planId, $startDate, $endDate);
+
         if ($stmt->execute()) {
             // In a real system, integrate with payment gateway here
             Response::success([
-                'subscription_id' => $subscriptionId,
-                'plan' => $plan['plan_name'],
+                'subscription_id' => $this->conn->insert_id,
+                'plan' => $plan['display_name'],
                 'amount' => $plan['price'],
                 'currency' => $plan['currency'],
-                'status' => 'pending_payment',
-                'payment_url' => '/payment/process/' . $subscriptionId
+                'status' => 'trial',
+                'payment_url' => '/payment/process/' . $this->conn->insert_id
             ], 'Subscription created. Please complete payment.', 201);
         } else {
             Response::error('Failed to create subscription', 500);

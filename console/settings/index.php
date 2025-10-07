@@ -12,9 +12,9 @@ $school_data = mysqli_fetch_assoc($school_settings);
 
 // Get subscription info
 $subscription_info = mysqli_query($conn, "
-  SELECT ss.*, sp.plan_name, sp.price, sp.features
+  SELECT ss.*, sp.display_name as plan_name, sp.price, sp.features
   FROM school_subscriptions ss
-  JOIN subscription_plans sp ON ss.plan_id = sp.plan_id
+  JOIN subscription_plans sp ON ss.plan_id = sp.id
   WHERE ss.school_uid = '$school_uid'
   ORDER BY ss.created_at DESC
   LIMIT 1
@@ -26,7 +26,7 @@ $login_logs_count = mysqli_query($conn, "
   SELECT COUNT(*) as count 
   FROM login_logs 
   WHERE school_uid = '$school_uid' 
-  AND login_time >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+  AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
 ");
 $login_count = mysqli_fetch_assoc($login_logs_count);
 
