@@ -196,28 +196,70 @@
         loginForm.onsubmit = async (e) => {
             e.preventDefault();
             const button = loginForm.querySelector('button');
+            const errorText = loginForm.querySelector('.error-text');
             loadingState(button, true);
-            
-            // Simulate API call
-            setTimeout(() => {
+            errorText.textContent = '';
+
+            const formData = new FormData(loginForm);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('../api/v1/onboarding/login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    errorText.textContent = result.error;
+                } else if (result.success) {
+                    window.location.href = '../console/';
+                }
+            } catch (error) {
+                errorText.textContent = 'An unexpected error occurred. Please try again.';
+            } finally {
                 loadingState(button, false);
-                window.location.href = '../console/';
-            }, 1500);
+            }
         };
 
         // Handle registration
         registerForm.onsubmit = async (e) => {
             e.preventDefault();
             const button = registerForm.querySelector('button');
+            const errorText = registerForm.querySelector('.error-text');
             loadingState(button, true);
+            errorText.textContent = '';
 
-            // Simulate API call
-            setTimeout(() => {
+            const formData = new FormData(registerForm);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('../api/v1/onboarding/join.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    errorText.textContent = result.error;
+                } else if (result.success) {
+                    registerCard.style.display = 'none';
+                    successCard.style.display = 'block';
+                    startRedirectCountdown();
+                }
+            } catch (error) {
+                errorText.textContent = 'An unexpected error occurred. Please try again.';
+            } finally {
                 loadingState(button, false);
-                registerCard.style.display = 'none';
-                successCard.style.display = 'block';
-                startRedirectCountdown();
-            }, 1500);
+            }
         };
 
         // Redirect countdown
