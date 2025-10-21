@@ -1,7 +1,24 @@
 <?php
-session_start();
-include_once "../../config.php";
-include_once "../../middlwares/school_auth.php";
+// Robust include for CLI and web
+if (php_sapi_name() === 'cli') {
+  require_once __DIR__ . '/../../config.php';
+  require_once __DIR__ . '/../../middlwares/school_auth.php';
+} else {
+  session_start();
+  include_once "../../config.php";
+  include_once "../../middlwares/school_auth.php";
+}
+
+// Fallback for missing $conn or $school_uid
+if (!isset($conn) || !$conn) {
+  die("Database connection not initialized.");
+}
+if (!isset($school_uid)) {
+  $school_uid = $_SESSION['School_uid'] ?? null;
+  if (!$school_uid) {
+    die("School UID not set.");
+  }
+}
 
 // Get recent import/export history
 $recent_operations = mysqli_query($conn, "
@@ -9,10 +26,11 @@ $recent_operations = mysqli_query($conn, "
   WHERE school_uid = '$school_uid' 
   ORDER BY created_at DESC 
   LIMIT 10
-") or null;
+") ?: [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -24,6 +42,7 @@ $recent_operations = mysqli_query($conn, "
   <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
 </head>
+
 <body>
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
@@ -37,14 +56,21 @@ $recent_operations = mysqli_query($conn, "
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="../assets/img/school-1.png" alt="Profile" class="">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$school['School_name']?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $school['School_name'] ?></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header"><h6><?=$school['School_name']?></h6><span>ekiliSense</span></li>
-            <li><hr class="dropdown-divider"></li>
+            <li class="dropdown-header">
+              <h6><?= $school['School_name'] ?></h6><span>ekiliSense</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li><a class="dropdown-item" href="../profile.php"><i class="bi bi-person"></i><span>Profile</span></a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="../logout.php?ref=<?=$school_uid?>"><i class="bi bi-box-arrow-right"></i><span>Sign Out</span></a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="../logout.php?ref=<?= $school_uid ?>"><i
+                  class="bi bi-box-arrow-right"></i><span>Sign Out</span></a></li>
           </ul>
         </li>
       </ul>
@@ -53,26 +79,39 @@ $recent_operations = mysqli_query($conn, "
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav">
       <li class="nav-item"><a class="nav-link collapsed" href="../"><i class="bi bi-grid"></i><span>Home</span></a></li>
-      <li class="nav-item"><a class="nav-link collapsed" href="../teachers/"><i class="bi bi-people"></i><span>Teachers</span></a></li>
-      <li class="nav-item"><a class="nav-link collapsed" href="../classes/"><i class="bi bi-buildings"></i><span>Classes</span></a></li>
-      <li class="nav-item"><a class="nav-link collapsed" href="../reports/"><i class="bi bi-bar-chart"></i><span>Reports</span></a></li>
-      <li class="nav-item"><a class="nav-link collapsed" href="../attendance/"><i class="bi bi-calendar-check"></i><span>Attendance</span></a></li>
-      <li class="nav-item"><a class="nav-link collapsed" href="../events/"><i class="bi bi-calendar-event"></i><span>Events</span></a></li>
+      <li class="nav-item"><a class="nav-link collapsed" href="../teachers/"><i
+            class="bi bi-people"></i><span>Teachers</span></a></li>
+      <li class="nav-item"><a class="nav-link collapsed" href="../classes/"><i
+            class="bi bi-buildings"></i><span>Classes</span></a></li>
+      <li class="nav-item"><a class="nav-link collapsed" href="../reports/"><i
+            class="bi bi-bar-chart"></i><span>Reports</span></a></li>
+      <li class="nav-item"><a class="nav-link collapsed" href="../attendance/"><i
+            class="bi bi-calendar-check"></i><span>Attendance</span></a></li>
+      <li class="nav-item"><a class="nav-link collapsed" href="../events/"><i
+            class="bi bi-calendar-event"></i><span>Events</span></a></li>
       <li class="nav-heading">Management</li>
-      <li class="nav-item"><a class="nav-link" href="./"><i class="bi bi-arrow-repeat"></i><span>Bulk Operations</span></a></li>
-      <li class="nav-item"><a class="nav-link collapsed" href="../settings/"><i class="bi bi-gear"></i><span>Settings</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="./"><i class="bi bi-arrow-repeat"></i><span>Bulk
+            Operations</span></a></li>
+      <li class="nav-item"><a class="nav-link collapsed" href="../settings/"><i
+            class="bi bi-gear"></i><span>Settings</span></a></li>
     </ul>
   </aside>
   <main id="main" class="main">
     <div class="pagetitle">
       <h1><i class="bi bi-arrow-repeat"></i> Bulk Operations</h1>
-      <nav><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../">Home</a></li><li class="breadcrumb-item active">Bulk Operations</li></ol></nav>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="../">Home</a></li>
+          <li class="breadcrumb-item active">Bulk Operations</li>
+        </ol>
+      </nav>
     </div>
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
           <div class="alert alert-info">
-            <i class="bi bi-info-circle"></i> <strong>Bulk Operations</strong> allow you to import, export, and manage data in bulk. Use CSV or Excel files for efficient data management.
+            <i class="bi bi-info-circle"></i> <strong>Bulk Operations</strong> allow you to import, export,
+            and manage data in bulk. Use CSV or Excel files for efficient data management.
           </div>
         </div>
       </div>
@@ -83,23 +122,23 @@ $recent_operations = mysqli_query($conn, "
               <h5 class="card-title">Import Data</h5>
               <p class="text-muted">Upload CSV or Excel files to import data into the system</p>
               <div class="list-group">
-                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
-                        data-bs-toggle="modal" data-bs-target="#importTeachersModal">
+                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                  data-bs-toggle="modal" data-bs-target="#importTeachersModal">
                   <span><i class="bi bi-people-fill text-primary"></i> Import Teachers</span>
                   <i class="bi bi-chevron-right"></i>
                 </button>
                 <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                        data-bs-toggle="modal" data-bs-target="#importStudentsModal">
+                  data-bs-toggle="modal" data-bs-target="#importStudentsModal">
                   <span><i class="bi bi-person-fill text-success"></i> Import Students</span>
                   <i class="bi bi-chevron-right"></i>
                 </button>
                 <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                        data-bs-toggle="modal" data-bs-target="#importClassesModal">
+                  data-bs-toggle="modal" data-bs-target="#importClassesModal">
                   <span><i class="bi bi-building text-info"></i> Import Classes</span>
                   <i class="bi bi-chevron-right"></i>
                 </button>
                 <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                        data-bs-toggle="modal" data-bs-target="#importSubjectsModal">
+                  data-bs-toggle="modal" data-bs-target="#importSubjectsModal">
                   <span><i class="bi bi-book text-warning"></i> Import Subjects</span>
                   <i class="bi bi-chevron-right"></i>
                 </button>
@@ -113,19 +152,26 @@ $recent_operations = mysqli_query($conn, "
               <h5 class="card-title">Export Data</h5>
               <p class="text-muted">Download your data in CSV or Excel format</p>
               <div class="list-group">
-                <a href="server/export.php?type=teachers" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                  <span><i class="bi bi-download text-primary"></i> Export Teachers (<?=$teachers_count?>)</span>
+                <a href="server/export.php?type=teachers"
+                  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <span><i class="bi bi-download text-primary"></i> Export Teachers
+                    (<?= $teachers_count ?>)</span>
                   <i class="bi bi-chevron-right"></i>
                 </a>
-                <a href="server/export.php?type=students" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                  <span><i class="bi bi-download text-success"></i> Export Students (<?=$students_count?>)</span>
+                <a href="server/export.php?type=students"
+                  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <span><i class="bi bi-download text-success"></i> Export Students
+                    (<?= $students_count ?>)</span>
                   <i class="bi bi-chevron-right"></i>
                 </a>
-                <a href="server/export.php?type=classes" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                  <span><i class="bi bi-download text-info"></i> Export Classes (<?=$classes_count?>)</span>
+                <a href="server/export.php?type=classes"
+                  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                  <span><i class="bi bi-download text-info"></i> Export Classes
+                    (<?= $classes_count ?>)</span>
                   <i class="bi bi-chevron-right"></i>
                 </a>
-                <a href="server/export.php?type=attendance" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <a href="server/export.php?type=attendance"
+                  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                   <span><i class="bi bi-download text-warning"></i> Export Attendance Records</span>
                   <i class="bi bi-chevron-right"></i>
                 </a>
@@ -214,8 +260,9 @@ $recent_operations = mysqli_query($conn, "
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <form action="../server/import-teachers.php" method="POST" enctype="multipart/form-data" id="importTeachersForm">
-            <input type="hidden" name="school_uid" value="<?=$school_uid?>">
+          <form action="../server/import-teachers.php" method="POST" enctype="multipart/form-data"
+            id="importTeachersForm">
+            <input type="hidden" name="school_uid" value="<?= $school_uid ?>">
             <div class="mb-3">
               <label class="form-label">Select CSV File</label>
               <input type="file" class="form-control" name="file" accept=".csv,.xlsx" required>
@@ -246,7 +293,7 @@ $recent_operations = mysqli_query($conn, "
         </div>
         <div class="modal-body">
           <form action="server/import-students.php" method="POST" enctype="multipart/form-data" id="importStudentsForm">
-            <input type="hidden" name="school_uid" value="<?=$school_uid?>">
+            <input type="hidden" name="school_uid" value="<?= $school_uid ?>">
             <div class="mb-3">
               <label class="form-label">Select CSV File</label>
               <input type="file" class="form-control" name="file" accept=".csv,.xlsx" required>
@@ -280,8 +327,8 @@ $recent_operations = mysqli_query($conn, "
               <label class="form-label">Recipients</label>
               <select class="form-select" name="recipients" required>
                 <option value="">Select Recipients</option>
-                <option value="all_teachers">All Teachers (<?=$teachers_count?>)</option>
-                <option value="all_students">All Students (<?=$students_count?>)</option>
+                <option value="all_teachers">All Teachers (<?= $teachers_count ?>)</option>
+                <option value="all_students">All Students (<?= $students_count ?>)</option>
                 <option value="all_parents">All Parents</option>
                 <option value="specific_class">Specific Class</option>
               </select>
@@ -318,20 +365,26 @@ $recent_operations = mysqli_query($conn, "
     <div class="copyright">&copy; Copyright <strong><span>ekiliSense</span></strong>. All Rights Reserved</div>
     <div class="credits">From <a href="https://ekilie.com">ekilie</a></div>
   </footer>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/main.js"></script>
   <script>
-    document.getElementById('importTeachersForm')?.addEventListener('submit', function(e) {
+    document.getElementById('importTeachersForm')?.addEventListener('submit', function (e) {
       e.preventDefault();
       const formData = new FormData(this);
-      fetch(this.action, {method: 'POST', body: formData})
+      fetch(this.action, {
+        method: 'POST',
+        body: formData
+      })
         .then(r => r.text())
         .then(data => {
-          alert(data.includes('success') ? 'Teachers imported successfully!' : 'Import failed: ' + data);
-          if(data.includes('success')) window.location.reload();
+          alert(data.includes('success') ? 'Teachers imported successfully!' : 'Import failed: ' +
+            data);
+          if (data.includes('success')) window.location.reload();
         });
     });
   </script>
 </body>
+
 </html>
