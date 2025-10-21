@@ -333,19 +333,20 @@
    * Upgrade button section
    */
 
-  const upgradeSection = document.querySelector(".upgrade-btn-section")
-  if(upgradeSection){
-    upgradeSection.innerHTML = 
-    `
-    <button
-    type="button"
-    class="btn btn-secondary mx-2"  
-    data-bs-toggle="modal" 
-    data-bs-target="#upgrade">
-      Upgrade
-    </button>
-    `
-  }
+  // Inject Upgrade button into all sections if modal exists
+  document.querySelectorAll('.upgrade-btn-section').forEach(section => {
+    if (document.getElementById('upgrade')) {
+      section.innerHTML = `
+        <button
+          type="button"
+          class="btn btn-secondary mx-2"
+          data-bs-toggle="modal"
+          data-bs-target="#upgrade">
+          Upgrade
+        </button>
+      `;
+    }
+  });
 
   // const pageTitle = document.querySelector("title")
   // pageTitle.innerText = "Profile page"
