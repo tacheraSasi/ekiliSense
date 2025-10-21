@@ -25,7 +25,7 @@ $attendance_by_class = mysqli_query($conn, "
 
 // Get detailed attendance for specific class if filtered
 $student_attendance = null;
-if($filter_class != 'all') {
+if ($filter_class != 'all') {
   $student_attendance = mysqli_query($conn, "
     SELECT s.student_name, s.student_id,
            CASE WHEN sa.status IS NULL THEN 'not_marked'
@@ -67,8 +67,8 @@ $overall_stats = mysqli_query($conn, "
     AND DATE(attendance_date) = '$filter_date'
 ");
 $stats = mysqli_fetch_assoc($overall_stats);
-$attendance_rate = $stats['total_records'] > 0 
-  ? round(($stats['present'] / $stats['total_records']) * 100, 1) 
+$attendance_rate = $stats['total_records'] > 0
+  ? round(($stats['present'] / $stats['total_records']) * 100, 1)
   : 0;
 ?>
 <!DOCTYPE html>
@@ -79,7 +79,7 @@ $attendance_rate = $stats['total_records'] > 0
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Attendance Overview | ekiliSense</title>
-  
+
   <!-- Favicons -->
   <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="icon">
   <link href="https://www.ekilie.com/assets/img/favicon.jpeg" rel="apple-touch-icon">
@@ -115,23 +115,27 @@ $attendance_rate = $stats['total_records'] > 0
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="../assets/img/school-1.png" alt="Profile" class="">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$school['School_name']?></span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?= $school['School_name'] ?></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6><?=$school['School_name']?></h6>
+              <h6><?= $school['School_name'] ?></h6>
               <span>ekiliSense</span>
             </li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
             <li>
               <a class="dropdown-item d-flex align-items-center" href="../profile.php">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
               </a>
             </li>
-            <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="../logout.php?ref=<?=$school_uid?>">
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="../logout.php?ref=<?= $school_uid ?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -218,19 +222,19 @@ $attendance_rate = $stats['total_records'] > 0
               <form method="GET" action="" class="row g-3">
                 <div class="col-md-4">
                   <label class="form-label">Date</label>
-                  <input type="date" class="form-control" name="date" value="<?=$filter_date?>" max="<?=date('Y-m-d')?>">
+                  <input type="date" class="form-control" name="date" value="<?= $filter_date ?>" max="<?= date('Y-m-d') ?>">
                 </div>
                 <div class="col-md-4">
                   <label class="form-label">Class</label>
                   <select class="form-select" name="class">
-                    <option value="all" <?=$filter_class == 'all' ? 'selected' : ''?>>All Classes</option>
+                    <option value="all" <?= $filter_class == 'all' ? 'selected' : '' ?>>All Classes</option>
                     <?php
                     mysqli_data_seek($get_classes, 0);
-                    while($class = mysqli_fetch_assoc($get_classes)):
+                    while ($class = mysqli_fetch_assoc($get_classes)):
                     ?>
-                    <option value="<?=$class['class_id']?>" <?=$filter_class == $class['class_id'] ? 'selected' : ''?>>
-                      <?=$class['Class_name']?>
-                    </option>
+                      <option value="<?= $class['class_id'] ?>" <?= $filter_class == $class['class_id'] ? 'selected' : '' ?>>
+                        <?= $class['Class_name'] ?>
+                      </option>
                     <?php endwhile; ?>
                   </select>
                 </div>
@@ -259,8 +263,8 @@ $attendance_rate = $stats['total_records'] > 0
                   <i class="bi bi-percent"></i>
                 </div>
                 <div class="ps-3">
-                  <h6><?=$attendance_rate?>%</h6>
-                  <span class="text-muted small"><?=date('M d, Y', strtotime($filter_date))?></span>
+                  <h6><?= $attendance_rate ?>%</h6>
+                  <span class="text-muted small"><?= date('M d, Y', strtotime($filter_date)) ?></span>
                 </div>
               </div>
             </div>
@@ -276,7 +280,7 @@ $attendance_rate = $stats['total_records'] > 0
                   <i class="bi bi-check-circle"></i>
                 </div>
                 <div class="ps-3">
-                  <h6><?=$stats['present'] ?? 0?></h6>
+                  <h6><?= $stats['present'] ?? 0 ?></h6>
                   <span class="text-success small">Students</span>
                 </div>
               </div>
@@ -293,7 +297,7 @@ $attendance_rate = $stats['total_records'] > 0
                   <i class="bi bi-x-circle"></i>
                 </div>
                 <div class="ps-3">
-                  <h6><?=$stats['absent'] ?? 0?></h6>
+                  <h6><?= $stats['absent'] ?? 0 ?></h6>
                   <span class="text-danger small">Students</span>
                 </div>
               </div>
@@ -310,7 +314,7 @@ $attendance_rate = $stats['total_records'] > 0
                   <i class="bi bi-clock-history"></i>
                 </div>
                 <div class="ps-3">
-                  <h6><?=$stats['late'] ?? 0?></h6>
+                  <h6><?= $stats['late'] ?? 0 ?></h6>
                   <span class="text-warning small">Students</span>
                 </div>
               </div>
@@ -324,7 +328,7 @@ $attendance_rate = $stats['total_records'] > 0
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Attendance by Class - <?=date('M d, Y', strtotime($filter_date))?></h5>
+              <h5 class="card-title">Attendance by Class - <?= date('M d, Y', strtotime($filter_date)) ?></h5>
               <table class="table datatable">
                 <thead>
                   <tr>
@@ -338,25 +342,25 @@ $attendance_rate = $stats['total_records'] > 0
                   </tr>
                 </thead>
                 <tbody>
-                  <?php while($class = mysqli_fetch_assoc($attendance_by_class)): 
-                    $class_rate = $class['total_students'] > 0 
-                      ? round(($class['present'] / $class['total_students']) * 100, 1) 
+                  <?php while ($class = mysqli_fetch_assoc($attendance_by_class)):
+                    $class_rate = $class['total_students'] > 0
+                      ? round(($class['present'] / $class['total_students']) * 100, 1)
                       : 0;
                     $rate_color = $class_rate >= 90 ? 'success' : ($class_rate >= 75 ? 'warning' : 'danger');
                   ?>
-                  <tr>
-                    <td><strong><?=$class['Class_name']?></strong></td>
-                    <td><?=$class['total_students']?></td>
-                    <td><span class="badge bg-success"><?=$class['present']?></span></td>
-                    <td><span class="badge bg-danger"><?=$class['absent']?></span></td>
-                    <td><span class="badge bg-warning"><?=$class['late']?></span></td>
-                    <td><span class="badge bg-<?=$rate_color?>"><?=$class_rate?>%</span></td>
-                    <td>
-                      <a href="?date=<?=$filter_date?>&class=<?=$class['class_id']?>" class="btn btn-sm btn-primary">
-                        <i class="bi bi-eye"></i> View Details
-                      </a>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td><strong><?= $class['Class_name'] ?></strong></td>
+                      <td><?= $class['total_students'] ?></td>
+                      <td><span class="badge bg-success"><?= $class['present'] ?></span></td>
+                      <td><span class="badge bg-danger"><?= $class['absent'] ?></span></td>
+                      <td><span class="badge bg-warning"><?= $class['late'] ?></span></td>
+                      <td><span class="badge bg-<?= $rate_color ?>"><?= $class_rate ?>%</span></td>
+                      <td>
+                        <a href="?date=<?= $filter_date ?>&class=<?= $class['class_id'] ?>" class="btn btn-sm btn-primary">
+                          <i class="bi bi-eye"></i> View Details
+                        </a>
+                      </td>
+                    </tr>
                   <?php endwhile; ?>
                 </tbody>
               </table>
@@ -366,60 +370,60 @@ $attendance_rate = $stats['total_records'] > 0
       </div>
 
       <!-- Detailed Student Attendance (if class is selected) -->
-      <?php if($student_attendance): ?>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Student Attendance Details</h5>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Student Name</th>
-                    <th>Status</th>
-                    <th>Marked At</th>
-                    <th>Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php while($student = mysqli_fetch_assoc($student_attendance)): 
-                    $status_class = '';
-                    $status_icon = '';
-                    switch($student['status']) {
-                      case 'present':
-                        $status_class = 'success';
-                        $status_icon = 'check-circle';
-                        break;
-                      case 'absent':
-                        $status_class = 'danger';
-                        $status_icon = 'x-circle';
-                        break;
-                      case 'late':
-                        $status_class = 'warning';
-                        $status_icon = 'clock-history';
-                        break;
-                      default:
-                        $status_class = 'secondary';
-                        $status_icon = 'question-circle';
-                    }
-                  ?>
-                  <tr>
-                    <td><?=$student['student_name']?></td>
-                    <td>
-                      <span class="badge bg-<?=$status_class?>">
-                        <i class="bi bi-<?=$status_icon?>"></i> <?=ucfirst($student['status'])?>
-                      </span>
-                    </td>
-                    <td><?=$student['marked_time'] ?? '-'?></td>
-                    <td><?=$student['notes'] ?? '-'?></td>
-                  </tr>
-                  <?php endwhile; ?>
-                </tbody>
-              </table>
+      <?php if ($student_attendance): ?>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Student Attendance Details</h5>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Student Name</th>
+                      <th>Status</th>
+                      <th>Marked At</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php while ($student = mysqli_fetch_assoc($student_attendance)):
+                      $status_class = '';
+                      $status_icon = '';
+                      switch ($student['status']) {
+                        case 'present':
+                          $status_class = 'success';
+                          $status_icon = 'check-circle';
+                          break;
+                        case 'absent':
+                          $status_class = 'danger';
+                          $status_icon = 'x-circle';
+                          break;
+                        case 'late':
+                          $status_class = 'warning';
+                          $status_icon = 'clock-history';
+                          break;
+                        default:
+                          $status_class = 'secondary';
+                          $status_icon = 'question-circle';
+                      }
+                    ?>
+                      <tr>
+                        <td><?= $student['student_name'] ?></td>
+                        <td>
+                          <span class="badge bg-<?= $status_class ?>">
+                            <i class="bi bi-<?= $status_icon ?>"></i> <?= ucfirst($student['status']) ?>
+                          </span>
+                        </td>
+                        <td><?= $student['marked_time'] ?? '-' ?></td>
+                        <td><?= $student['notes'] ?? '-' ?></td>
+                      </tr>
+                    <?php endwhile; ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       <?php endif; ?>
 
       <!-- Attendance Trends -->
@@ -463,7 +467,7 @@ $attendance_rate = $stats['total_records'] > 0
       $trend_present = [];
       $trend_absent = [];
       $trend_late = [];
-      while($row = mysqli_fetch_assoc($attendance_trends)) {
+      while ($row = mysqli_fetch_assoc($attendance_trends)) {
         $trend_dates[] = date('M d', strtotime($row['attendance_date']));
         $trend_present[] = $row['present'];
         $trend_absent[] = $row['absent'];
@@ -473,22 +477,22 @@ $attendance_rate = $stats['total_records'] > 0
       new Chart(document.querySelector('#trendsChart'), {
         type: 'line',
         data: {
-          labels: <?=json_encode($trend_dates)?>,
+          labels: <?= json_encode($trend_dates) ?>,
           datasets: [{
             label: 'Present',
-            data: <?=json_encode($trend_present)?>,
+            data: <?= json_encode($trend_present) ?>,
             borderColor: 'rgb(75, 192, 192)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             tension: 0.1
           }, {
             label: 'Absent',
-            data: <?=json_encode($trend_absent)?>,
+            data: <?= json_encode($trend_absent) ?>,
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             tension: 0.1
           }, {
             label: 'Late',
-            data: <?=json_encode($trend_late)?>,
+            data: <?= json_encode($trend_late) ?>,
             borderColor: 'rgb(255, 205, 86)',
             backgroundColor: 'rgba(255, 205, 86, 0.2)',
             tension: 0.1
@@ -507,4 +511,5 @@ $attendance_rate = $stats['total_records'] > 0
   </script>
 
 </body>
+
 </html>

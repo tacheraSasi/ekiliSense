@@ -1,6 +1,6 @@
 <?php
 
-include '../config.php';  
+include '../config.php';
 include 'RegisterIPN.php';
 
 use GuzzleHttp\Client;  // Importing the Guzzle HTTP client
@@ -43,13 +43,13 @@ $headers = [
 
 // Create the payload (data) that will be sent with the request to Pesapal.
 $data = [
-    'id' => $merchantreference,  
-    'currency' => 'TZS',         
-    'amount' => $amount,         
-    'description' => 'subscription to ekiliSense premium',  
+    'id' => $merchantreference,
+    'currency' => 'TZS',
+    'amount' => $amount,
+    'description' => 'subscription to ekiliSense premium',
     'callback_url' => $callbackurl,
-    'notification_id' => $ipn_id,   
-    'branch' => $branch,            
+    'notification_id' => $ipn_id,
+    'branch' => $branch,
     'billing_address' => [
         'email_address' => $email_address,
         'phone_number' => $phone,
@@ -90,8 +90,8 @@ try {
             echo "<iframe src='$redirectUrl' width='100%' height='100%' frameborder='0' style='margin:auto'></iframe>";
 
             // Assume payment is successful. We need to get the consent token for future recurring payments
-            $consentToken = $responseData->payment_method->token; 
-            
+            $consentToken = $responseData->payment_method->token;
+
 
             // Insert the subscription data into MySQL for future recurring payments
             $next_payment_date = date('Y-m-d', strtotime('+1 month'));  // Next payment date (for monthly subscription)
@@ -104,7 +104,6 @@ try {
             } else {
                 echo "Error: " . mysqli_error($conn);
             }
-
         } else {
             // Handle case where order_tracking_id is missing
             echo "Error: Order tracking ID not found in the response.";
@@ -121,7 +120,8 @@ try {
 mysqli_close($conn);  // Close the database connection
 
 // Handle IPN response after payment
-function handleIPN($ipnData) {
+function handleIPN($ipnData)
+{
     global $conn; // Use global connection variable
     // Here, $ipnData should be parsed from the incoming IPN request
     $school_subscription_id = $ipnData['school_subscription_id'];
@@ -147,5 +147,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ipnData = json_decode(file_get_contents('php://input'), true); // Assuming IPN data is sent as JSON
     handleIPN($ipnData);
 }
-
-?>
